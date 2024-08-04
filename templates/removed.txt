@@ -1,0 +1,11 @@
+
+		<!--
+			<div class="rubicon-hud-bar" id="rubicon-hud-bar-movement">
+				<div class="rubicon-hud-layer rubicon-hud-background-layer">
+				</div>
+				<div class="rubicon-hud-layer rubicon-hud-content-layer">
+					<span class="rubicon-hud-heading">Movement</span>
+					<span class="rubicon-hud-value">100 / 100</span>
+				</div>
+			</div>
+		-->

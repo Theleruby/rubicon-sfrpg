@@ -1,0 +1,595 @@
+/*===================================*/
+/* hacks */
+/*===================================*/
+* {
+	scrollbar-width: thin;
+	scrollbar-color: #d8d8d0 #111;
+}
+#players {
+	width: 307px !important;
+}
+#players ol {
+	width: 310px !important;
+}
+#ui-top.offset {
+    margin-left: -190px !important;
+}
+.sfrpg.chat-card .card-content > * > *, .sfrpg.chat-card .card-content > * > * > *, .sfrpg.chat-card .card-content > * > * > * > * {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}
+/*===================================*/
+
+table.rubicon-bonuses-table td:first-child {
+    width: 32px;
+    text-align: right;
+    padding-right: 6px;
+    font-weight: bold;
+}
+
+#rubiconQuickSkillCheckDialog, #rubiconQuickSkillCheckDialog .window-content {
+	width: 460px !important;
+}
+
+#rubiconQuickSkillCheckDialog .dialog-buttons {
+	flex-direction: row;
+	flex-grow: 0;
+	flex-shrink: 0;
+	flex-basis: 220px;
+	margin-top: 10px;
+}
+
+#rubiconQuickSkillCheckDialog .dialog-button {
+	text-wrap: nowrap;
+	min-width: 220px !important;
+	max-width: 220px !important;
+	margin: 0;
+	text-align: left;
+}
+
+.rubicon-hud-outer-container {
+    width: 610px;
+	flex-direction: column;
+}
+
+.rubicon-hud-statuses {
+	display: flex;
+	flex-flow: wrap-reverse;
+	margin-left: 2px;
+}
+/*
+.rubicon-hud-statuses {
+    display: flex;
+    margin-left: 2px;
+    flex-direction: column;
+    position: absolute;
+    left: 611px;
+}
+*/
+
+.rubicon-hud-status-box {
+	height: 24px;
+    background: url(/ui/denim075.png) repeat;
+	border: 1px solid black;
+	border-radius: 3px;
+    padding: 3px;
+	margin-bottom: 4px;
+	width: /*124px;*/fit-content;
+    display: inline-flex;
+	margin-right: 4px;
+}
+
+.rubicon-hud-status-box > img {
+	width: 16px;
+	border: none;
+	float: left;
+}
+
+.rubicon-hud-status-box > span {
+	color: white;
+    margin-left: 4px;
+    position: relative;
+    top: -1px;
+}
+
+.rubicon-hud, .rubicon-spell-hud {
+	margin-left: 2px;
+	height: 173px;
+    margin-bottom: 4px;
+    background: url(/ui/denim075.png) repeat;
+    padding: 6px;
+	border: 1px solid black;
+	border-radius: 3px;
+}
+
+.rubicon-spell-hud {
+	width: 90px;
+	position: absolute;
+	left: 611px;
+}
+
+.rubicon-spell-hud-row {
+    padding: 2px 3px;
+}
+
+.rubicon-spell-hud-title {
+	padding-bottom: 6px !important;
+    margin-bottom: 4px;
+	border-bottom: 1px solid white;
+	width: 100%;
+}
+
+.rubicon-hud-row {
+	display: flex;
+	flex-direction: row;
+}
+
+.rubicon-hud-column {
+	display: flex;
+	flex-direction: column;
+}
+
+#rubicon-hud-character-name {
+	font-size: 1.25em;
+	color: white;
+    margin-bottom: 3px;
+}
+
+#rubicon-hud-character-level {
+	font-size: 1.25em;
+	color: white;
+    margin-bottom: 3px;
+	margin-right: 2px;
+}
+
+.rubicon-hud-title {
+    margin-bottom: 4px;
+	border-bottom: 1px solid white;
+	width: 100%;
+}
+
+#rubicon-hud-portrait {
+	width: 132px;
+	height: 132px;
+	border: 1px solid black;
+	border-radius: 3px;
+	background: rgba(0, 0, 0, 0.5);
+}
+
+#rubicon-hud-portrait > img {
+	width: 100%;
+	height: 100%;
+	border: none;
+	object-position: center center;
+	object-fit: contain;
+}
+
+.rubicon-hud-bar, .rubicon-hud-ac-box, .rubicon-hud-speed-box {
+	margin-left: 2px;
+	margin-bottom: 2px;
+	border: 1px solid black;
+	border-radius: 3px;
+	background: rgba(0, 0, 0, 0.5);
+    position: relative;
+}
+
+.rubicon-hud-content-layer {	
+	padding: 1px 4px;
+}
+
+.rubicon-hud-bar {
+	width: 140px;
+    height: 28px;
+    font-size: 1.3em;
+}
+
+.rubicon-hud-ac-box {
+	width: 42px;
+	height: 43px;
+}
+
+.rubicon-hud-speed-box {
+	width: 52px;
+	height: 43px;
+}
+
+.rubicon-hud-layer {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.rubicon-hud-bar > .rubicon-hud-content-layer > span.rubicon-hud-heading {
+	font-size: 1em;
+}
+
+.rubicon-hud-bar > .rubicon-hud-content-layer > span.rubicon-hud-value {
+    margin-top: 3px;
+	font-size: 0.8em;
+}
+
+span.rubicon-hud-heading, span.rubicon-hud-value {
+	color: white;
+}
+
+span.rubicon-hud-heading {
+	float: left;
+}
+
+span.rubicon-hud-value {
+	float: right;
+}
+
+#rubicon-hud-bar-health > .rubicon-hud-background-layer {
+    background: #0b8900;
+    /*background: #c31d1d;*/
+}
+
+#rubicon-hud-bar-stamina > .rubicon-hud-background-layer {
+    background: #1d7ac3;
+}
+
+#rubicon-hud-bar-resolve > .rubicon-hud-background-layer {
+	background: #c31d7f;
+}
+
+#rubicon-hud-bar-movement > .rubicon-hud-background-layer {
+    background: #656265;
+}
+
+#rubicon-hud-ac-eac > .rubicon-hud-background-layer, #rubicon-hud-ac-kac > .rubicon-hud-background-layer, #rubicon-hud-speed > .rubicon-hud-background-layer {
+    background: #696869;/*#73008c;*/
+}
+
+#rubicon-hud-ac-kac > .rubicon-hud-background-layer {
+    background: #696869;/*#93240e;*/
+}
+
+div#rubicon-hud-equipment-section {
+    flex: 1;
+}
+
+.rubicon-hud-ac-heading {
+	font-size: 1.2em;
+	width: 100%;
+}
+
+.rubicon-hud-ac-heading, .rubicon-hud-ac-value {
+	text-align: center;
+	color: white;
+	display: block;
+}
+
+div#rubicon-hud-right-column {
+	flex-grow: 1;
+}
+
+.rubicon-hud-equipment  {
+	height: 21px;
+	/*background: white;*/
+	margin-top: 1px;
+	margin-bottom: 2px;
+	margin-left: 4px;
+}
+
+.rubicon-hud-equipment-icon, .rubicon-hud-consumable-icon {
+	width: 21px;
+    height: 21px;
+	background: black;
+    margin-top: auto;
+	border: 1px solid #333;
+	border-radius: 2px;
+}
+
+.rubicon-hud-equipment-icon {
+	margin-right: 4px;
+}
+
+.rubicon-hud-consumable-icon {
+    position: relative;
+    top: -2px;
+    left: -2px;
+}
+
+.rubicon-hud-equipment-name {
+	color: white;
+	margin-top: 2px;
+	flex: 1;
+}
+
+.rubicon-hud-equipment-charges {
+	color: white;
+	margin-top: 2px;
+}
+
+.sfrpg.chat-card .card-buttons-rubicon button {
+    font-size: var(--font-size-12);
+    height: 24px;
+    line-height: 20px;
+    margin: 2px 0;
+    font-family: "Exo 2", sans-serif;
+}
+
+#rubicon-card-using-using {
+	flex: none;
+	padding-right: 4px;
+}
+
+.rubicon-card-using-headerfooter {
+	flex: revert;
+	margin-top: 3px;
+	padding-top: 1px;
+	border-top: 2px groove #fff;
+}
+
+.rubicon-card-using-headerfooter span {
+	border-right: 2px groove #fff;
+    padding: 0 5px 5px 0;
+    font-size: var(--font-size-11);
+}
+
+.rubicon-card-using-headerfooter span:last-child {
+    border-right: none;
+    padding-right: 0;
+}
+
+.rubicon-item-name-hack-extra {
+	line-height: 25px !important;
+	position: relative;
+    top: -2px;
+}
+
+.rubicon-card-using {
+	position: relative;
+    top: -2px;
+}
+
+.rubicon-card-using img {
+    width: 16px !important;
+    height: 16px !important;
+    flex: 0 0 16px !important;
+}
+
+div[id^='rubiconQuickActionDialog_'] .dialog-buttons {
+	flex-direction: row;
+	flex-grow: 0;
+	flex-shrink: 0;
+	margin-top: 10px;
+}
+
+div[id^='rubiconQuickActionDialog_'] .dialog-button {
+	text-wrap: nowrap;
+	min-width: 100% !important;
+	max-width: 100% !important;
+    text-align: left;
+    margin: 3px 0px;
+    padding: 5px;
+}
+
+div[id^='rubiconQuickActionDialog_'] .dialog-button > img {
+    height: 32px;
+    margin-right: 8px;
+    float: left; 
+}
+
+div[id^='rubiconQuickActionDialog_'] .dialog-button > span {
+    display: block;
+    line-height: 16px;
+    font-size: 9.5pt;
+    text-wrap: wrap;
+}
+
+div[id^='rubiconQuickActionDialog_'] .dialog-button > span:first-of-type {
+    font-weight: bold;
+    font-size: 10.5pt !important;
+}
+
+
+div[id^='rubiconQuickActionDialog_groupSelection_'], div[id^='rubiconQuickActionDialog_groupSelection_'] .window-content {
+	width: 460px !important;
+}
+
+
+div[id^='rubiconQuickActionDialog__basicSpell_'], div[id^='rubiconQuickActionDialog__basicSpell_'] .window-content {
+	width: 460px !important;
+}
+
+.rubicon-button-property-block {
+	font-size: 0.8em;
+	padding-top: 2px;
+    border-top: 2px groove white;
+    margin-top: 4px;
+	color: var(--color-text-dark-primary);
+}	
+
+span.rubicon-spell-level-box, span.rubicon-spell-school-box {
+	background: #eee;
+    padding: 0px 5px 2px 5px;
+    border: 1px solid gray;
+    border-radius: 5px;
+    font-size: 0.9em;
+    margin-left: 3px;
+    float: right;
+    line-height: 12px;
+	text-align: center;
+}
+
+span.rubicon-spell-school-box {
+	/*width: 96px;*/
+}
+
+span.rubicon-item-capacity-box {
+    padding-left: 6px;
+    font-weight: normal;
+}
+
+/*
+div.rubicon-hud-action-bar {
+	height: 24px;
+	width: 700px;
+	margin-bottom: 2px;
+	margin-left: 2px;
+}
+
+div.rubicon-hud-action-button {
+    border: 1px solid var(--color-border-dark);
+    border-radius: 2px;
+    background: url(/ui/denim075.png) repeat;
+    box-shadow: 0 0 5px var(--color-shadow-dark) inset;
+    cursor: pointer;
+	margin-right: 1px;
+    height: 24px;
+    width: fit-content;
+	display: inline-block;
+}
+
+div.rubicon-hud-action-button > img {
+    height: 16px;
+    width: 16px;
+    margin-left: 2px;
+    margin-top: 3px;
+    float: left;
+}
+
+div.rubicon-hud-action-button > span {
+    color: white;
+    margin: 4px;
+    position: relative;
+    top: 2px;
+    font-size: 0.9em;
+}
+*/
+
+.rubicon-hud-consumable {
+    height: 23px;
+	padding: 2px;
+	width: 44px;
+    margin-right: 1px;
+    margin-left: 1px;
+    border: 1px solid black;
+	border-radius: 2px;
+    background: rgba(167, 167, 167, 0.35);
+	color: white;
+}
+
+.rubicon-hud-consumable-amount {
+	flex-grow: 1;
+	text-align: center;
+}
+
+div#rubicon-hud-consumables-section {
+    margin-bottom: 2px;
+    margin-left: 2px;
+    margin-right: -6px;
+}
+
+.rubicon-hud-consumable[data-quantity-color="5"] {
+    background: rgb(0 255 255 / 35%);
+}
+
+.rubicon-hud-consumable[data-quantity-color="4"] {
+    background: rgb(0 255 0 / 35%);
+}
+
+.rubicon-hud-consumable[data-quantity-color="3"] {
+    background: rgb(255 255 0 / 35%);
+}
+
+.rubicon-hud-consumable[data-quantity-color="2"] {
+    background: rgb(255 96 0 / 35%);
+}
+
+.rubicon-hud-consumable[data-quantity-color="1"] {
+    background: rgb(255 0 0 / 35%);
+}
+
+.rubicon-hud-consumable[data-quantity-color="0"] {
+    background: rgb(64 0 0 / 35%);
+}
+
+span.rubicon-weapon-target-box {
+    width: 50px;
+    display: inline-block;
+    color: #fff;
+    text-align: center;
+    margin-top: 3px;
+	margin-right: 3px;
+}
+
+span.rubicon-weapon-target-kac {
+    background: #8f0000;
+}
+
+span.rubicon-weapon-target-eac {
+    background: #9000a9;
+}
+
+span.rubicon-weapon-target-kac8 {
+    background: black;
+}
+
+span.rubicon-weapon-target-ac5 {
+    background: #007f28;
+}
+
+span.rubicon-weapon-target-ac15 {
+    background: #007f28;
+}
+
+span.rubicon-weapon-target-other {
+    background: #444444;
+}
+
+span.rubicon-weapon-target- {
+    background: #444444;
+}
+
+span.rubicon-weapon-attack-box {
+    width: 30px;
+    display: inline-block;
+    background: #235683;
+    color: #fff;
+    text-align: center;
+    margin-top: 3px;
+	margin-right: 3px;
+}
+
+span.rubicon-weapon-save-box {
+    width: 150px;
+    display: inline-block;
+    background: #007f28;
+    color: #fff;
+    text-align: center;
+    margin-top: 3px;
+	margin-right: 3px;
+}
+
+span.rubicon-weapon-damage-box {
+    width: 90px;
+    display: inline-block;
+    background: #c41e1e;
+    color: #fff;
+    text-align: center;
+    margin-top: 3px;
+	margin-right: 3px;
+}
+
+.rubicon-button-property-label {
+    border-right: 1px solid #999;
+    padding: 0 5px 0px 0;
+    font-size: var(--font-size-11);
+    margin-right: 4px;
+    display: inline-block;
+}
+
+.rubicon-button-property-label:last-child {
+    border-right: 0px !important;
+}
+
+.rubicon-item-description {
+	display: block;
+}

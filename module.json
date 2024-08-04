@@ -1,0 +1,52 @@
+{
+  "id": "rubicon-sfrpg",
+  "title": "Rubicon for Starfinder",
+  "description": "Adds custom UI and macro elements to Starfinder.",
+  "version": "0.0.1",
+  "library": "false",
+  "manifestPlusVersion": "1.2.0",
+  "compatibility": {
+    "minimum": 12,
+    "verified": 12,
+    "maximum": 12
+  },
+  "authors": [
+    {
+      "name": "Ruby Dennington",
+      "url": "https://www.theleruby.com/",
+      "discord": "theleruby"
+    }
+  ],
+  "relationships": {
+    "systems": [
+      {
+        "id": "sfrpg",
+        "type": "system",
+		"compatibility": { "minimum": "0.26.1", "verified": "0.26.1" }
+      }
+    ]
+  },
+  "esmodules": [
+    "modules/hooks.js",
+    "modules/rubicon.js",
+    "modules/actions.js",
+    "modules/spells.js",
+    "modules/consumables.js",
+    "modules/menu.js"
+  ],
+  "scripts": [
+    "scripts/dummy.js"
+  ],
+  "styles": [
+    "styles/module.css"
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "languages/en.json"
+    }
+  ],
+  "license": "LICENSE",
+  "readme": "README.md"
+}

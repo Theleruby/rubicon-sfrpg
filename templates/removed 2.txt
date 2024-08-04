@@ -1,0 +1,78 @@
+		<div class="rubicon-hud-status-box">
+			<img src="systems/sfrpg/icons/conditions/overburdened.webp" />
+			<span>Overburdened</span>
+		</div>
+		<div class="rubicon-hud-status-box">
+			<img src="systems/sfrpg/icons/conditions/entangled.webp" />
+			<span>Entangled</span>
+		</div>
+		<div class="rubicon-hud-status-box">
+			<img src="systems/sfrpg/icons/conditions/flatfooted.webp" />
+			<span>Flat-footed</span>
+		</div>
+		<div class="rubicon-hud-status-box">
+			<img src="systems/sfrpg/icons/conditions/paralyzed.webp" />
+			<span>Paralyzed</span>
+		</div>
+		<div class="rubicon-hud-status-box">
+			<img src="systems/sfrpg/icons/conditions/entangled.webp" />
+			<span>Entangled 5</span>
+		</div>
+		<div class="rubicon-hud-status-box">
+			<img src="systems/sfrpg/icons/conditions/entangled.webp" />
+			<span>Entangled 6</span>
+		</div>
+		<div class="rubicon-hud-status-box">
+			<img src="systems/sfrpg/icons/conditions/entangled.webp" />
+			<span>Entangled 7</span>
+		</div>
+		<div class="rubicon-hud-status-box">
+			<img src="systems/sfrpg/icons/conditions/entangled.webp" />
+			<span>Entangled</span>
+		</div>
+		<div class="rubicon-hud-status-box">
+			<img src="systems/sfrpg/icons/conditions/entangled.webp" />
+			<span>Entangled</span>
+		</div>
+		<div class="rubicon-hud-status-box">
+			<img src="systems/sfrpg/icons/conditions/entangled.webp" />
+			<span>Entangled</span>
+		</div>
+		<!--
+		<div class="rubicon-hud-status-box">
+			<img src="systems/sfrpg/icons/conditions/entangled.webp" />
+			<span>Entangled</span>
+		</div>
+		<div class="rubicon-hud-status-box">
+			<img src="systems/sfrpg/icons/conditions/entangled.webp" />
+			<span>Entangled</span>
+		</div>
+		<div class="rubicon-hud-status-box">
+			<img src="systems/sfrpg/icons/conditions/entangled.webp" />
+			<span>Entangled</span>
+		</div>
+		<div class="rubicon-hud-status-box">
+			<img src="systems/sfrpg/icons/conditions/entangled.webp" />
+			<span>Entangled</span>
+		</div>
+		<div class="rubicon-hud-status-box">
+			<img src="systems/sfrpg/icons/conditions/entangled.webp" />
+			<span>Entangled</span>
+		</div>
+		<div class="rubicon-hud-status-box">
+			<img src="systems/sfrpg/icons/conditions/entangled.webp" />
+			<span>Entangled</span>
+		</div>
+		<div class="rubicon-hud-status-box">
+			<img src="systems/sfrpg/icons/conditions/entangled.webp" />
+			<span>Entangled</span>
+		</div>
+		<div class="rubicon-hud-status-box">
+			<img src="systems/sfrpg/icons/conditions/entangled.webp" />
+			<span>Entangled</span>
+		</div>
+		<div class="rubicon-hud-status-box">
+			<img src="systems/sfrpg/icons/conditions/entangled.webp" />
+			<span>Entangled</span>
+		</div>
+		-->
