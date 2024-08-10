@@ -70,6 +70,7 @@ export class Rubicon extends Application {
     // the hooks are unreliable, so we're forced to just reselect the controlled token repeatedly.
     window.setInterval(() => { this._selectControlledToken(); }, 30);
     $(document).on('click', '.rubicon-chat-card-button', this._onButtonClick.bind(this));
+    $(document).on('click', '.rubicon-hud-action-button', this._onHudActionClick.bind(this));
     this._availableActions = Object.assign({},
       RubiconActions.combatManeuvers,
       RubiconActions.specialAttacks,
@@ -159,8 +160,82 @@ export class Rubicon extends Application {
     this.showDialogQuick(token, QuickMenuOptions.altActions, "altAttack");
   }
   
+  showDialogQuickMoveDefend(token) {
+    this.showDialogQuick(token, QuickMenuOptions.moveDefend, "moveDefend");
+  }
+  
+  showDialogQuickEquipReload(token) {
+    this.showDialogQuick(token, QuickMenuOptions.equipReload, "equipReload");
+  }
+  
   showDialogQuickSpell(token) {
     this._showDialogQuickActionItem(token, "_basicSpell_");
+  }
+  
+  showDialogQuickSpellIdentify(token) {
+    this._showDialogQuickActionItem(token, "_identifySpell_");
+  }
+  
+  dealDamageToToken(token) {
+    if (!token) {
+      return this.showDialogError("Error", "No target");
+    }
+    new Dialog({
+      title: `Deal damage to ${token.name}`,
+      content: `<form><div class="form-group"><label>Damage amount:</label><input type='text' name='inputField'></input></div></form>`,
+      buttons: {
+        apply: {
+          icon: "<i class='fas fa-check'></i>",
+          label: `Apply Changes`,
+          callback: function(html) {
+            let result = html.find('input[name=\'inputField\']').val();
+            var x = parseInt(result, 10);
+            if (isNaN(x)) {
+              return game.rubicon.showDialogError("Error", "Not a Number");
+            }
+            if (x < 1) {
+              return game.rubicon.showDialogError("Error", "Input amount must be at least 1");
+            }
+            // reduce temporary hit points
+            let thp = token.actor.system.attributes?.hp?.temp
+            if (thp !== undefined && thp !== null && thp > 0) {
+              if (thp > x) {
+                thp = thp - x;
+                x = 0;
+              } else {
+                x = x - thp;
+                thp = 0;
+              }
+              token.actor.update({"system.attributes.hp.temp": thp});
+            }
+            // reduce stamina
+            let sp = token.actor.system.attributes?.sp?.value
+            if (sp !== undefined && sp !== null && sp > 0) {
+              if (sp > x) {
+                sp = sp - x;
+                x = 0;
+              } else {
+                x = x - sp;
+                sp = 0;
+              }
+              token.actor.update({"system.attributes.sp.value": sp});
+            }
+            // reduce health
+            let hp = token.actor.system.attributes?.hp?.value
+            if (hp !== undefined && hp !== null && hp > 0) {
+              if (hp > x) {
+                hp = hp - x;
+                x = 0;
+              } else {
+                x = x - hp;
+                hp = 0;
+              }
+              token.actor.update({"system.attributes.hp.value": hp});
+            }
+          }
+        }
+      }
+    }).render(true);
   }
   
   showDialogQuick(token, entries, windowId) {
@@ -232,7 +307,7 @@ export class Rubicon extends Application {
   }
   
   _showDialogQuickActionEntry(token, actionGroup) {
-    if(!Object.keys(QuickMenuOptions.skills).includes(actionGroup) && !Object.keys(QuickMenuOptions.altActions).includes(actionGroup)) {
+    if(!Object.keys(QuickMenuOptions.skills).includes(actionGroup) && !Object.keys(QuickMenuOptions.altActions).includes(actionGroup) && !Object.keys(QuickMenuOptions.moveDefend).includes(actionGroup)) {
         return this.showDialogError("Error", "That isn't a valid action group");
     }
     let dialogName = actionGroup.replace(" ", "_");
@@ -322,14 +397,17 @@ export class Rubicon extends Application {
     if (!action) {
       return this.showDialogError("Error", "No action");
     }
+    if (action.allowItem === 9 && token.actor.type !== "npc2") {
+      return this.showDialogError("Error", "Only usable on NPC tokens");
+    }
     let dialogName = entry.replace(" ", "_");
     // find all the items that can be used, put them into an Array
     let items = [];
     let actorItems = this._sortItems(Array.from(token.actor.items));
-    console.log(actorItems);
+    //console.log(actorItems);
     actorItems.forEach( (item) => {
       // does the entry allow the item?
-      if (action.allowItem === 4) {
+      if (action.allowItem === 4 || action.allowItem === 9) {
         if (item?.type === "spell") {
           items.push(item);
         }
@@ -383,6 +461,10 @@ export class Rubicon extends Application {
       let propertyString = "";
       let comment = "";
       if (item.type == "spell") {
+        // if this is unidentified add that to the name
+        if (item.actor.type == "npc2" && item.system?.identified !== true) {
+          name = `${name} <span style="color: red; font-weight: normal;">(unidentified)</span>`;
+        }
         // get the spell school
         let schoolString = SFRPG.spellSchools[item.system.school] ? game.i18n.localize(SFRPG.spellSchools[item.system.school]) : "Unknown";
         name = `<span class="rubicon-spell-school-box">${schoolString}</span> <span class="rubicon-spell-level-box">Lv ${item.system.level}</span> ${name}`
@@ -472,8 +554,15 @@ export class Rubicon extends Application {
             item.reload(); // reload the weapon
           } else if (action.allowItem === 6) {
             item.update({"system.equipped": true});
+            this.postEquipChatMessage(token, token.actor, item, true);
           } else if (action.allowItem === 7) {
             item.update({"system.equipped": false});
+            this.postEquipChatMessage(token, token.actor, item, false);
+          } else if (action.allowItem == 9) {
+            let newStatus = item.system?.identified === true ? false : true;
+            let statusString = newStatus ? 'identified' : 'unidentified';
+            item.update({"system.identified": newStatus});
+            this.showDialogError("Identification status changed", `${item.name} of ${token.actor.name} is now ${statusString}.`);
           } else {
             this.showSpecificItemChatDialog(token, entry, item);
           }
@@ -487,6 +576,47 @@ export class Rubicon extends Application {
         content: `<b>${token.actor.name}</b><br/>Select an item to perform ${action.name} with.`,
         buttons: buttons
     }, {id: `rubiconQuickActionDialog_${dialogName}`, options: {height: 600}}).render(true); // height is max height to expand to
+  }
+  
+  async postEquipChatMessage(token, actor, item, isEquipped) {
+    let itemChatCard = await item.getChatData();
+    let templateArguments = {
+      actor: actor,
+      action: isEquipped ? "Equips" : "Unequips",
+      item: item.parentItem,
+      usingString: isEquipped ? "from" : "returning it to",
+      img: item.img,
+      name: item.name,
+      description: "", //isEquipped ? item.system.description?.value : "",
+      properties: [item.parentItem?.name == "Cheek Pouches" ? "Swift action" : "Move action"],
+      /*
+      properties2: isEquipped && itemChatCard ? itemChatCard.properties : null,
+      */
+      buttons: []
+    };
+    if (actor.type != "character" && token) {
+      templateArguments["tokenId"] = token.id;
+      if (token.scene) {
+        templateArguments["sceneId"] = token.scene.id;
+      }
+    }
+    let content = await renderTemplate("modules/rubicon-sfrpg/templates/rubicon-custom-card.hbs", templateArguments);
+    let rollMode = game.settings.get("core", "rollMode");
+    let chatCardData = {
+      user: game.user.id,
+      type: CONST.CHAT_MESSAGE_STYLES.OTHER,
+      content: content,
+      flags: {
+        core: {
+          canPopout: !0
+        },
+        rollMode: rollMode
+      },
+      speaker: token ? ChatMessage.getSpeaker({token: token}) : ChatMessage.getSpeaker({actor: actor})
+    }
+    ChatMessage.create(chatCardData, {
+      displaySheet: !1
+    });
   }
   
   _getActualControlledToken() {
@@ -726,7 +856,7 @@ export class Rubicon extends Application {
         DiceSFRPG.d20Roll( {
           rollContext: context,
           parts: parts,
-          title: `${actor.name} - ${name}${itemStrSuffix} - Attack Roll`,
+          title: `Attack Roll - ${name}${itemStrSuffix}`,
           speaker: token ? ChatMessage.getSpeaker({token: token}) : ChatMessage.getSpeaker({actor: actor}),
           rollOptions: {
             actionTarget: target ? target : item ? item.system.actionTarget : "",
@@ -761,6 +891,33 @@ export class Rubicon extends Application {
       } else {
         ui.notifications.error("Unknown action")
       }
+    }
+  }
+  
+  
+  async _onHudActionClick(evt) {
+    let token = this._getActualControlledToken();
+    if (!token) { ui.notifications.error("No token selected"); return; }
+    let action = evt.currentTarget.dataset.action;
+    //console.log(`Action ${action} from hud action click`);
+    if (action == "attack") {
+      this.showDialogQuickBasicAttack(token);
+    } else if (action == "altAttack") {
+      this.showDialogQuickAltAttack(token);
+    } else if (action == "defend") {
+      this.showDialogQuickMoveDefend(token);
+    } else if (action == "reload") {
+      this.showDialogQuickEquipReload(token);
+    } else if (action == "consumable") {
+      this.showDialogQuickConsumable(token);
+    } else if (action == "skillAction") {
+      this.showDialogQuickAction(token);
+    } else if (action == "skillCheck") {
+      this.showDialogQuickSkillCheck(token?.actor);
+    } else if (action == "cast") {
+      this.showDialogQuickSpell(token);
+    } else {
+      ui.notifications.error("Invalid action"); return;
     }
   }
   
@@ -871,7 +1028,11 @@ export class Rubicon extends Application {
     }
     
     // health. everyone should have this.
-    document.getElementById("rubicon-hud-health-value").textContent = `${attributes.hp.value} / ${attributes.hp.max}`
+    let tempHealthValue = "";
+    if(attributes.hp.temp !== undefined && attributes.hp.temp !== null && attributes.hp.temp > 0) {
+      tempHealthValue = ` (+${attributes.hp.temp})`
+    }
+    document.getElementById("rubicon-hud-health-value").textContent = `${attributes.hp.value} / ${attributes.hp.max}${tempHealthValue}`
     if (attributes.hp.max < 1) {
       document.getElementById("rubicon-hud-health-background").style.width = "0%";
     } else {
@@ -930,8 +1091,10 @@ export class Rubicon extends Application {
     }
     if (hasConfiguredSpells) {
       document.getElementsByClassName("rubicon-spell-hud")[0].style.display = "flex";
+      document.getElementById("rubicon-hud-action-spell-cast-button").style.display = "inline-block";
     } else {
       document.getElementsByClassName("rubicon-spell-hud")[0].style.display = "none";
+      document.getElementById("rubicon-hud-action-spell-cast-button").style.display = "none";
     }
     // delete all the statuses and equipped items
     let statuses = document.getElementsByClassName("rubicon-hud-statuses")[0];

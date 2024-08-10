@@ -1,12 +1,17 @@
 <div class="sfrpg chat-card rubicon-custom-card" data-actor-id="{{actor.id}}" {{#if item}}data-item-id="{{item._id}}"{{/if}} {{#if tokenId}}data-token-id="{{tokenId}}"{{/if}} {{#if sceneId}}data-token-id="{{sceneId}}"{{/if}}>
     <header class="card-header">
 		<div class="flexrow">
+			{{#if img}}
 			<img src="{{img}}" title="{{name}}" width="36" height="36"/>
+			{{/if}}
 			<div class="flexcolumn">
+				{{#if action}}
+				<h3 class="action-name noborder">{{action}}</h3>
+				{{/if}}
 				<h3 class="item-name {{#if item}}rubicon-item-name-hack-extra{{/if}} noborder">{{name}}</h3>
 				{{#if item}}
 				<div class="flexrow rubicon-card-using">
-					<span id="rubicon-card-using-using">using </span>
+					<span id="rubicon-card-using-using">{{#if usingString}}{{usingString}}{{else}}using{{/if}} </span>
 					<img src="{{item.img}}" title="{{item.name}}" width="16" height="16"/>
 					<span> {{item.name}}</span>
 				</div>
@@ -41,5 +46,8 @@
         <span>{{this}}</span>
         {{log this}}
         {{/each}}
+		{{#each properties2}}
+		<span data-tooltip="{{this.tooltip}}">{{#if this.title}}<strong>{{this.title}}:</strong> {{/if}}{{this.name}}</span>
+		{{/each}}
     </footer>
 </div>

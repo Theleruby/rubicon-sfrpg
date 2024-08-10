@@ -1,10 +1,12 @@
 /*===================================*/
 /* hacks */
 /*===================================*/
+/* fix broken scroll bar colour */
 * {
 	scrollbar-width: thin;
 	scrollbar-color: #d8d8d0 #111;
 }
+/* fix player box not being wide enough to fit player names */
 #players {
 	width: 307px !important;
 }
@@ -14,11 +16,16 @@
 #ui-top.offset {
     margin-left: -190px !important;
 }
+/* fix chat card text not being selectable if there were bullet points or a table */
 .sfrpg.chat-card .card-content > * > *, .sfrpg.chat-card .card-content > * > * > *, .sfrpg.chat-card .card-content > * > * > * > * {
     -webkit-user-select: text;
     -moz-user-select: text;
     -ms-user-select: text;
     user-select: text;
+}
+/* fix character names not fitting in the chat message header */
+.chat-message .message-header .message-sender {
+    white-space: normal !important;
 }
 /*===================================*/
 
@@ -97,7 +104,7 @@ table.rubicon-bonuses-table td:first-child {
 .rubicon-hud, .rubicon-spell-hud {
 	margin-left: 2px;
 	height: 173px;
-    margin-bottom: 4px;
+    margin-bottom: 2px;
     background: url(/ui/denim075.png) repeat;
     padding: 6px;
 	border: 1px solid black;
@@ -105,9 +112,9 @@ table.rubicon-bonuses-table td:first-child {
 }
 
 .rubicon-spell-hud {
-	width: 90px;
+	width: 79px;
 	position: absolute;
-	left: 611px;
+	left: 610px;
 }
 
 .rubicon-spell-hud-row {
@@ -427,11 +434,10 @@ span.rubicon-item-capacity-box {
     font-weight: normal;
 }
 
-/*
 div.rubicon-hud-action-bar {
-	height: 24px;
-	width: 700px;
-	margin-bottom: 2px;
+	height: 45px;
+	width: 701px;
+	/*margin-bottom: 2px;*/
 	margin-left: 2px;
 }
 
@@ -441,26 +447,65 @@ div.rubicon-hud-action-button {
     background: url(/ui/denim075.png) repeat;
     box-shadow: 0 0 5px var(--color-shadow-dark) inset;
     cursor: pointer;
-	margin-right: 1px;
-    height: 24px;
+    margin-right: 2px;
+    height: 43px;
     width: fit-content;
-	display: inline-block;
+    display: inline-block;
+    pointer-events: all;
+    position: relative;
+}
+
+div.rubicon-hud-action-button:hover {
+    border: 1px solid var(--color-border-highlight-alt);
+}
+
+.rubicon-hud-action-button > span.macro-key {
+    position: absolute;
+    background: black;
+    left: 18px;
+    width: 17px;
+    text-align: center;
+    top: 0px;
+    color: var(--color-text-light-highlight);
+    font-weight: bold;
+    pointer-events: none;
+    padding: 0 2px;
+    z-index: 1;
+    font-size: 0.8em;
 }
 
 div.rubicon-hud-action-button > img {
-    height: 16px;
-    width: 16px;
-    margin-left: 2px;
-    margin-top: 3px;
+    height: 41px;
+    width: 35.8px;
+    margin-left: 0px;
+    margin-top: 0px;
     float: left;
 }
 
-div.rubicon-hud-action-button > span {
+div.rubicon-hud-action-button > span.rubicon-hud-action-label {
     color: white;
-    margin: 4px;
+    margin: 1px 4px;
+    font-size: 0.85em;
+    float: right;
+    text-align: center;
+    text-transform: uppercase;
+    /* top: 4px; */
     position: relative;
-    top: 2px;
-    font-size: 0.9em;
+    top: 4px;
+}
+
+.rubicon-hud-action-button[data-action=cast] {
+    /*width: 90px;*/
+    margin-right: 0px;
+}
+
+.rubicon-hud-action-button[data-action=skillCheck] {
+    padding-right: 1px;
+}
+
+/*
+.rubicon-hud-action-button[data-action=cast] > span.rubicon-hud-action-label {
+    width: 48px;
 }
 */
 
@@ -592,4 +637,9 @@ span.rubicon-weapon-damage-box {
 
 .rubicon-item-description {
 	display: block;
+}
+
+/* temporarily hide until I can get it working */
+.rubicon-hud-action-button > span.macro-key {
+	display: none;
 }

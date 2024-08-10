@@ -190,7 +190,7 @@ RubiconActions.specialAttacks = {
     "itemSpecialTarget": undefined,
     "requireTraining": false,
     "description": "<p>As a full action, you can move at up to double your speed and then make a melee attack at the end of the movement. You can draw a weapon during a charge attack if your base attack bonus is at least +1.</p><p>Charging carries tight restrictions on how you can move. You must move at least 10 feet (2 squares), and all movement must be directly toward the designated opponent, though diagonal movement is allowed. You must have a clear path toward the opponent, and you must move to the space closest to your starting square from which you can attack the opponent. If this space is occupied or blocked, you can’t charge. If any line from your starting space to the ending space passes through a square that blocks movement, slows movement (such as difficult terrain), or contains a creature (even an ally), you can’t charge. You can still move through helpless creatures during a charge. If you don’t have line of sight (see page 271) to the opponent at the start of your turn, you can’t charge that opponent.</p><p><strong>Attacking on a Charge:</strong> After moving, you can make a single melee attack. You take a –2 penalty to the attack roll and a –2 penalty to your AC until the start of your next turn. You can’t move any farther after the attack. Some classes, including solarian and soldier, grant abilities that modify attacks made on charges.</p>",
-    "properties": ["Full action", "Special attack", "Melee"],
+    "properties": ["Full action", "Full turn attack", "Melee"],
     "hasItemButtons": [
       { name: "Charge", action: "rollAttack", value: "", target: "", content: "Attack ", special: "" },
       { name: "Charge", action: "rollDamage", value: "", target: "", content: "Damage", special: "" }
@@ -209,7 +209,7 @@ RubiconActions.specialAttacks = {
     "itemSpecialTarget": undefined,
     "requireTraining": false,
     "description": "<p>As a full action, you can deliver a special attack called a coup de grace to an adjacent helpless opponent. You automatically hit and score a critical hit. If the target survives the damage, they must succeed at a Fortitude saving throw (DC = 10 + your level or CR) or die. However, if the target is immune to critical hits, the coup de grace does not deal critical damage or effects, nor does it force the target to succeed at a saving throw or die.</p>",
-    "properties": ["Full action", "Special attack", "Melee"],
+    "properties": ["Full action", "Full turn attack", "Melee"],
     "hasItemButtons": [
       { name: "Coup De Grace", action: "rollAttack", value: "", target: "", content: "Attack (to drain ammo, if needed)", special: "" },
       { name: "Coup De Grace", action: "rollDamage", value: "", target: "", content: "Damage", special: "" },
@@ -229,7 +229,7 @@ RubiconActions.specialAttacks = {
     "itemSpecialTarget": undefined,
     "requireTraining": false,
     "description": "<p>You can spend a full action to make two attacks, each with a –4 penalty to the attack rolls. These attacks can be made with the same weapon or different weapons, though certain weapons have a firing speed so slow that you can’t shoot them more than once in a round, even with a full attack. These weapons have the unwieldy special property (see page 182).</p><p>Certain weapons have special individualized full attacks. For instance, some weapons have a fully automatic attack mode. Sometimes special full attacks, such as the soldier’s onslaught class feature, require specialized training in order to gain their benefits.</p>",
-    "properties": ["Full action", "Special attack"],
+    "properties": ["Full action", "Full turn attack"],
     "hasItemButtons": [
     ],
     "hasNoItemButtons": [
@@ -697,7 +697,7 @@ RubiconActions.basic = {
   /*==================================*/
   "_basicAttack_": {
     "img": "icons/skills/melee/hand-grip-sword-strike-orange.webp",
-    "name": "Attack",
+    "name": "Basic Attack",
     "allowItem": 3, // required, display roll card
     "actionType": "",
     "shortDescription": "Perform a basic attack",
@@ -780,9 +780,26 @@ RubiconActions.basic = {
     "hasNoItemButtons": [
     ]
   },
+  "_identifySpell_": {
+    "img": "modules/rubicon-sfrpg/icons/unknown_spell.webp",
+    "name": "Identify Spell",
+    "allowItem": 9, // required, identify spell
+    "actionType": "",
+    "shortDescription": "Identify or unidentify a spell",
+    "buttonComment": "",
+    "itemActionTypes": [],
+    "itemSpecialTarget": undefined,
+    "requireTraining": false,
+    "description": "<p>Toggle identification status of a spell.</p>",
+    "properties": ["_", "_"],
+    "hasItemButtons": [
+    ],
+    "hasNoItemButtons": [
+    ]
+  },
   "_consumable_": {
     "img": "icons/consumables/potions/potion-vial-corked-purple.webp",
-    "name": "Use Consumable",
+    "name": "Use Item",
     "allowItem": 8, // required, use consumable
     "actionType": "",
     "shortDescription": "Use a consumable item",

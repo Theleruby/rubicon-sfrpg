@@ -5,31 +5,9 @@
 			<span>Overburdened</span>
 		</div>
 	</div>
-	<!--
-	<div class="rubicon-hud-action-bar">
-		<div class="rubicon-hud-action-button" data-action="attack">
-			<img src="icons/magic/nature/tree-animated-strike.webp"/><span>Attack</span>
-		</div>
-		<div class="rubicon-hud-action-button" data-action="altAttack">
-			<img src="icons/magic/nature/tree-animated-strike.webp"/><span>Alt Attack</span>
-		</div>
-		<div class="rubicon-hud-action-button" data-action="reload">
-			<img src="icons/magic/nature/tree-animated-strike.webp"/><span>Reload</span>
-		</div>
-		<div class="rubicon-hud-action-button" data-action="cast">
-			<img src="icons/magic/nature/tree-animated-strike.webp"/><span>Cast Spell</span>
-		</div>
-		<div class="rubicon-hud-action-button" data-action="skillAction">
-			<img src="icons/magic/nature/tree-animated-strike.webp"/><span>Skill Action</span>
-		</div>
-		<div class="rubicon-hud-action-button" data-action="skillCheck">
-			<img src="icons/magic/nature/tree-animated-strike.webp"/><span>Skill Check</span>
-		</div>
-	</div>
-	-->
 	<div class="rubicon-spell-hud rubicon-hud-column">
 		<div class="rubicon-spell-hud-row rubicon-spell-hud-title">
-			<span class="rubicon-hud-heading"><b>Spells Left</b></span>
+			<span class="rubicon-hud-heading"><b>Spells</b></span>
 		</div>
 		<div class="rubicon-spell-hud-row">
 			<span class="rubicon-hud-heading">Lv 1</span>
@@ -173,6 +151,40 @@
 				</div>
 				-->
 			</div>
+		</div>
+	</div>
+	<div class="rubicon-hud-action-bar rubicon-hud-row">
+		<div class="rubicon-hud-action-button" data-action="attack">
+			<span class="macro-key">S1</span>
+			<img src="icons/skills/melee/hand-grip-sword-strike-orange.webp"/><span class="rubicon-hud-action-label">Basic<br/>Attack</span>
+		</div>
+		<div class="rubicon-hud-action-button" data-action="altAttack">
+			<span class="macro-key">S2</span>
+			<img src="icons/skills/melee/maneuver-sword-katana-yellow.webp"/><span class="rubicon-hud-action-label">Special<br/>Attack</span>
+		</div>
+		<div class="rubicon-hud-action-button" data-action="defend">
+			<span class="macro-key">S3</span>
+			<img src="icons/magic/defensive/shield-barrier-deflect-teal.webp"/><span class="rubicon-hud-action-label">Move/<br/>Defend</span>
+		</div>
+		<div class="rubicon-hud-action-button" data-action="reload">
+			<span class="macro-key">S4</span>
+			<img src="modules/rubicon-sfrpg/icons/quick-menu/reload.jpg"/><span class="rubicon-hud-action-label">Equip/<br/>Reload</span>
+		</div>
+		<div class="rubicon-hud-action-button" data-action="consumable">
+			<span class="macro-key">S5</span>
+			<img src="icons/consumables/potions/potion-vial-corked-purple.webp"/><span class="rubicon-hud-action-label">Use<br/>Item</span>
+		</div>
+		<div class="rubicon-hud-action-button" data-action="skillAction">
+			<span class="macro-key">S6</span>
+			<img src="icons/magic/movement/chevrons-down-yellow.webp"/><span class="rubicon-hud-action-label">Skill<br/>Action</span>
+		</div>
+		<div class="rubicon-hud-action-button" data-action="skillCheck">
+			<span class="macro-key">S7</span>
+			<img src="icons/commodities/biological/organ-brain-pink-purple.webp"/><span class="rubicon-hud-action-label">Skill<br/>Check</span>
+		</div>
+		<div id="rubicon-hud-action-spell-cast-button" class="rubicon-hud-action-button" data-action="cast">
+			<span class="macro-key">S8</span>
+			<img src="icons/magic/symbols/runes-star-pentagon-orange-purple.webp"/><span class="rubicon-hud-action-label">Cast<br/>Spell</span>
 		</div>
 	</div>
 </div>

@@ -43,6 +43,65 @@ Hooks.on("updateCombat", function() {
   }
 });
 
+// Before creating a chat message for a spell, check to see if the spell is identified. If not, we need to hide the chat card and also post a replacement.
+Hooks.on('preCreateChatMessage', async function(doc, _data, _options) {
+  if (!game.user?.isGM) {
+    return;
+  }
+  console.log(doc);
+  const whisper = doc.whisper || doc.data?.whisper;
+  if (whisper && whisper.length > 0) {
+    return;
+  }
+  if (doc.flags?.sfrpg?.item) {
+    // get the item and find out if it's a spell being cast by an NPC.
+    let item = await fromUuid(doc.flags.sfrpg.item);
+    console.log(item);
+    if (item.type == "spell" && item.actor.type == "npc2") {
+      // TODO find out if we've identified this spell yet
+      let identified = false;
+      if (item.system?.identified !== true) {
+        // first we have to hide the spell card so only the GM can see it
+        doc.applyRollMode(CONST.DICE_ROLL_MODES.PRIVATE);
+        // now, find out the difficulty of the DC to identify this spell
+        let level = item.system.level ?? 0;
+        let difficulty = 10 + (5*level);
+        // now we have to create a whole new chat card with an identify box, and post it.
+        let templateArguments = {
+          actor: item.actor,
+          img: "modules/rubicon-sfrpg/icons/unknown_spell.webp",
+          name: "Unidentified Spell",
+          description: "<p>If you can clearly observe this spell being cast, and you have Mysticism as a trained skill, you can use it to identify the spell. The DC of this check is equal to 10 + 5 × the level of the spell being cast. This does not require an action.</p><p>You can’t take 10 or 20 on a Mysticism check to identify a spell.</p>",
+          properties: [],
+          buttons: [
+            {name: `Identify a Spell Being Cast`, action: "rollSkill", value: "mys", target: "", content: `Roll Mysticism Check`, special: ""},
+            {name: `Fortitude Save`, action: "rollSave", value: "fort", target: "", content: `Roll Fortitude Save`, special: ""},
+            {name: `Reflex Save`, action: "rollSave", value: "reflex", target: "", content: `Roll Reflex Save`, special: ""},
+            {name: `Will Save`, action: "rollSave", value: "will", target: "", content: `Roll Will Save`, special: ""},
+          ]
+        };
+        let content = await renderTemplate("modules/rubicon-sfrpg/templates/rubicon-custom-card.hbs", templateArguments);
+        let rollMode = game.settings.get("core", "rollMode");
+        let newChatCardData = {
+          user: doc.user.id,
+          type: CONST.CHAT_MESSAGE_STYLES.OTHER,
+          content: content,
+          flags: {
+            core: {
+              canPopout: !0
+            },
+            rollMode: rollMode
+          },
+          speaker: doc.speaker
+        }
+        ChatMessage.create(newChatCardData, {
+          displaySheet: !1
+        });
+      }
+    }
+  }
+});
+
 // Disable all timed effects directly linked to feats that are still active when combat ends
 Hooks.on("deleteCombat", function(combat) {
     console.log("Rubicon Hooks | Cleaning up a combat session")

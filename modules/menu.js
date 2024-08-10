@@ -8,16 +8,8 @@ QuickMenuOptions.full = {
     "requireTraining": false,
     "type": 1
   },
-  "Movement": {
-    "name": "Movement",
-    "img": "icons/magic/movement/trail-streak-impact-blue.webp",
-    "shortDescription": "Move, crawl, guarded step, run, withdraw",
-    "properties": [],
-    "requireTraining": false,
-    "type": 0
-  },
-  "Special attack": {
-    "name": "Special attack",
+  "Full turn attack": {
+    "name": "Full action",
     "img": "icons/magic/death/weapon-sword-skull-purple.webp",
     "shortDescription": "Charge, coup de grace, full attack",
     "properties": [],
@@ -40,6 +32,14 @@ QuickMenuOptions.full = {
     "requireTraining": false,
     "type": 0
   },
+  "Movement": {
+    "name": "Movement",
+    "img": "icons/magic/movement/trail-streak-impact-blue.webp",
+    "shortDescription": "Move, crawl, guarded step, run, withdraw",
+    "properties": [],
+    "requireTraining": false,
+    "type": 0
+  },
   "Defensive action": {
     "name": "Defensive action",
     "img": "icons/magic/defensive/shield-barrier-deflect-teal.webp",
@@ -48,10 +48,34 @@ QuickMenuOptions.full = {
     "requireTraining": false,
     "type": 0
   },
-  "_basicSpell_": {
-    "name": "Cast a spell",
-    "img": "icons/magic/symbols/runes-star-pentagon-orange-purple.webp",
-    "shortDescription": "Standard action",
+  "_equip_": {
+    "name": "Equip a weapon or shield",
+    "img": "modules/rubicon-sfrpg/icons/quick-menu/equip.png",
+    "shortDescription": "Move action",
+    "properties": [],
+    "requireTraining": false,
+    "type": 1
+  },
+  "_unequip_": {
+    "name": "Unequip a weapon or shield",
+    "img": "modules/rubicon-sfrpg/icons/quick-menu/unequip.png",
+    "shortDescription": "Move action",
+    "properties": [],
+    "requireTraining": false,
+    "type": 1
+  },
+  "_reload_": {
+    "name": "Reload",
+    "img": "modules/rubicon-sfrpg/icons/quick-menu/reload.jpg",
+    "shortDescription": "Move action",
+    "properties": [],
+    "requireTraining": false,
+    "type": 1
+  },
+  "_consumable_": {
+    "name": "Use a consumable item from your bag",
+    "img": "icons/consumables/potions/potion-vial-corked-purple.webp",
+    "shortDescription": "Standard or Full action",
     "properties": [],
     "requireTraining": false,
     "type": 1
@@ -72,50 +96,18 @@ QuickMenuOptions.full = {
     "requireTraining": false,
     "type": 3
   },
-  "_consumable_": {
-    "name": "Use a consumable item from your bag",
-    "img": "icons/consumables/potions/potion-vial-corked-purple.webp",
-    "shortDescription": "Standard or Full action",
-    "properties": [],
-    "requireTraining": false,
-    "type": 1
-  },
-  "_reload_": {
-    "name": "Reload",
-    "img": "modules/rubicon-sfrpg/icons/quick-menu/reload.jpg",
-    "shortDescription": "Move action",
-    "properties": [],
-    "requireTraining": false,
-    "type": 1
-  },
-  "_equip_": {
-    "name": "Equip a weapon or shield",
-    "img": "modules/rubicon-sfrpg/icons/quick-menu/equip.png",
-    "shortDescription": "Move action",
-    "properties": [],
-    "requireTraining": false,
-    "type": 1
-  },
-  "_unequip_": {
-    "name": "Unequip a weapon or shield",
-    "img": "modules/rubicon-sfrpg/icons/quick-menu/unequip.png",
-    "shortDescription": "Move action",
+  "_basicSpell_": {
+    "name": "Cast a spell",
+    "img": "icons/magic/symbols/runes-star-pentagon-orange-purple.webp",
+    "shortDescription": "Standard action",
     "properties": [],
     "requireTraining": false,
     "type": 1
   }
 }
 QuickMenuOptions.altActions = {
-  "Movement": {
-    "name": "Movement",
-    "img": "icons/magic/movement/trail-streak-impact-blue.webp",
-    "shortDescription": "Move, crawl, run, withdraw",
-    "properties": [],
-    "requireTraining": false,
-    "type": 0
-  },
-  "Special attack": {
-    "name": "Special attacks",
+  "Full turn attack": {
+    "name": "Full actions",
     "img": "icons/magic/death/weapon-sword-skull-purple.webp",
     "shortDescription": "Charge, coup de grace, full attack",
     "properties": [],
@@ -134,6 +126,16 @@ QuickMenuOptions.altActions = {
     "name": "Combat maneuvers",
     "img": "icons/skills/melee/maneuver-greatsword-yellow.webp",
     "shortDescription": "Bull rush, dirty trick, disarm, graple, reposition, sunder, trip",
+    "properties": [],
+    "requireTraining": false,
+    "type": 0
+  }
+}
+QuickMenuOptions.moveDefend = {
+  "Movement": {
+    "name": "Movement",
+    "img": "icons/magic/movement/trail-streak-impact-blue.webp",
+    "shortDescription": "Move, crawl, run, withdraw",
     "properties": [],
     "requireTraining": false,
     "type": 0
@@ -164,6 +166,32 @@ QuickMenuOptions.equip = {
     "requireTraining": false,
     "type": 1
   },
+}
+QuickMenuOptions.equipReload = {
+  "_equip_": {
+    "name": "Equip",
+    "img": "modules/rubicon-sfrpg/icons/quick-menu/equip.png",
+    "shortDescription": "Equip a weapon or shield",
+    "properties": ["Move action"],
+    "requireTraining": false,
+    "type": 1
+  },
+  "_unequip_": {
+    "name": "Unequip",
+    "img": "modules/rubicon-sfrpg/icons/quick-menu/unequip.png",
+    "shortDescription": "Put a weapon or shield away",
+    "properties": ["Move action"],
+    "requireTraining": false,
+    "type": 1
+  },
+  "_reload_": {
+    "name": "Reload",
+    "img": "modules/rubicon-sfrpg/icons/quick-menu/reload.jpg",
+    "shortDescription": "Reload an equipped weapon",
+    "properties": ["Move action"],
+    "requireTraining": false,
+    "type": 1
+  }
 }
 QuickMenuOptions.skills = {
   "Acrobatics": {
