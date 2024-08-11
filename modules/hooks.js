@@ -134,7 +134,9 @@ Hooks.on("deleteCombat", function(combat) {
         n.system.activeDuration.activationEnd = -1
         i.system.timedEffects.get(effect.uuid)?.update(this)
         game.sfrpg.timedEffects.get(effect.uuid)?.update(this)
-        i.updateEmbeddedDocuments("Item", [n])
+        if (game.user?.isGM) {
+          i.updateEmbeddedDocuments("Item", [n])
+        }
       }
     });
 });
