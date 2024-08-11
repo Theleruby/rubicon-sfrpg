@@ -13,7 +13,7 @@ RubiconActions.combatManeuvers = {
     "itemActionTypes": [],
     "itemSpecialTarget": "kac8",
     "requireTraining": false,
-    "description": "<p>As a standard action, you can attempt to knock back a target.</p><p>Choose an opponent within your reach and then make a melee attack roll against KAC + 8. If successful, you knock the target back 5 feet, plus 5 additional feet for every 5 by which the result of your attack roll exceeds the target's KAC + 8. If an obstacle is in the way, the target stops at the obstacle instead.</p>",
+    "description": "<p>As a standard action, you can attempt to knock back a target.</p><p>Choose an opponent within your reach and then make a melee attack roll against KAC + 4. If successful, you knock the target back 5 feet, plus 5 additional feet for every 5 by which the result of your attack roll exceeds the target's KAC + 4. If an obstacle is in the way, the target stops at the obstacle instead.</p>",
     "properties": ["Standard action", "Combat maneuver", "Melee"],
     "hasItemButtons": [
       //{ name: "Bull Rush", action: "rollAttack", value: "", target: "kac8", content: "Attack", special: "" },
@@ -32,7 +32,7 @@ RubiconActions.combatManeuvers = {
     "itemActionTypes": [],
     "itemSpecialTarget": "kac8",
     "requireTraining": false,
-    "description": "<p>As a standard action, you can attempt an unorthodox attack to briefly hinder an opponent. This could be throwing sand in the target's eyes, jamming a rock into its actuators, or any other improvised action designed to put your opponent at a disadvantage.</p><p>Choose an opponent within your reach and then make a melee attack roll against KAC + 8. If successful, your target becomes blinded, deafened, entangled, off-target, shaken, or sickened (your choice) for 1 round, plus 1 additional round for every 5 by which the result of your attack roll exceeds the target's KAC + 8. The target can remove the condition as a move action.</p><p>A dirty trick is normally a melee attack, but a GM can allow certain actions to count as dirty tricks at range, in which case you take a –2 penalty to your attack roll for every 5 feet between you and the target.</p>",
+    "description": "<p>As a standard action, you can attempt an unorthodox attack to briefly hinder an opponent. This could be throwing sand in the target's eyes, jamming a rock into its actuators, or any other improvised action designed to put your opponent at a disadvantage.</p><p>Choose an opponent within your reach and then make a melee attack roll against KAC + 4. If successful, your target becomes blinded, deafened, entangled, off-target, shaken, or sickened (your choice) for 1 round, plus 1 additional round for every 5 by which the result of your attack roll exceeds the target's KAC + 4. The target can remove the condition as a move action.</p><p>A dirty trick is normally a melee attack, but a GM can allow certain actions to count as dirty tricks at range, in which case you take a –2 penalty to your attack roll for every 5 feet between you and the target.</p>",
     "properties": ["Standard action", "Combat maneuver", "Melee"],
     "hasItemButtons": [
       //{ name: "Dirty Trick", action: "rollAttack", value: "", target: "kac8", content: "Attack", special: "" },
@@ -52,7 +52,7 @@ RubiconActions.combatManeuvers = {
     "itemActionTypes": ["mwak"],
     "itemSpecialTarget": "kac8",
     "requireTraining": false,
-    "description": "<p>As a standard action, you can attempt to knock an item a target is holding out of the target's hands and onto the ground.</p><p>Choose an opponent within your reach and then make a melee attack roll against KAC + 8. If successful, the target lets go of the item. If you have a hand free, you can automatically grab the item with your hand before it falls.</p>",
+    "description": "<p>As a standard action, you can attempt to knock an item a target is holding out of the target's hands and onto the ground.</p><p>Choose an opponent within your reach and then make a melee attack roll against KAC + 4. If successful, the target lets go of the item. If you have a hand free, you can automatically grab the item with your hand before it falls.</p>",
     "properties": ["Standard action", "Combat maneuver", "Melee"],
     "hasItemButtons": [
       { name: "Disarm", action: "rollAttack", value: "", target: "kac8", content: "Attack", special: "" },
@@ -71,7 +71,7 @@ RubiconActions.combatManeuvers = {
     "itemActionTypes": [],
     "itemSpecialTarget": "kac8",
     "requireTraining": false,
-    "description": "<p>As a standard action, you can attempt to hold a target in place. You must have at least one hand free to perform a grapple combat maneuver.</p><p>Choose an opponent within your reach and then make a melee attack roll against KAC + 8. If successful, your target gains the grappled condition, meaning she can't move from her current space and takes further penalties until she either uses a standard action to attempt a grapple combat maneuver to grapple you (giving you the grappled condition) or uses the escape task of the Acrobatics skill to break free.</p><p>If the result of your attack roll equals or exceeds the target's KAC + 13, the target is instead pinned for the same duration, and she can't take any actions that involve moving her limbs other than to attempt to escape.</p><p>The grappled or pinned condition lasts until the end of your next turn, unless you renew it on your next turn with another grapple combat maneuver. The condition ends immediately if you move away.</p><p>As long as you have one target grappled or pinned, you cannot attempt to grapple another.</p><p>When you renew a grapple, you can remove one item from the target's body that can be easily accessed, including most weapons and equipment (but not worn armor). Doing so immediately ends the grapple.</p>",
+    "description": "<p>As a standard action, you can attempt to hold a target in place. You must have at least one hand free to perform a grapple combat maneuver.</p><p>Choose an opponent within your reach and then make a melee attack roll against KAC + 4. If successful, your target gains the grappled condition, meaning she can't move from her current space and takes further penalties until she either uses a standard action to attempt a grapple combat maneuver to grapple you (giving you the grappled condition) or uses the escape task of the Acrobatics skill to break free.</p><p>If the result of your attack roll equals or exceeds the target's KAC + 13, the target is instead pinned for the same duration, and she can't take any actions that involve moving her limbs other than to attempt to escape.</p><p>The grappled or pinned condition lasts until the end of your next turn, unless you renew it on your next turn with another grapple combat maneuver. The condition ends immediately if you move away.</p><p>As long as you have one target grappled or pinned, you cannot attempt to grapple another.</p><p>When you renew a grapple, you can remove one item from the target's body that can be easily accessed, including most weapons and equipment (but not worn armor). Doing so immediately ends the grapple.</p>",
     "properties": ["Standard action", "Combat maneuver", "Melee"],
     "hasItemButtons": [
     ],
@@ -89,7 +89,7 @@ RubiconActions.combatManeuvers = {
     "itemActionTypes": ["mwak"],
     "itemSpecialTarget": "kac8",
     "requireTraining": false,
-    "description": "<p>As a standard action, you can attempt to reposition a target.</p><p>Choose an opponent within your reach and then make a melee attack roll against KAC + 8. If successful, you can change the target's position to a different location still within your reach and within 5 feet of its original placement. You can move the target 5 additional feet for every 5 by which the result of your attack roll exceeds the target's KAC + 8, but all movement must remain within your reach. You cannot move the target past an obstacle.</p><p>You may instead choose to reposition a creature as a full action. If you do this, you can move a distance equal to the distance you repositioned your target (up to your move speed), dragging the target along with you.</p>",
+    "description": "<p>As a standard action, you can attempt to reposition a target.</p><p>Choose an opponent within your reach and then make a melee attack roll against KAC + 4. If successful, you can change the target's position to a different location still within your reach and within 5 feet of its original placement. You can move the target 5 additional feet for every 5 by which the result of your attack roll exceeds the target's KAC + 4, but all movement must remain within your reach. You cannot move the target past an obstacle.</p><p>You may instead choose to reposition a creature as a full action. If you do this, you can move a distance equal to the distance you repositioned your target (up to your move speed), dragging the target along with you.</p>",
     "properties": ["Standard or Full action", "Combat maneuver", "Melee"],
     "hasItemButtons": [
       { name: "Reposition", action: "rollAttack", value: "", target: "kac8", content: "Attack", special: "" },
@@ -107,7 +107,7 @@ RubiconActions.combatManeuvers = {
     "itemActionTypes": ["mwak"],
     "itemSpecialTarget": "kac8",
     "requireTraining": false,
-    "description": "<p>As a standard action, you can attempt to deal damage to an item held in a target's hand or accessible on its body.</p><p>Choose an opponent within your reach and then make a melee attack roll against KAC + 8. If successful, you deal damage using your chosen melee weapon as normal. The object must be something that could be drawn easily by the target as a move action. The damage is reduced by an amount equal to the object's hardness.</p><p>More details can be found on pages 247 and 409 of the Core Rulebook.</p>",
+    "description": "<p>As a standard action, you can attempt to deal damage to an item held in a target's hand or accessible on its body.</p><p>Choose an opponent within your reach and then make a melee attack roll against KAC + 4. If successful, you deal damage using your chosen melee weapon as normal. The object must be something that could be drawn easily by the target as a move action. The damage is reduced by an amount equal to the object's hardness.</p><p>More details can be found on pages 247 and 409 of the Core Rulebook.</p>",
     "properties": ["Standard action", "Combat maneuver", "Melee"],
     "hasItemButtons": [
       { name: "Sunder", action: "rollAttack", value: "", target: "kac8", content: "Attack", special: "" },
@@ -126,7 +126,7 @@ RubiconActions.combatManeuvers = {
     "itemActionTypes": ["mwak"],
     "itemSpecialTarget": "kac8",
     "requireTraining": false,
-    "description": "<p>As a standard action, you can attempt to make a target trip over.</p><p>Choose an opponent within your reach and then make a melee attack roll against KAC + 8. If successful: A target on the ground is knocked prone. A target in the air descends 10 feet, falling prone if this causes it to fall to the ground. A target in zero gravity is knocked off-kilter.</p>",
+    "description": "<p>As a standard action, you can attempt to make a target trip over.</p><p>Choose an opponent within your reach and then make a melee attack roll against KAC + 4. If successful: A target on the ground is knocked prone. A target in the air descends 10 feet, falling prone if this causes it to fall to the ground. A target in zero gravity is knocked off-kilter.</p>",
     "properties": ["Standard action", "Combat maneuver", "Melee"],
     "hasItemButtons": [
       { name: "Trip", action: "rollAttack", value: "", target: "kac8", content: "Attack", special: "" },
