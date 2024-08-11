@@ -91,6 +91,7 @@ export class Rubicon extends Application {
     const myDialog = new Dialog({
       title: title,
       content: `${message}<br/>&nbsp;`,
+      default: "ok",
       buttons: {
         ok: { label: "OK", callback: ()=>{}, icon:''}
       }
@@ -182,7 +183,7 @@ export class Rubicon extends Application {
     }
     new Dialog({
       title: `Deal damage to ${token.name}`,
-      content: `<form><div class="form-group"><label>Damage amount:</label><input type='text' name='inputField'></input></div></form>`,
+      content: `<form autocomplete="off"><div class="form-group"><label>Damage amount:</label><input type='text' name='inputField' data-button="apply" autofocus></input></div></form>`,
       buttons: {
         apply: {
           icon: "<i class='fas fa-check'></i>",
