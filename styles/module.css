@@ -27,6 +27,10 @@
 .chat-message .message-header .message-sender {
     white-space: normal !important;
 }
+/* replace the movement control icon with a different one */
+li.scene-control[data-control="measure"] > i::before {
+    content: "\e4b2" !important;
+}
 /*===================================*/
 
 table.rubicon-bonuses-table td:first-child {
