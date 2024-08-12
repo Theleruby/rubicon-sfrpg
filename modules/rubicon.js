@@ -589,7 +589,7 @@ export class Rubicon extends Application {
       img: item.img,
       name: item.name,
       description: "", //isEquipped ? item.system.description?.value : "",
-      properties: [item.parentItem?.name == "Cheek Pouches" ? "Swift action" : "Move action"],
+      properties: [!isEquipped || item.parentItem?.name == "Cheek Pouches" ? "Swift action" : "Move action"],
       /*
       properties2: isEquipped && itemChatCard ? itemChatCard.properties : null,
       */
