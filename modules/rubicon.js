@@ -425,21 +425,21 @@ export class Rubicon extends Application {
           }
         }
       } else if (action.allowItem === 6 || action.allowItem === 7) {
-    if (["weapon", "shield"].includes(item?.type) && item?.name !== "Unarmed strike" && item?.name !== "Natural Weapons") {
-      if (action.allowItem === 6 && !item?.system?.equipped) {
-        if (item?.type === "weapon" && item?.system?.weaponType === "grenade") {
-          // only allow pushing the grenade if the capacity is greater than zero.
-          if (item.getCurrentCapacity() > 0) {
+        if (["weapon", "shield"].includes(item?.type) && item?.name !== "Unarmed strike" && item?.name !== "Natural Weapons") {
+          if (action.allowItem === 6 && item?.system?.equippable && !item?.system?.equipped) {
+            if (item?.type === "weapon" && item?.system?.weaponType === "grenade") {
+              // only allow pushing the grenade if the capacity is greater than zero.
+              if (item.getCurrentCapacity() > 0) {
+                items.push(item);
+              }
+            } else {
+              items.push(item);
+            }
+          } else if (action.allowItem === 7 && item?.system?.equipped) {
+            // unequip
             items.push(item);
           }
-        } else {
-          items.push(item);
         }
-      } else if (action.allowItem === 7 && item?.system?.equipped) {
-        // unequip
-        items.push(item);
-      }
-    }
       } else {
         if (item?.system?.equipped && item?.system?.actionType && action.itemActionTypes.includes(item?.system?.actionType)) {
           //console.log(`We can use ${item.name}`);
