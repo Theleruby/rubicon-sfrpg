@@ -10,6 +10,12 @@ Rubicon adds features such as:
 
 The highest priority of Rubicon is to streamline combat encounters, both for the GM and the players. New features will be added as and when they are needed to help achieve this goal.
 
+## Rubicon HUD
+
+Here's a screenshot of what the HUD looks like:
+
+![Screenshot](https://stuff.theleruby.com/media/rubicon-hud.png)
+
 ## Requirements
 To use this module you will require:
 - Foundry VTT version 12
