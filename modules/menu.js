@@ -27,7 +27,7 @@ QuickMenuOptions.full = {
   "Combat maneuver": {
     "name": "Combat maneuver",
     "img": "icons/skills/melee/maneuver-greatsword-yellow.webp",
-    "shortDescription": "Bull rush, dirty trick, disarm, graple, reposition, sunder, trip",
+    "shortDescription": "Bull rush, dirty trick, disarm, grapple, reposition, sunder, trip",
     "properties": [],
     "requireTraining": false,
     "type": 0
@@ -125,7 +125,7 @@ QuickMenuOptions.altActions = {
   "Combat maneuver": {
     "name": "Combat maneuvers",
     "img": "icons/skills/melee/maneuver-greatsword-yellow.webp",
-    "shortDescription": "Bull rush, dirty trick, disarm, graple, reposition, sunder, trip",
+    "shortDescription": "Bull rush, dirty trick, disarm, grapple, reposition, sunder, trip",
     "properties": [],
     "requireTraining": false,
     "type": 0
