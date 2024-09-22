@@ -1,4 +1,5 @@
 const SpellDescriptions = {
+  "Adhere":                 "Create a molecular bond between an object and a surface",
   "Conjure Grenade":        "Conjure and throw a piercing grenade",
   "Corrosive Haze":         "Convert nearby water vapour into a cloud of deadly acid",
   "Daze":                   "Short-circuit the mind of a humanoid creature so it can't perform actions",
