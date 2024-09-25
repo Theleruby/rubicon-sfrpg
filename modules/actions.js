@@ -673,7 +673,7 @@ RubiconActions.steSkill = {
   },
   "snipe": {
     "img": "icons/weapons/guns/rifle-brown.webp",
-    "name": "Sniping",
+    "name": "Stealthy Snipe",
     "allowItem": 1, // required
     "actionType": "Standard",
     "shortDescription": "Pop out of hiding to make a ranged attack",
