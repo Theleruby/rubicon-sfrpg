@@ -48,7 +48,6 @@ Hooks.on('preCreateChatMessage', async function(doc, _data, _options) {
   if (!game.user?.isGM) {
     return;
   }
-  console.log(doc);
   const whisper = doc.whisper || doc.data?.whisper;
   if (whisper && whisper.length > 0) {
     return;
