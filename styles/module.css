@@ -60,6 +60,10 @@ table.rubicon-bonuses-table td:first-child {
 	text-align: left;
 }
 
+#rubiconQuickActionDialog__basicAttack_, #rubiconQuickActionDialog__basicAttack_ .window-content {
+	width: 434px !important;
+}
+
 .rubicon-hud-outer-container {
     width: 610px;
 	flex-direction: column;
@@ -434,7 +438,7 @@ span.rubicon-spell-school-box {
 }
 
 span.rubicon-item-capacity-box {
-    padding-left: 6px;
+    padding-left: 2px;
     font-weight: normal;
 }
 
