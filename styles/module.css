@@ -521,10 +521,16 @@ div.rubicon-hud-action-button > span.rubicon-hud-action-label {
 .rubicon-hud-action-button[data-action=cast] {
     /*width: 90px;*/
     margin-right: 0px;
+    padding-right: 1px;
 }
 
 .rubicon-hud-action-button[data-action=skillCheck] {
     padding-right: 1px;
+}
+
+.rubicon-hud-action-button[data-action=quickRoll] > span.rubicon-hud-action-label {
+    padding-left: 1px;
+    padding-right: 2px;
 }
 
 /*
