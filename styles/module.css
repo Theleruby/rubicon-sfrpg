@@ -31,6 +31,12 @@
 li.scene-control[data-control="measure"] > i::before {
     content: "\e4b2" !important;
 }
+/* fix modifier cell heights */
+.sfrpg.sheet.item .inventory-list .item-detail {
+    line-height: 20px;
+    vertical-align: middle;
+    margin: auto;
+}
 /*===================================*/
 
 table.rubicon-bonuses-table td:first-child {
@@ -76,7 +82,7 @@ table.rubicon-bonuses-table td:first-child {
 	text-align: left;
 }
 
-#rubiconQuickActionDialog__basicAttack_, #rubiconQuickActionDialog__basicAttack_ .window-content {
+#rubiconQuickActionDialog__basicAttack_, #rubiconQuickActionDialog__basicAttack_ .window-content, #rubiconQuickActionDialog__equip_, #rubiconQuickActionDialog__equip_ .window-content, #rubiconQuickActionDialog__unequip_, #rubiconQuickActionDialog__unequip_ .window-content {
 	width: 434px !important;
 }
 
