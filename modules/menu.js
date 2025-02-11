@@ -251,4 +251,38 @@ QuickMenuOptions.skills = {
     "type": 0
   }
 };
+QuickMenuOptions.quickRoll = {
+  "_skillCheck_": {
+    "name": "Perform a skill check",
+    "img": "icons/commodities/biological/organ-brain-pink-purple.webp",
+    "shortDescription": "Lets you do a basic skill roll (e.g. Life Science, Perception)",
+    "properties": [],
+    "requireTraining": false,
+    "type": 3
+  },
+  "_statCheck_": {
+    "name": "Perform an ability check",
+    "img": "systems/sfrpg/icons/spells/alter_corpse.webp",
+    "shortDescription": "Lets you do a basic ability roll (e.g. Strength, Dexterity)",
+    "properties": [],
+    "requireTraining": false,
+    "type": 4
+  },
+  "_save_": {
+    "name": "Do a saving throw",
+    "img": "systems/sfrpg/icons/spells/spirit_bound_armor.webp",
+    "shortDescription": "Roll a fortitude, reflex or will save",
+    "properties": [],
+    "requireTraining": false,
+    "type": 5
+  },
+  "_rollableTable_": {
+    "name": "Roll against a preconfigured table",
+    "img": "systems/sfrpg/icons/spells/share_language.webp",
+    "shortDescription": "Required by some situations such as confusion",
+    "properties": [],
+    "requireTraining": false,
+    "type": 6
+  }
+}
 export default QuickMenuOptions;

@@ -132,6 +132,88 @@ export class Rubicon extends Application {
     }, {id: "rubiconQuickSkillCheckDialog"}).render(true);
   }
   
+  showDialogQuickAbilityCheck(actor) {
+    if (!actor) {
+        return this.showDialogError("Error", "No target");
+    }
+    let buttons = {};
+    let skillTargets = ["str", "dex", "con", "int", "wis", "cha"];
+    let index = 0;
+    for (const [a, key] of Object.entries(skillTargets)) {
+      let skill = actor.system.abilities[key];
+      let label = CONFIG.SFRPG.abilities[key];
+      if (skill.mod != 0) {
+        if (skill.mod > 0) {
+            label += ` <span style='color:green;font-weight:bold;float:right;'>+${skill.mod}</span>`;
+        } else if (skill.mod < 0) {
+            label += ` <span style='color:red;font-weight:bold;float:right;'>${skill.mod}</span>`;
+        }
+      }
+      label = label.replace(" ","&nbsp;");
+      buttons[key] = {
+        label: label,
+        callback: () => {actor.rollAbility(key);},
+        icon: ``
+      };
+    }
+    const myDialog = new Dialog({
+        title: "Quick Ability Check",
+        content: `<b>${actor.name}</b><br/>Select an ability to roll.`,
+        buttons: buttons
+    }, {id: "rubiconQuickAbilityCheckDialog"}).render(true);
+  }
+  
+  showDialogQuickSave(actor) {
+    if (!actor) {
+        return this.showDialogError("Error", "No target");
+    }
+    let buttons = {};
+    let skillTargets = ["fort", "reflex", "will"];
+    let index = 0;
+    for (const [a, key] of Object.entries(skillTargets)) {
+      let skill = actor.system.attributes[key];
+      let label = CONFIG.SFRPG.saves[key];
+      let skillMod = skill.value + skill.bonus;
+      if (skillMod != 0) {
+        if (skillMod > 0) {
+            label += ` <span style='color:green;font-weight:bold;float:right;'>+${skillMod}</span>`;
+        } else if (skillMod < 0) {
+            label += ` <span style='color:red;font-weight:bold;float:right;'>${skillMod}</span>`;
+        }
+      }
+      label = label.replace(" ","&nbsp;");
+      buttons[key] = {
+        label: label,
+        callback: () => {actor.rollSave(key);},
+        icon: ``
+      };
+    }
+    const myDialog = new Dialog({
+        title: "Quick Save",
+        content: `<b>${actor.name}</b><br/>Select a save to roll.`,
+        buttons: buttons
+    }, {id: "rubiconQuickAbilityCheckDialog"}).render(true);
+  }
+  
+  showDialogQuickRollableTable(actor) {
+    if (!actor) {
+        return this.showDialogError("Error", "No target");
+    }
+    let buttons = {};
+    for (const rollTable of game.tables) {
+      buttons[rollTable._id] = {
+        label: rollTable.name,
+        callback: () => {rollTable.draw();},
+        icon: `<img src="${rollTable.img}" />`,
+      };
+    }
+    const myDialog = new Dialog({
+        title: "Quick Rollable Table",
+        content: `<b>${actor.name}</b><br/>Select a table to roll against.`,
+        buttons: buttons
+    }, {id: "rubiconQuickActionDialog__rollableTable_"}).render(true);
+  }
+  
   showDialogQuickMenu(token) {
     this.showDialogQuick(token, QuickMenuOptions.full, "menu")
   }
@@ -175,6 +257,10 @@ export class Rubicon extends Application {
   
   showDialogQuickSpellIdentify(token) {
     this._showDialogQuickActionItem(token, "_identifySpell_");
+  }
+  
+  showDialogQuickRoll(token) {
+    this.showDialogQuick(token, QuickMenuOptions.quickRoll, "quickRoll");
   }
   
   dealDamageToToken(token) {
@@ -269,6 +355,12 @@ export class Rubicon extends Application {
             this.showDialogQuickAction(token);
           } else if (data.type === 3) {
             this.showDialogQuickSkillCheck(token?.actor);
+          } else if (data.type === 4) {
+            this.showDialogQuickAbilityCheck(token?.actor);
+          } else if (data.type === 5) {
+            this.showDialogQuickSave(token?.actor);
+          } else if (data.type === 6) {
+            this.showDialogQuickRollableTable(token?.actor);
           } else {
             return this.showDialogError("Error", "Bad data type");
           }
@@ -913,8 +1005,8 @@ export class Rubicon extends Application {
       this.showDialogQuickConsumable(token);
     } else if (action == "skillAction") {
       this.showDialogQuickAction(token);
-    } else if (action == "skillCheck") {
-      this.showDialogQuickSkillCheck(token?.actor);
+    } else if (action == "quickRoll") {
+      this.showDialogQuickRoll(token);
     } else if (action == "cast") {
       this.showDialogQuickSpell(token);
     } else {

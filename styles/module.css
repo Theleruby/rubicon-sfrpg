@@ -60,6 +60,22 @@ table.rubicon-bonuses-table td:first-child {
 	text-align: left;
 }
 
+#rubiconQuickAbilityCheckDialog, #rubiconQuickAbilityCheckDialog .window-content {
+	width: 240px !important;
+}
+
+#rubiconQuickAbilityCheckDialog .dialog-buttons {
+	margin-top: 10px;
+}
+
+#rubiconQuickAbilityCheckDialog .dialog-button {
+	text-wrap: nowrap;
+	min-width: 220px !important;
+	max-width: 220px !important;
+	margin: 0;
+	text-align: left;
+}
+
 #rubiconQuickActionDialog__basicAttack_, #rubiconQuickActionDialog__basicAttack_ .window-content {
 	width: 434px !important;
 }
