@@ -173,7 +173,7 @@ export class Rubicon extends Application {
     for (const [a, key] of Object.entries(skillTargets)) {
       let skill = actor.system.attributes[key];
       let label = CONFIG.SFRPG.saves[key];
-      let skillMod = skill.value + skill.bonus;
+      let skillMod = skill.bonus;
       if (skillMod != 0) {
         if (skillMod > 0) {
             label += ` <span style='color:green;font-weight:bold;float:right;'>+${skillMod}</span>`;
