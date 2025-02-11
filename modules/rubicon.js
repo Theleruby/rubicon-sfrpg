@@ -528,8 +528,12 @@ export class Rubicon extends Application {
               items.push(item);
             }
           } else if (action.allowItem === 7 && item?.system?.equipped) {
-            // unequip
-            items.push(item);
+            // is this in a container that doesn't allow unequip, if so, ignore.
+            const container = getItemContainer(actorItems, item);
+            if (!["Light weapon mount"].includes(container?.name)) {
+              // unequip
+              items.push(item);
+            }
           }
         }
       } else {
