@@ -1109,7 +1109,17 @@ export class Rubicon extends Application {
     // update the challenge rating or player level
     let details = this._actor.system.details;
     if (this._actor.type == "character") {
-      document.getElementById("rubicon-hud-character-level").textContent = `Level ${details.level.value}`;
+      // determine the class
+      let classes = [];
+      for(const [classname, classdata] of Object.entries(this._actor.system.classes)) {
+        if (classdata.levels > 0) {
+          classes.push(String(classname).charAt(0).toUpperCase() + String(classname).slice(1));
+        }
+      }
+      let classesString = classes.join("-")
+      document.getElementById("rubicon-hud-character-level").textContent = `Level ${details.level.value} ${classesString}`;
+    } else if (this._actor.type == "drone") {
+      document.getElementById("rubicon-hud-character-level").textContent = `Level ${details.level.value} Drone`;
     } else if (this._actor.type == "npc2") {
       let c = `CR ${details.cr}`;
       if (details.cr < 0.3) {
