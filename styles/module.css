@@ -431,8 +431,41 @@ div[id^='rubiconQuickActionDialog_groupSelection_'], div[id^='rubiconQuickAction
 }
 
 
-div[id^='rubiconQuickActionDialog__basicSpell_'], div[id^='rubiconQuickActionDialog__basicSpell_'] .window-content {
+div[id^='rubiconQuickActionDialog_TABBED__basicSpell_'], div[id^='rubiconQuickActionDialog_TABBED__basicSpell_'] .window-content {
 	width: 460px !important;
+}
+
+nav.tabs.rubicon-tabbed-dialog-tabs {
+    height: 27px;
+    line-height: 27px;
+    color: #fff;
+    background: linear-gradient(130deg, #0c2d4a 0, #235683 40%, #235683 60%, #1d7dd1 100%);
+    font-family: "Exo 2", sans-serif;
+}
+
+div[id^='rubiconQuickActionDialog_TABBED_'] > .window-content {
+    padding: 2px 2px 0px 2px;
+	min-height: 600px;
+}
+
+div[id^='rubiconQuickActionDialog_TABBED_'] .content {
+    padding: 8px 6px 6px 6px;
+}
+
+div[id^='rubiconQuickActionDialog_TABBED_'] .dialog-buttons {
+	display: none;
+}
+
+.rubicon-tabbed-dialog-header {
+	margin: 6px 6px 8px 6px;
+}
+
+.rubicon-tabbed-dialog-tabs > .item {
+    flex: 1;
+}
+
+.rubicon-tabbed-dialog-tabs > .active {
+    background: #c41e1e;
 }
 
 .rubicon-button-property-block {

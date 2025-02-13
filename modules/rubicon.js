@@ -503,6 +503,23 @@ export class Rubicon extends Application {
       return this.showDialogError("Error", "Only usable on NPC tokens");
     }
     let dialogName = entry.replace(" ", "_");
+    // determine what we're doing
+    let dialogString = `an item to perform ${action.name} with`;
+    if (action.allowItem === 1 || action.allowItem === 3) {
+      dialogString = `a weapon to perform ${action.name} with`;
+    } else if (action.allowItem === 4) {
+      dialogString = "a spell to cast";
+    } else if (action.allowItem === 5) {
+      dialogString = "a weapon to reload";
+    } else if (action.allowItem === 6) {
+      dialogString = "something to equip";
+    } else if (action.allowItem === 7) {
+      dialogString = "something to unequip";
+    } else if (action.allowItem === 8) {
+      dialogString = "an item to use";
+    } else if (action.allowItem === 9) {
+      dialogString = "a spell to (un)identify";
+    }
     // find all the items that can be used, put them into an Array
     let items = [];
     let actorItems = this._sortItems(Array.from(token.actor.items));
@@ -560,6 +577,7 @@ export class Rubicon extends Application {
       return this.showDialogError("Error", "You don't have any items equipped you can perform this action with.");
     }
     let buttons = {};
+    let spellTotals = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     for (const item of items) {
       //console.log(item);
       let name = item.name.split("(")[0].trim();
@@ -573,7 +591,8 @@ export class Rubicon extends Application {
         }
         // get the spell school
         let schoolString = SFRPG.spellSchools[item.system.school] ? game.i18n.localize(SFRPG.spellSchools[item.system.school]) : "Unknown";
-        name = `<span class="rubicon-spell-school-box">${schoolString}</span> <span class="rubicon-spell-level-box">Lv ${item.system.level}</span> ${name}`
+        name = `<span class="rubicon-spell-school-box">${schoolString}</span> <!--<span class="rubicon-spell-level-box">Lv ${item.system.level}</span>--> ${name}`
+        spellTotals[item.system.level] = spellTotals[item.system.level] + 1;
         let newDesc = SpellDescriptions[item.name.split("(")[0].trim()];
         if (newDesc) {
           description = `${description}<span class="rubicon-item-description">${newDesc}</span>`
@@ -673,15 +692,39 @@ export class Rubicon extends Application {
             this.showSpecificItemChatDialog(token, entry, item);
           }
         },
+        tab: `${item?.system?.level}`,
         icon: `<img src="${item.img}" />`
       };
     };
-    //console.log(buttons);
-    const myDialog = new Dialog({
-        title: `Quick Action: ${action.name}`,
-        content: `<b>${token.actor.name}</b><br/>Select an item to perform ${action.name} with.`,
-        buttons: buttons
-    }, {id: `rubiconQuickActionDialog_${dialogName}`, options: {height: 600}}).render(true); // height is max height to expand to
+    if (action.allowItem === 4) {
+      const tabs = [];
+      for (const tabNumber of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) {
+        if (spellTotals[tabNumber] > 0) {
+          tabs.push({ label: `${tabNumber}`,
+                     title: `Lv ${tabNumber}`,
+                     content: ""});
+        }
+      }
+      if (tabs.length < 1) {
+        return this.showDialogError("Error", "No spells available");
+      }
+      const rendered_html = await renderTemplate("modules/rubicon-sfrpg/templates/tabbed-dialog.hbs", {
+        header: `<b>${token.actor.name}</b><br/>Select ${dialogString}.`,
+        buttons: buttons,
+        tabs: tabs
+      });    
+      const myDialog = new Dialog({
+          title: `Quick Action: ${action.name}`,
+          content: rendered_html,
+          buttons: buttons
+      }, {id: `rubiconQuickActionDialog_TABBED_${dialogName}`, options: {height: 600}, tabs: [{ navSelector: ".tabs", contentSelector: ".content", initial: "0" }]}).render(true); // height is max height to expand to
+    } else {    
+      const myDialog = new Dialog({
+          title: `Quick Action: ${action.name}`,
+          content: `<b>${token.actor.name}</b><br/>Select ${dialogString}.`,
+          buttons: buttons
+      }, {id: `rubiconQuickActionDialog_${dialogName}`, options: {height: 600}}).render(true); // height is max height to expand to
+    }
   }
   
   async postEquipChatMessage(token, actor, item, isEquipped) {

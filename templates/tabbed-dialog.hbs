@@ -1,0 +1,28 @@
+<p class="rubicon-tabbed-dialog-header">{{{header}}}</p>
+
+<form>
+<nav class="tabs rubicon-tabbed-dialog-tabs" data-group="primary-tabs">
+  {{#each tabs}}
+  <a class="item" data-tab="{{label}}"> {{title}}</a>
+  {{/each}}
+</nav>
+
+<section class="content">
+  {{#each tabs as |tab tabid|}}
+  <div class="tab" data-tab="{{label}}" data-group="primary-tabs">
+    {{{content}}}
+	<div class="rubicon-tabbed-dialog-buttons">
+    {{#each ../buttons as |button id|}}
+	{{#if (eq button.tab tab.label)}}
+    <button class="dialog-button {{cssClass}}" data-button="{{id}}">
+        {{{button.icon}}}
+        {{{button.label}}}
+    </button>
+	{{/if}}
+    {{/each}}
+	</div>
+  </div>
+  {{/each}}
+</section>
+
+</form>
