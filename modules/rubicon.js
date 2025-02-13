@@ -449,7 +449,8 @@ export class Rubicon extends Application {
     if (t === "ammunition") return 4;
     if (t === "consumable") return 5;
     if (t === "goods") return 6;
-    if (t === "technological") return 7;
+    if (t === "quest") return 7;
+    if (t === "technological") return 8;
     //
     if (t === "class") return 101;
     if (t === "race") return 102;
@@ -463,22 +464,30 @@ export class Rubicon extends Application {
   
   _sortItems(items) {
     return items.sort((a, b) => {
-      let aSpellLevel = a.type === "spell" ? a.system.level : -1;
-      let bSpellLevel = b.type === "spell" ? b.system.level : -1;
-      // check the spell levels
-      if (aSpellLevel != bSpellLevel) {
-        return a.system.level - b.system.level;
-      }
       // check the type sorts
       let aTypeSort = this._getItemTypeSortValue(a.type);
       let bTypeSort = this._getItemTypeSortValue(b.type);
       if (aTypeSort != bTypeSort) {
         return aTypeSort - bTypeSort;
       }
+      // check the spell levels
+      let aSpellLevel = a.type === "spell" ? a.system.level : -1;
+      let bSpellLevel = b.type === "spell" ? b.system.level : -1;
+      if (aSpellLevel != bSpellLevel) {
+        return a.system.level - b.system.level;
+      }
+      if (a.type === "spell" && b.type === "spell") {
+        // sort by name
+        return a.name.localeCompare(b.name);
+      }
       // check the container
       let aParentSort = a.parentItem !== null && a.parentItem !== undefined ? a.parentItem.sort : -1;
       let bParentSort = b.parentItem !== null && b.parentItem !== undefined ? b.parentItem.sort : -1;
-      return aParentSort == bParentSort ? a.sort - b.sort : aParentSort - bParentSort;
+      if (aParentSort != bParentSort) {
+        return aParentSort - bParentSort;
+      }
+      // sort normally
+      return a.sort - b.sort;
     });
   }
   
