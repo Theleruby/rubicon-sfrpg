@@ -8,8 +8,10 @@ import { Rubicon } from "./rubicon.js";
 
 // Load the HUD and construct the app object
 Hooks.once('ready', async function() {
-	let rubiconHudHtml = await renderTemplate("modules/rubicon-sfrpg/templates/hud.hbs", {});
-	document.getElementById("ui-bottom").insertAdjacentHTML("afterbegin", rubiconHudHtml);
+	let rubiconCharacterHudHtml = await renderTemplate("modules/rubicon-sfrpg/templates/character-hud.hbs", {});
+	document.getElementById("ui-bottom").insertAdjacentHTML("afterbegin", rubiconCharacterHudHtml);
+	let rubiconStarshipHudHtml = await renderTemplate("modules/rubicon-sfrpg/templates/starship-hud.hbs", {"crewArray": ["crew0", "crew1", "crew2", "crew3", "crew4", "crew5", "crew6", "crew7", "crew8"]});
+	document.getElementById("ui-bottom").insertAdjacentHTML("afterbegin", rubiconStarshipHudHtml);
 	game.rubicon = new Rubicon();
 	console.log("Rubicon Hooks | Initialized successfully")
 });

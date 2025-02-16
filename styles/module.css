@@ -1,3 +1,4 @@
+
 /*===================================*/
 /* hacks */
 /*===================================*/
@@ -8,10 +9,11 @@
 }
 /* fix player box not being wide enough to fit player names */
 #players {
-	width: 307px !important;
+	width: 273px !important;
+	margin-left: 8px;
 }
 #players ol {
-	width: 310px !important;
+	width: 276px !important;
 }
 #ui-top.offset {
     margin-left: -190px !important;
@@ -141,10 +143,32 @@ table.rubicon-bonuses-table td:first-child {
 	border-radius: 3px;
 }
 
+.rubicon-starship-hud, .rubicon-starship-crew-hud {
+	margin-left: 2px;
+	height: 312px;
+	margin-bottom: 2px;
+	background: url(/ui/denim075.png) repeat;
+	padding: 6px;
+	border: 1px solid black;
+	border-radius: 3px;
+}
+
 .rubicon-spell-hud {
 	width: 79px;
 	position: absolute;
 	left: 610px;
+}
+
+.rubicon-starship-crew-hud {
+	width: 251px;
+	position: absolute;
+	left: 610px;
+}
+
+.rubicon-starship-crew-hud-row {
+    height: 23px;
+    margin-bottom: 1px;
+    color: white;
 }
 
 .rubicon-spell-hud-row {
@@ -168,13 +192,13 @@ table.rubicon-bonuses-table td:first-child {
 	flex-direction: column;
 }
 
-#rubicon-hud-character-name {
+#rubicon-hud-character-name, #rubicon-starship-hud-ship-name {
 	font-size: 1.25em;
 	color: white;
     margin-bottom: 3px;
 }
 
-#rubicon-hud-character-level {
+#rubicon-hud-character-level, #rubicon-starship-hud-ship-tier {
 	font-size: 1.25em;
 	color: white;
     margin-bottom: 3px;
@@ -203,13 +227,56 @@ table.rubicon-bonuses-table td:first-child {
 	object-fit: contain;
 }
 
-.rubicon-hud-bar, .rubicon-hud-ac-box, .rubicon-hud-speed-box {
+#rubicon-starship-hud-portrait {
+	width: 196px;
+	height: 196px;
+	border: 1px solid black;
+	border-radius: 3px;
+	background: rgba(0, 0, 0, 0.5);
+}
+
+#rubicon-starship-hud-portrait > img {
+	width: 100%;
+	height: 100%;
+	border: none;
+	object-position: center center;
+	object-fit: contain;
+}
+
+.rubicon-hud-bar, .rubicon-hud-ac-box, .rubicon-hud-threshold-box, .rubicon-hud-speed-box, .rubicon-starship-hud-bar {
 	margin-left: 2px;
 	margin-bottom: 2px;
 	border: 1px solid black;
 	border-radius: 3px;
 	background: rgba(0, 0, 0, 0.5);
     position: relative;
+}
+
+.rubicon-starship-hud-quadrant-box {
+	margin-left: 1px;
+	margin-right: 1px;
+	margin-bottom: 1px;
+	border: 1px solid black;
+	border-radius: 3px;
+	background: rgba(0, 0, 0, 0.5);
+	position: relative;
+}
+
+.rubicon-starship-crew-hud-hp, .rubicon-starship-crew-hud-rp {
+	margin-left: 2px;
+	margin-bottom: 2px;
+	border: 1px solid black;
+	border-radius: 3px;
+	background: rgba(0, 0, 0, 0.5);
+	position: relative;
+}
+
+.rubicon-starship-crew-hud-hp {
+	width: 72px;
+}
+
+.rubicon-starship-crew-hud-rp {
+	width: 56px;
 }
 
 .rubicon-hud-content-layer {	
@@ -222,9 +289,25 @@ table.rubicon-bonuses-table td:first-child {
     font-size: 1.3em;
 }
 
+.rubicon-starship-hud-bar {
+	width: 107px;
+	height: 28px;
+	font-size: 1.3em;
+}
+
 .rubicon-hud-ac-box {
 	width: 42px;
 	height: 43px;
+}
+
+.rubicon-hud-threshold-box {
+	width: 37px;
+	height: 43px;
+}
+
+.rubicon-starship-hud-quadrant-box {
+	width: 34px;
+	height: 37px;
 }
 
 .rubicon-hud-speed-box {
@@ -240,11 +323,11 @@ table.rubicon-bonuses-table td:first-child {
 	height: 100%;
 }
 
-.rubicon-hud-bar > .rubicon-hud-content-layer > span.rubicon-hud-heading {
+.rubicon-hud-bar > .rubicon-hud-content-layer > span.rubicon-hud-heading, .rubicon-starship-hud-bar > .rubicon-hud-content-layer > span.rubicon-hud-heading {
 	font-size: 1em;
 }
 
-.rubicon-hud-bar > .rubicon-hud-content-layer > span.rubicon-hud-value {
+.rubicon-hud-bar > .rubicon-hud-content-layer > span.rubicon-hud-value, .rubicon-starship-hud-bar > .rubicon-hud-content-layer > span.rubicon-hud-value {
     margin-top: 3px;
 	font-size: 0.8em;
 }
@@ -261,16 +344,15 @@ span.rubicon-hud-value {
 	float: right;
 }
 
-#rubicon-hud-bar-health > .rubicon-hud-background-layer {
+#rubicon-hud-bar-health > .rubicon-hud-background-layer, .rubicon-starship-crew-hud-hp > .rubicon-hud-background-layer {
     background: #0b8900;
-    /*background: #c31d1d;*/
 }
 
 #rubicon-hud-bar-stamina > .rubicon-hud-background-layer {
     background: #1d7ac3;
 }
 
-#rubicon-hud-bar-resolve > .rubicon-hud-background-layer {
+#rubicon-hud-bar-resolve > .rubicon-hud-background-layer, .rubicon-starship-crew-hud-rp > .rubicon-hud-background-layer {
 	background: #c31d7f;
 }
 
@@ -278,12 +360,93 @@ span.rubicon-hud-value {
     background: #656265;
 }
 
-#rubicon-hud-ac-eac > .rubicon-hud-background-layer, #rubicon-hud-ac-kac > .rubicon-hud-background-layer, #rubicon-hud-speed > .rubicon-hud-background-layer {
-    background: #696869;/*#73008c;*/
+#rubicon-hud-ac-eac > .rubicon-hud-background-layer {
+    background: #693869;
 }
 
 #rubicon-hud-ac-kac > .rubicon-hud-background-layer {
-    background: #696869;/*#93240e;*/
+    background: #693839;
+}
+
+#rubicon-hud-speed > .rubicon-hud-background-layer {
+    background: #396839;
+}
+
+#rubicon-starship-hud-bar-health > .rubicon-hud-background-layer {
+    background: #0b8900;
+}
+
+#rubicon-starship-hud-bar-shields > .rubicon-hud-background-layer {
+    background: #1d7ac3;
+}
+
+#rubicon-starship-hud-bar-icm > .rubicon-hud-background-layer {
+    background: #c31d7f;
+}
+
+#rubicon-starship-hud-dt > .rubicon-hud-background-layer {
+    background: #693839;
+}
+
+#rubicon-starship-hud-ct > .rubicon-hud-background-layer {
+    background: #693839;
+}
+
+#rubicon-starship-hud-sensor > .rubicon-hud-background-layer {
+    background: #396869;
+}
+
+#rubicon-starship-hud-scandc > .rubicon-hud-background-layer {
+    background: #696869;
+}
+
+#rubicon-starship-hud-actiondc > .rubicon-hud-background-layer {
+    background: #696869;
+}
+
+#rubicon-starship-hud-dipdc > .rubicon-hud-background-layer {
+    background: #696869;
+}
+
+#rubicon-starship-hud-movement > .rubicon-hud-background-layer {
+    background: #396849;
+}
+
+#rubicon-starship-hud-turn > .rubicon-hud-background-layer {
+    background: #396839;
+}
+
+.rubicon-starship-hud-quadrant-ac-box > .rubicon-hud-background-layer {
+    background: #736027;
+}
+
+.rubicon-starship-hud-quadrant-tl-box > .rubicon-hud-background-layer {
+    background: #6b2773;
+}
+
+.rubicon-starship-hud-quadrant-pd-box > .rubicon-hud-background-layer {
+    background: #c31d1d;
+}
+
+.rubicon-starship-hud-quadrant-shields-box > .rubicon-hud-background-layer {
+    background: #1d7ac3;
+}
+
+.rubicon-starship-hud-quadrant-ablative-box > .rubicon-hud-background-layer {
+    background: #696869;
+}
+
+.rubicon-starship-hud-quadrant-section {
+	margin: auto;
+    font-size: 13px;
+}
+
+.rubicon-hud-separator {
+	display: block;
+	width: 1px;
+	background-color: white;
+	margin-left: 1px;
+	margin-right: 1px;
 }
 
 div#rubicon-hud-equipment-section {
@@ -296,6 +459,18 @@ div#rubicon-hud-equipment-section {
 }
 
 .rubicon-hud-ac-heading, .rubicon-hud-ac-value {
+	text-align: center;
+	color: white;
+	display: block;
+}
+
+.rubicon-starship-hud-quadrant-value {
+	color: white;
+	display: block;
+}
+
+.rubicon-starship-hud-quadrant-heading, .rubicon-starship-hud-quadrant-value {
+	display: block;
 	text-align: center;
 	color: white;
 	display: block;
@@ -454,6 +629,10 @@ div[id^='rubiconQuickActionDialog_TABBED_'] .content {
 
 div[id^='rubiconQuickActionDialog_TABBED_'] .dialog-buttons {
 	display: none;
+}
+
+div[id^='rubiconQuickActionDialog_TABBED__starshipActions_'] > .window-content {
+	min-height: 900px;
 }
 
 .rubicon-tabbed-dialog-header {
@@ -711,4 +890,86 @@ span.rubicon-weapon-damage-box {
 /* temporarily hide until I can get it working */
 .rubicon-hud-action-button > span.macro-key {
 	display: none;
+}
+
+.rubicon-starship-hud-systemstatus-row {
+	margin-left: 2px;
+    margin-bottom: 1px;
+    padding: 2px 5px;
+    border: 1px solid #000000;
+    border-radius: 3px;
+    /*background: rgba(90, 90, 90, 0.9);*/
+}
+
+.rubicon-starship-hud-systemstatus-row-nominal {
+	background: #005c80c7;
+}
+
+.rubicon-starship-hud-systemstatus-row-glitching {
+	background: #a96d0fc7;
+}
+
+.rubicon-starship-hud-systemstatus-row-malfunctioning {
+	background: #b32a2ac7;
+}
+
+.rubicon-starship-hud-systemstatus-row-wrecked {
+	background: #494949c7;
+}
+
+.rubicon-starship-hud-systemstatus-row > .rubicon-hud-heading {
+	width: 90px;
+}
+
+.rubicon-starship-hud-systemstatus-row > .rubicon-hud-value {
+	width: 114px;
+	text-align: right;
+}
+
+.rubicon-starship-crew-hud-portrait {
+	width: 20px;
+	height: 20px;
+	border: 1px solid black;
+	border-radius: 3px;
+	background: rgba(0, 0, 0, 0.5);
+}
+
+.rubicon-starship-crew-hud-portrait > img {
+	width: 100%;
+	height: 100%;
+	border: none;
+	object-position: center center;
+	object-fit: contain;
+}
+
+.rubicon-starship-crew-hud-player {
+    margin-left: 3px;
+    line-height: 20px;
+    overflow: hidden;
+    width: 60px;
+}
+
+.rubicon-starship-crew-hud-role {
+    width: 16px;
+    text-align: center;
+    margin-right: 5px;
+    background: rgb(255 255 255 / 20%);
+    color: #ffffff;
+    border-radius: 3px;
+    height: 19px;
+}
+
+.rubicon-starship-crew-hud-hp > .rubicon-hud-content-layer > span, .rubicon-starship-crew-hud-rp > .rubicon-hud-content-layer > span {
+    float: left;
+}
+
+.dialog-button.rubicon-starship-action-button-push-warning {
+    background: #c3c333;
+}
+
+.dialog-button.rubicon-starship-action-button-push-disabled {
+    background: #bd5757;
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.5;
 }

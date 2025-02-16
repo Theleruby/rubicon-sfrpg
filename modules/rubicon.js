@@ -8,6 +8,7 @@ import { getItemContainer } from "/systems/sfrpg/module/actor/actor-inventory-ut
 import { SFRPG } from "/systems/sfrpg/module/config.js";
 import { DiceSFRPG } from "/systems/sfrpg/module/dice.js";
 import { ActorSheetSFRPG } from "/systems/sfrpg/module/actor/sheet/base.js";
+import { ActorSheetSFRPGStarship } from "/systems/sfrpg/module/actor/sheet/starship.js";
 import RollContext from "/systems/sfrpg/module/rolls/rollcontext.js";
 import SFRPGModifier from "/systems/sfrpg/module/modifiers/modifier.js";
 import StackModifiers from "/systems/sfrpg/module/rules/closures/stack-modifiers.js";
@@ -18,6 +19,7 @@ import {
 } from "/systems/sfrpg/module/modifiers/types.js";
 import RubiconActions from "./actions.js";
 import SpellDescriptions from "./spells.js";
+import ShipActionDescriptions from "./shipactions.js";
 import ConsumableDescriptions from "./consumables.js";
 import QuickMenuOptions from "./menu.js";
 
@@ -85,6 +87,20 @@ export class Rubicon extends Application {
       RubiconActions.steSkill,
       RubiconActions.basic
     )
+  }
+  
+  sac() {
+    return ActorSheetSFRPGStarship.StarshipActionsCache;
+  }
+  
+  createDummyTokenForActor(actor) {
+    /*
+    // we can only make dummy tokens for the player
+    if (!["character", "drone"].includes(actor.type)) {
+      return null;
+    }
+    */
+    return { actor: actor, isRubiconDummyToken: true }
   }
   
   showDialogError(title, message) {
@@ -397,6 +413,224 @@ export class Rubicon extends Application {
       });
       return amount;
     }
+  }
+  
+  _showDialogQuickActionStarshipControlPlayer(token) {
+    let actor = token?.actor;
+    if (actor == null || actor.type !== "starship") {
+      return this.showDialogError("Error", "Invalid target");
+    }
+    let controllableCrew = [];
+    // get all the player characters on the ship
+    if (actor.crew) {
+      //console.log(actor.crew);
+      for (const role of ["captain", "pilot", "gunner", "engineer", "scienceOfficer", "chiefMate", "magicOfficer", "passenger"]) {
+        let crewMap = actor.crew[role];
+        if (crewMap != null) {
+          for (const crewActor of Array.from(crewMap.actors)) {
+            //console.log(crewActor);
+            if (/*["character", "drone"].includes(crewActor.type) && */crewActor.isOwner) {
+              controllableCrew.push([role, crewActor]);
+            }
+          }
+        }
+      }
+    }
+    if (controllableCrew.length < 1) {
+      return this.showDialogError("Error", "You don't have control over any crew on this ship");
+    }
+    if (controllableCrew.length === 1) {
+      this.showDialogQuickMenu(this.createDummyTokenForActor(controllableCrew[0][1]));
+      return;
+    }
+    let buttons = {};
+    for (const [role, crewMember] of controllableCrew) {
+      let roleString = this._formatCrewRoleString(role);
+      buttons[crewMember._id] = {
+        label: `<span>${crewMember.name}</span><span>${roleString}</span>`,
+        callback: () => {
+          this.showDialogQuickMenu(this.createDummyTokenForActor(crewMember));
+        },
+        icon: `<img src="${crewMember.img}" />`
+      };
+    }
+    const myDialog = new Dialog({
+      title: `Quick Action: Crew Actions`,
+      content: `<b>${token.actor.name}</b><br/>Select a crew member to open their quick action menu.`,
+      buttons: buttons
+    }, {id: `rubiconQuickActionDialog__starshipControlPlayer_`, options: {height: 600}}).render(true); // height is max height to expand to
+  }
+  
+  _formatCrewRoleString(crewRole) {
+    let roleString = crewRole.replace("Officer", " Officer").replace("Mate", " Mate").replace("Crew", " Crew");
+    roleString = roleString.charAt(0).toUpperCase() + roleString.slice(1);
+    return roleString;
+  }
+  
+  async _showDialogQuickActionStarshipActions(token, ignoreOwner) {
+    let actor = token?.actor;
+    if (actor == null || actor.type !== "starship") {
+      return this.showDialogError("Error", "Invalid target");
+    }
+    let phaseValues = ["Changing Roles", "Engineering", "Piloting Check", "Helm", "Gunnery", "Damage", "Unknown"];
+    let actionsToIgnore = [
+      // temporary
+      "Orders", // lv 6
+      "Moving Speech", // lv 12
+      "Full Power", // requires 6 ranks in Piloting
+      "Audacious Gambit", // requires 12 ranks in Piloting
+      "Lay Mines", // no mines
+      "Precise Targeting", // lv 12
+      "Broadside", // lv 6
+      "Vent Engines (Mechanic Only)", // doesn't have it
+      "Recalibrate Engine (Mechanic Only)", // doesn't have it
+      "Quick Fix", // 12 ranks engineering
+      "Overpower", // 6 ranks engineering
+      "Insidious Electronics", // lv 6, no ECM
+      "Rapid Jam", // no ECM
+      "Lock On", // 6 ranks computers
+      "Improve Countermeasures", // 12 ranks computers
+      "Recall Beacon", // no beacon
+      "Activate ECM", // no ECM
+      "Targeting Aid", // 6 ranks acrobatics or athletics
+      "Maximize Speed", // 12 ranks acrobatics or athletics
+      "Mystic Haze", // 6 ranks mysticism
+      "Psychic Currents", // 12 ranks mysticism
+      "Deploy Drone", // no deployable drone
+    ]
+    let actionsBoundToPhase = [0, 0, 0, 0, 0, 0, 0];
+    let phaseToInt = {
+      "Any phase": [1, 3, 4],
+      "Engineering phase": [1],
+      "Helm phase": [3],
+      "Gunnery phase": [4]
+    };
+    // here we bodge the current phase based on the closest one for the tab we're making
+    let currentPhase = game.combat?.flags?.sfrpg?.phase;
+    if (currentPhase == null || currentPhase < 0 || currentPhase > 5) {
+      currentPhase = 6;
+    }
+    let effectivePhase = currentPhase;
+    if (currentPhase == null || currentPhase < 1 || currentPhase == 6) {
+      effectivePhase = 1;
+    } else if (currentPhase == 2) {
+      effectivePhase = 3;
+    } else if (currentPhase > 4) {
+      effectivePhase = 4;
+    }
+    let impactedCrewRolesTable = {
+      "captain": ["lifeSupport"],
+      "chiefMate": [],
+      "engineer": ["powerCore"],
+      "gunner": ["weaponsArrayForward", "weaponsArrayPort", "weaponsArrayStarboard", "weaponsArrayAft"],
+      "magicOfficer": [],
+      "pilot": ["engines"],
+      "scienceOfficer": ["sensors"],
+      "minorCrew": [],
+      "openCrew": []
+    }
+    let matchingCrew = {
+      "captain": [],
+      "chiefMate": [],
+      "engineer": [],
+      "gunner": [],
+      "magicOfficer": [],
+      "pilot": [],
+      "scienceOfficer": [],
+      "minorCrew": [],
+      "openCrew": []
+    }
+    let ownedCrew = [];
+    // determine how many of each crew the ship has
+    if (actor.system.crew.useNPCCrew) {
+      if (actor.isOwner || ignoreOwner) {
+        for(const crewRole of ["captain", "pilot", "gunner", "engineer", "scienceOfficer", "chiefMate", "magicOfficer"]) {
+          for (var crewi = 0; crewi < actor.system.crew.npcData[crewRole].numberOfUses; crewi++) {
+            matchingCrew[crewRole].push("npc");
+            matchingCrew["minorCrew"].push("npc");
+          }
+        }
+      }
+    } else {
+      for(const crewRole of ["captain", "pilot", "gunner", "engineer", "scienceOfficer", "chiefMate", "magicOfficer", "passenger"]) {
+        let destRole = crewRole == "passenger" ? "openCrew" : crewRole;
+        for(const crewActor of actor.crew[crewRole].actors) {
+          if (crewActor && crewActor.type != "drone" && (crewActor.isOwner || ignoreOwner)) {
+            matchingCrew[destRole].push(crewActor);
+            matchingCrew["minorCrew"].push(crewActor);
+            if (crewActor.isOwner) {
+              ownedCrew.push([crewRole, crewActor]);
+            }
+          }
+        }
+      }
+    }
+    let buttons = {};
+    let possibleActions = this.sac();
+    // now we go through all the actions and put them into the correct phases
+    for(const crewRole of ["captain", "pilot", "gunner", "engineer", "scienceOfficer", "chiefMate", "magicOfficer", "minorCrew", "openCrew"]) {
+      if (matchingCrew[crewRole].length < 1) continue;
+      let roleString = this._formatCrewRoleString(crewRole);
+      for(const action of possibleActions[crewRole].actions) {
+        if(actionsToIgnore.includes(action.name)) {
+          continue;
+        }
+        let pushState = "enabled";
+        let name = action.name;
+        if (action.system.isPush) {
+          name = `${name} <strong>(Push)</strong>`;
+          for (const targetSystem of impactedCrewRolesTable[crewRole]) {
+            if (["malfunctioning", "wrecked"].includes(actor.system.attributes.systems[targetSystem].value)) {
+              pushState = crewRole == "gunner" ? "warning" : "disabled";
+            }
+          }
+        }
+        let description = "";
+        let newDesc = ShipActionDescriptions[action.name.split("(")[0].trim()];
+        if (newDesc) {
+          description = `${description}<span class="rubicon-item-description">${newDesc}</span>`
+        }
+        let phaseName = action?.system?.phase?.name;
+        if (phaseName != null && phaseToInt[phaseName] != null) {
+          let phaseInts = phaseToInt[phaseName];
+          for (const phaseInt of phaseInts) {
+            // we add this action to this phase
+            buttons[`itemQuickActionButton_${action._id}_${phaseInt}`] = {
+              label: `
+              <span>${roleString}: <span style='font-weight:normal'>${name}</span></span>
+              <span>${description}</span>
+              `,
+              callback: () => { actor.useStarshipAction(action._id) },
+              tab: `${phaseInt}`,
+              icon: ``,
+              cssClass: `rubicon-starship-action-button-push-${pushState}`
+            }
+            actionsBoundToPhase[phaseInt] = actionsBoundToPhase[phaseInt] + 1;
+          }
+        }
+      }
+    }
+    const tabs = [];
+    for (const tabNumber of [1, 3, 4]) {
+      // determine what buttons go on this tab.
+      tabs.push({ label: `${tabNumber}`,
+                 title: `${phaseValues[tabNumber]}`,
+                 content: actionsBoundToPhase[tabNumber] > 0 ? "" : "No actions available in this phase"});
+    }
+    console.log(ownedCrew);
+    let headerNameString = (ownedCrew.length > 0 && !ignoreOwner) ? ownedCrew.map(_ => `<b>${_[1].name}</b> (${this._formatCrewRoleString(_[0])})`).join("<br/>") : `<b>${token.actor.name}</b>`;
+    console.log(headerNameString);
+    const rendered_html = await renderTemplate("modules/rubicon-sfrpg/templates/tabbed-dialog.hbs", {
+      header: `${headerNameString}<br/>Select a starship action for the ${phaseValues[currentPhase]} phase.`,
+      buttons: buttons,
+      tabs: tabs
+    });
+    const myDialog = new Dialog({
+        title: `Quick Action: Starship Actions`,
+        content: rendered_html,
+        buttons: buttons
+    }, {id: `rubiconQuickActionDialog_TABBED__starshipActions_`, options: {height: 900}, tabs: [{ navSelector: ".tabs", contentSelector: ".content", initial: `${effectivePhase}` }]}).render(true); // height is max height to expand to
+    //  
   }
   
   _showDialogQuickActionEntry(token, actionGroup) {
@@ -761,7 +995,7 @@ export class Rubicon extends Application {
         },
         rollMode: rollMode
       },
-      speaker: token ? ChatMessage.getSpeaker({token: token}) : ChatMessage.getSpeaker({actor: actor})
+      speaker: (token && !token.isRubiconDummyToken) ? ChatMessage.getSpeaker({token: token}) : ChatMessage.getSpeaker({actor: actor})
     }
     ChatMessage.create(chatCardData, {
       displaySheet: !1
@@ -769,9 +1003,11 @@ export class Rubicon extends Application {
   }
   
   _getActualControlledToken() {
+    // check for currently selected tokens, use the first one
     if (canvas.tokens.controlled[0]) {
       return canvas.tokens.controlled[0];
     }
+    // check to see if the player's character is on the scene
     if (game.user.character) {
       for (const token of canvas.tokens.ownedTokens) {
         if (token.actor == game.user.character) {
@@ -779,6 +1015,22 @@ export class Rubicon extends Application {
         }
       }
     }
+    // check to see if the player owns any tokens on the scene. if they only have one, use that
+    // (this should be fine for most players for starship combat, the players will only be controlling one ship token)
+    let ownedTokens = [];
+    for (const token of Array.from(canvas.scene.tokens)) {
+      if (token?.isOwner) {
+        ownedTokens.push(token);
+      }
+    }
+    if (ownedTokens.length === 1) {
+      return ownedTokens[0];
+    }
+    // if the player has a character, create a dummy token
+    if (game.user.character) {
+      return this.createDummyTokenForActor(game.user.character);
+    }
+    // give up
     return null;
   }
   
@@ -831,6 +1083,8 @@ export class Rubicon extends Application {
   }
   
   async showCustomItemChatDialog(token, item, img, name, description, properties, buttons) {
+    //console.log("showCustomItemChatDialog");
+    //console.log(token);
     let actor = token ? token.actor : game.user.character;
     let itemChatCard = item ? await item.getChatData() : null;
     //console.log(itemChatCard);
@@ -854,6 +1108,7 @@ export class Rubicon extends Application {
         { name: name, action: "rollSkill", value: "pro", target: "", content: "Roll Profession Check" }
       ]*/
     };
+    //console.log(templateArguments);
     // sets the token ID and scene ID if its not the player's character
     if (actor.type != "character" && token) {
       templateArguments["tokenId"] = token.id;
@@ -874,14 +1129,16 @@ export class Rubicon extends Application {
         },
         rollMode: rollMode
       },
-      speaker: token ? ChatMessage.getSpeaker({token: token}) : ChatMessage.getSpeaker({actor: actor})
+      speaker: (token && !token.isRubiconDummyToken) ? ChatMessage.getSpeaker({token: token}) : ChatMessage.getSpeaker({actor: actor})
     }
+    let chatMessage = ChatMessage.create(chatCardData, {
+      displaySheet: !1
+    });
+    //console.log(chatMessage);
     return ["gmroll", "blindroll"].includes(rollMode) && (chatCardData.whisper = ChatMessage.getWhisperRecipients("GM")),
             "blindroll" === rollMode && (chatCardData.blind = !0),
             "selfroll" === rollMode && (chatCardData.whisper = ChatMessage.getWhisperRecipients(game.user.name)),
-            ChatMessage.create(chatCardData, {
-              displaySheet: !1
-            });
+            chatMessage;
   }
   
   async _onButtonClick(evt) {
@@ -1006,7 +1263,7 @@ export class Rubicon extends Application {
           rollContext: context,
           parts: parts,
           title: `Attack Roll - ${name}${itemStrSuffix}`,
-          speaker: token ? ChatMessage.getSpeaker({token: token}) : ChatMessage.getSpeaker({actor: actor}),
+          speaker: (token && !token.isRubiconDummyToken) ? ChatMessage.getSpeaker({token: token}) : ChatMessage.getSpeaker({actor: actor}),
           rollOptions: {
             actionTarget: target ? target : item ? item.system.actionTarget : "",
             actionTargetSource: SFRPG.actionTargets
@@ -1065,6 +1322,14 @@ export class Rubicon extends Application {
       this.showDialogQuickRoll(token);
     } else if (action == "cast") {
       this.showDialogQuickSpell(token);
+    } else if (action == "rollableTable") {
+      this.showDialogQuickRollableTable(token?.actor);
+    } else if (action == "starshipControlPlayer") {
+      this._showDialogQuickActionStarshipControlPlayer(token);
+    } else if (action == "myStarshipActions") {
+      this._showDialogQuickActionStarshipActions(token, false);
+    } else if (action == "allStarshipActions") {
+      this._showDialogQuickActionStarshipActions(token, true);
     } else {
       ui.notifications.error("Invalid action"); return;
     }
@@ -1081,7 +1346,6 @@ export class Rubicon extends Application {
 
   _onItemChange(item) {
     this._updateActor();
-    //this._updateItems();
   }
 
   _onActorChange(actor) {
@@ -1111,22 +1375,236 @@ export class Rubicon extends Application {
   
   _show() {
     // this makes the HUD container show in 1ms time, which avoids a bug where the content sort-of procedurally updates.
-    setTimeout(function(){
-      document.getElementsByClassName("rubicon-hud-outer-container")[0].style.display = "block";
-    },1);
+    if (this._actor.type === "starship") {
+      setTimeout(function(){
+        document.getElementById("rubicon-starship-hud-container").style.display = "block";
+      },1);
+    } else {
+      setTimeout(function(){
+        document.getElementById("rubicon-character-hud-container").style.display = "block";
+      },1);
+    }
   }
   
   _hide() {
-      document.getElementsByClassName("rubicon-hud-outer-container")[0].style.display = "none";
+      document.getElementById("rubicon-character-hud-container").style.display = "none";
+      document.getElementById("rubicon-starship-hud-container").style.display = "none";
   }
   
-  _updateActor() {
-    if (!this._actor) return;
+  _updateStarship() {    
+    let attributes = this._actor.system.attributes;
+    let crew = this._actor.system.crew;
+    let quadrants = this._actor.system.quadrants;
+    let details = this._actor.system.details;
+    
+    //======================================
+    // title
+    //======================================
+    document.getElementById("rubicon-starship-hud-ship-name").textContent = this._actor.name;
+    document.getElementById("rubicon-starship-hud-portrait").getElementsByTagName('img')[0].src = this._actor.img;
+    
+    //======================================
+    // main stats
+    //======================================
+    document.getElementById("rubicon-starship-hud-dt-value").textContent = attributes.damageThreshold.value;
+    document.getElementById("rubicon-starship-hud-ct-value").textContent = attributes.criticalThreshold.value;
+    document.getElementById("rubicon-starship-hud-ship-tier").textContent = `Tier ${details.tier} ${details.frame}`;
+    document.getElementById("rubicon-starship-hud-movement-value").textContent = attributes.speed.value;
+    document.getElementById("rubicon-starship-hud-turn-value").textContent = attributes.turn.value;
+    
+    // get some stuff from the items
+    let defensiveCountermeasureBonus = 0;
+    let nodes = 0;
+    let sensorRange = 0;
+    for(const item of Array.from(this._actor.items)) {
+      //console.log(item);
+      if (item.type === "starshipDefensiveCountermeasure") {
+        defensiveCountermeasureBonus = defensiveCountermeasureBonus + item.system.targetLockBonus;
+      }
+      if (item.type === "starshipComputer") {
+        nodes = nodes + item.system.nodes;
+      }
+      if (item.type === "starshipSensor") {
+        // TODO: this might need to be improved
+        if (item.system.range === "short") {
+          sensorRange = 5;
+        } else if (item.system.range === "medium") {
+          sensorRange = 10;
+        } else if (item.system.range === "long") {
+          sensorRange = 15;
+        }
+        sensorRange = sensorRange + item.system.modifier;
+      }
+    }
+    
+    //======================================
+    // scan / action / diplomatic DC
+    //======================================
+    let scanDC = 5 + Math.floor(details.tier * 1.5) + defensiveCountermeasureBonus;
+    document.getElementById("rubicon-starship-hud-scandc-value").textContent = scanDC;
+    
+    let actionDC = 10 + Math.floor(details.tier * 1.5);
+    document.getElementById("rubicon-starship-hud-actiondc-value").textContent = actionDC;
+    
+    let dipDC = 15 + Math.floor(details.tier * 1.5);
+    document.getElementById("rubicon-starship-hud-dipdc-value").textContent = dipDC;
+    
+    //======================================
+    // sensor range
+    //======================================
+    document.getElementById("rubicon-starship-hud-sensor-value").textContent = sensorRange;
+    
+    //======================================
+    // health
+    //======================================
+    let tempHealthValue = "";
+    if(attributes.hp.temp !== undefined && attributes.hp.temp !== null && attributes.hp.temp > 0) {
+      tempHealthValue = ` (+${attributes.hp.temp})`
+    }
+    document.getElementById("rubicon-starship-hud-health-value").textContent = `${attributes.hp.value} / ${attributes.hp.max}${tempHealthValue}`
+    if (attributes.hp.max < 1) {
+      document.getElementById("rubicon-starship-hud-health-background").style.width = "0%";
+    } else {
+      let widthPercentage = (attributes.hp.value * 100) / attributes.hp.max;
+      document.getElementById("rubicon-starship-hud-health-background").style.width = `${widthPercentage}%`;
+    }
+
+    //======================================
+    // shields
+    //======================================
+    document.getElementById("rubicon-starship-hud-shields-value").textContent = `${attributes.shields.value} / ${attributes.shields.max}`
+    let widthPercentage = (attributes.shields.value * 100) / attributes.shields.max;
+    document.getElementById("rubicon-starship-hud-shields-background").style.width = `${widthPercentage}%`;
+
+    //======================================
+    // ICM nodes
+    //======================================
+    // TODO
+    let icmValue = 0;
+    let icmMax = nodes;
+    document.getElementById("rubicon-starship-hud-icm-value").textContent = `- / ${icmMax}`
+    widthPercentage = icmMax < 1 ? 0 : (icmValue * 100) / icmMax;
+    document.getElementById("rubicon-starship-hud-icm-background").style.width = `${widthPercentage}%`;
+    
+    //======================================
+    // forward quadrant
+    //======================================
+    document.getElementById("rubicon-starship-hud-forward-ac-value").textContent = quadrants.forward.ac.value;
+    document.getElementById("rubicon-starship-hud-forward-tl-value").textContent = quadrants.forward.targetLock.value;
+    document.getElementById("rubicon-starship-hud-forward-shields-value").textContent = quadrants.forward.shields.value;
+    document.getElementById("rubicon-starship-hud-forward-ablative-value").textContent = quadrants.forward.ablative.value;
+    
+    //======================================
+    // port(left) quadrant
+    //======================================
+    document.getElementById("rubicon-starship-hud-port-ac-value").textContent = quadrants.port.ac.value;
+    document.getElementById("rubicon-starship-hud-port-tl-value").textContent = quadrants.port.targetLock.value;
+    document.getElementById("rubicon-starship-hud-port-shields-value").textContent = quadrants.port.shields.value;
+    document.getElementById("rubicon-starship-hud-port-ablative-value").textContent = quadrants.port.ablative.value;
+    
+    //======================================
+    // starboard(right) quadrant
+    //======================================
+    document.getElementById("rubicon-starship-hud-starboard-ac-value").textContent = quadrants.starboard.ac.value;
+    document.getElementById("rubicon-starship-hud-starboard-tl-value").textContent = quadrants.starboard.targetLock.value;
+    document.getElementById("rubicon-starship-hud-starboard-shields-value").textContent = quadrants.starboard.shields.value;
+    document.getElementById("rubicon-starship-hud-starboard-ablative-value").textContent = quadrants.starboard.ablative.value;
+    
+    //======================================
+    // aft quadrant
+    //======================================
+    document.getElementById("rubicon-starship-hud-aft-ac-value").textContent = quadrants.aft.ac.value;
+    document.getElementById("rubicon-starship-hud-aft-tl-value").textContent = quadrants.aft.targetLock.value;
+    document.getElementById("rubicon-starship-hud-aft-shields-value").textContent = quadrants.aft.shields.value;
+    document.getElementById("rubicon-starship-hud-aft-ablative-value").textContent = quadrants.aft.ablative.value;
+    
+    //======================================
+    // system statuses
+    //======================================
+    for (const systemId of ["lifeSupport", "sensors", "engines", "powerCore", "weaponsArrayForward", "weaponsArrayPort", "weaponsArrayStarboard", "weaponsArrayAft"]) {
+      for (const possibleSystemStatus of ["nominal", "glitching", "malfunctioning", "wrecked"]) {
+        let targetClass = `rubicon-starship-hud-systemstatus-row-${possibleSystemStatus}`;
+        if (attributes.systems[systemId].value == possibleSystemStatus) {
+          //console.log(`rubicon-starship-hud-${systemId}-row`);
+          document.getElementById(`rubicon-starship-hud-${systemId}-row`).classList.add(targetClass)
+        } else {
+          document.getElementById(`rubicon-starship-hud-${systemId}-row`).classList.remove(targetClass)
+        }
+      }
+      document.getElementById(`rubicon-starship-hud-${systemId}-value`).textContent = attributes.systems[systemId].value;
+    }
+    
+    //======================================
+    // crew information
+    //======================================
+    let crewRolesTable = {
+      "captain": "C",
+      "chiefMate": "F",
+      "engineer": "E",
+      "gunner": "G",
+      "magicOfficer": "M",
+      "pilot": "P",
+      "scienceOfficer": "S",
+    }
+    if (crew.useNPCCrew) {
+      // for now we don't show this for the NPC crew
+      document.getElementById("rubicon-starship-crew-hud").style.display = "none";
+    } else {
+      // hide all the crew rows
+      for (const crewMemberIndex of [0, 1, 2, 3, 4, 5, 6, 7, 8]) {
+        document.getElementById(`rubicon-starship-crew${crewMemberIndex}-row`).style.display = "none";
+      }
+      // get all the crew members that are actually being used
+      let crewMembers = [];
+      document.getElementById("rubicon-starship-crew-hud").style.display = "block";
+      for(const crewRole of ["captain", "pilot", "gunner", "engineer", "scienceOfficer", "chiefMate", "magicOfficer"]) {
+        for(const crewActorId of crew[crewRole].actorIds) {
+          let crewActor = game.actors.get(crewActorId);
+          if (crewActor) {
+            crewMembers.push([crewRole, crewActor]);
+          }
+        }
+      }
+      for (const [crewMemberIndex, crewData] of crewMembers.entries()) {
+        if (crewMemberIndex > 8) continue; // we only support showing 9 crew members currently
+        let crewRole = crewData[0];
+        let crewMember = crewData[1];
+        document.getElementById(`rubicon-starship-crew${crewMemberIndex}-row`).style.display = "flex";
+        document.getElementById(`rubicon-starship-crew${crewMemberIndex}-role`).textContent = crewRolesTable[crewRole];
+        document.getElementById(`rubicon-starship-crew${crewMemberIndex}-portrait`).getElementsByTagName('img')[0].src = crewMember.img;
+        document.getElementById(`rubicon-starship-crew${crewMemberIndex}-player`).textContent = crewMember.name.replace("-", " "); // hack
+        let crewAttributes = crewMember.system.attributes;
+        // health. everyone should have this.
+        let tempHealthValue = "";
+        if(crewAttributes.hp.temp !== undefined && crewAttributes.hp.temp !== null && crewAttributes.hp.temp > 0) {
+          tempHealthValue = ` (+${crewAttributes.hp.temp})`
+        }
+        document.getElementById(`rubicon-starship-crew-crew${crewMemberIndex}-health-value`).textContent = `${crewAttributes.hp.value} / ${crewAttributes.hp.max}${tempHealthValue}`
+        if (crewAttributes.hp.max < 1) {
+          document.getElementById(`rubicon-starship-crew-crew${crewMemberIndex}-health-background`).style.width = "0%";
+        } else {
+          let widthPercentage = (crewAttributes.hp.value * 100) / crewAttributes.hp.max;
+          document.getElementById(`rubicon-starship-crew-crew${crewMemberIndex}-health-background`).style.width = `${widthPercentage}%`;
+        }
+        // resolve. players. rarely some mobs.
+        if (crewAttributes.rp && crewAttributes.rp.max > 0) {
+          document.getElementById(`rubicon-starship-crew-crew${crewMemberIndex}-resolve-value`).textContent = `${crewAttributes.rp.value} / ${crewAttributes.rp.max}`
+          let widthPercentage = (crewAttributes.rp.value * 100) / crewAttributes.rp.max;
+          document.getElementById(`rubicon-starship-crew-crew${crewMemberIndex}-resolve-background`).style.width = `${widthPercentage}%`;
+        } else {
+          document.getElementById(`rubicon-starship-crew-crew${crewMemberIndex}-resolve-value`).textContent = "-";
+          document.getElementById(`rubicon-starship-crew-crew${crewMemberIndex}-resolve-background`).style.width = "0%";
+        }
+      }
+    }
+  }
+  
+  _updateCharacter() {
     document.getElementById("rubicon-hud-character-name").textContent = this._actor.name;
     document.getElementById("rubicon-hud-portrait").getElementsByTagName('img')[0].src = this._actor.img;
     let attributes = this._actor.system.attributes;
-    document.getElementById("rubicon-hud-eac-value").textContent = attributes.eac.value;
-    document.getElementById("rubicon-hud-kac-value").textContent = attributes.kac.value;
+    document.getElementById("rubicon-hud-eac-value").textContent = attributes.eac?.value;
+    document.getElementById("rubicon-hud-kac-value").textContent = attributes.kac?.value;
     if (attributes.speed) {
       let movementType = attributes.speed.movementType;
       if (!movementType) {
@@ -1198,7 +1676,7 @@ export class Rubicon extends Application {
       let widthPercentage = (attributes.hp.value * 100) / attributes.hp.max;
       document.getElementById("rubicon-hud-health-background").style.width = `${widthPercentage}%`;
     }
-    
+        
     // stamina. players only.
     if (attributes.sp && attributes.sp.max > 0) {
       document.getElementById("rubicon-hud-stamina-value").textContent = `${attributes.sp.value} / ${attributes.sp.max}`
@@ -1219,10 +1697,6 @@ export class Rubicon extends Application {
       document.getElementById("rubicon-hud-resolve-background").style.width = "0%";
     }
     
-    this._updateItems();
-  }
-  
-  _updateItems() {
     // is this player a spellcaster ?
     let spells = this._actor.system.spells;
     let hasConfiguredSpells = false;
@@ -1321,5 +1795,15 @@ export class Rubicon extends Application {
     
   };
   */
+  }
+  
+  _updateActor() {
+    if (!this._actor) return;
+    //console.log(this._actor);
+    if (["starship"].includes(this._actor.type)) {
+      this._updateStarship();
+    } else {
+      this._updateCharacter();
+    }
   }
 }
