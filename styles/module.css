@@ -261,7 +261,15 @@ table.rubicon-bonuses-table td:first-child {
 	height: 100%;
 	border: none;
 	object-position: center center;
+/*	object-fit: cover;*/
+}
+
+.rubicon-hud-cover-portrait > img {
 	object-fit: cover;
+}
+
+.rubicon-hud-contain-portrait > img {
+	object-fit: contain;
 }
 
 #rubicon-starship-hud-portrait {

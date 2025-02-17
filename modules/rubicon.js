@@ -1601,7 +1601,15 @@ export class Rubicon extends Application {
   
   _updateCharacter() {
     document.getElementById("rubicon-hud-character-name").textContent = this._actor.name;
-    document.getElementById("rubicon-hud-portrait").getElementsByTagName('img')[0].src = this._actor.img;
+    let portraitElement = document.getElementById("rubicon-hud-portrait");
+    portraitElement.getElementsByTagName('img')[0].src = this._actor.img;
+    if (["character", "drone"].includes(this._actor.type)) {
+      portraitElement.classList.remove("rubicon-hud-contain-portrait")
+      portraitElement.classList.add("rubicon-hud-cover-portrait")
+    } else {
+      portraitElement.classList.remove("rubicon-hud-cover-portrait")
+      portraitElement.classList.add("rubicon-hud-contain-portrait")
+    }
     let attributes = this._actor.system.attributes;
     document.getElementById("rubicon-hud-eac-value").textContent = attributes.eac?.value;
     document.getElementById("rubicon-hud-kac-value").textContent = attributes.kac?.value;
