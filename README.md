@@ -32,7 +32,7 @@ When a starship is selected, the heads-up display shows information about:
  * Damage threshold and critical threshold
  * Move speed and turn distance
  * Sensor range
- * Sensor DC (5 + 1.5*tier) - used by sensor related ship actions
+ * Sensor DC (5 + 1.5*tier + defensive countermeasure bonus) - used by sensor related ship actions
  * Action DC (10 + 1.5*tier) - used by most of the standard ship actions
  * Difficult DC (15 + 1.5*tier) - used by some of the harder ship actions
  * Status of each starship system
