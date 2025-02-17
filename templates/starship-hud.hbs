@@ -1,4 +1,12 @@
 <div class="rubicon-hud-outer-container" id="rubicon-starship-hud-container" style="display:none;">
+<!-- starship statuses will go here, so we need to fix this
+	<div class="rubicon-hud-statuses">
+		<div class="rubicon-hud-status-box">
+			<img src="systems/sfrpg/icons/conditions/overburdened.webp" />
+			<span>Overburdened</span>
+		</div>
+	</div>
+-->
 	<div class="rubicon-starship-crew-hud rubicon-hud-column" id="rubicon-starship-crew-hud">
 		{{#each crewArray}}
 		<div class="rubicon-starship-crew-hud-row rubicon-hud-row" id="rubicon-starship-{{this}}-row">
@@ -24,340 +32,359 @@
 		</div>
 		{{/each}}
 	</div>
-	<div class="rubicon-starship-hud rubicon-hud-column">
+	<div class="rubicon-hud-column">
 		<div class="rubicon-hud-title">
 			<span class="rubicon-hud-heading" id="rubicon-starship-hud-ship-name">Name</span>
 			<span class="rubicon-hud-value" id="rubicon-starship-hud-ship-tier">Tier</span>
 		</div>
 		<div class="rubicon-hud-row">
+			<div class="rubicon-hud-column rubicon-hud-left-column">
+				<div class="rubicon-hud-row rubicon-hud-left-column-main-row">
+					<div class="rubicon-hud-column rubicon-hud-left-column-main-column">
+						<div class="rubicon-hud-row rubicon-starship-hud-portrait-row">
+							<div class="rubicon-hud-column rubicon-starship-hud-quadrant-section">
+								<div class="rubicon-hud-row rubicon-starship-hud-quadrant-box rubicon-starship-hud-quadrant-ac-box">
+									<div class="rubicon-hud-layer rubicon-hud-background-layer">
+									</div>
+									<div class="rubicon-hud-layer rubicon-hud-content-layer">
+										<span class="rubicon-starship-hud-quadrant-heading">AC</span>
+										<span class="rubicon-starship-hud-quadrant-value" id="rubicon-starship-hud-port-ac-value">0</span>
+									</div>
+								</div>
+								<div class="rubicon-hud-row rubicon-starship-hud-quadrant-box rubicon-starship-hud-quadrant-tl-box">
+									<div class="rubicon-hud-layer rubicon-hud-background-layer">
+									</div>
+									<div class="rubicon-hud-layer rubicon-hud-content-layer">
+										<span class="rubicon-starship-hud-quadrant-heading">TL</span>
+										<span class="rubicon-starship-hud-quadrant-value" id="rubicon-starship-hud-port-tl-value">1</span>
+									</div>
+								</div>
+								<div class="rubicon-hud-row rubicon-starship-hud-quadrant-box rubicon-starship-hud-quadrant-pd-box">
+									<div class="rubicon-hud-layer rubicon-hud-background-layer">
+									</div>
+									<div class="rubicon-hud-layer rubicon-hud-content-layer">
+										<span class="rubicon-starship-hud-quadrant-heading">PD</span>
+										<span class="rubicon-starship-hud-quadrant-value" id="rubicon-starship-hud-port-pd-value">-</span>
+									</div>
+								</div>
+								<div class="rubicon-hud-row rubicon-starship-hud-quadrant-box rubicon-starship-hud-quadrant-shields-box">
+									<div class="rubicon-hud-layer rubicon-hud-background-layer">
+									</div>
+									<div class="rubicon-hud-layer rubicon-hud-content-layer">
+										<span class="rubicon-starship-hud-quadrant-heading">SH</span>
+										<span class="rubicon-starship-hud-quadrant-value" id="rubicon-starship-hud-port-shields-value">test</span>
+									</div>
+								</div>
+								<div class="rubicon-hud-row rubicon-starship-hud-quadrant-box rubicon-starship-hud-quadrant-ablative-box">
+									<div class="rubicon-hud-layer rubicon-hud-background-layer">
+									</div>
+									<div class="rubicon-hud-layer rubicon-hud-content-layer">
+										<span class="rubicon-starship-hud-quadrant-heading">AB</span>
+										<span class="rubicon-starship-hud-quadrant-value" id="rubicon-starship-hud-port-ablative-value">test</span>
+									</div>
+								</div>
+							</div>
+							<div class="rubicon-hud-column">
+								<div class="rubicon-hud-row rubicon-starship-hud-quadrant-section">
+									<div class="rubicon-hud-column rubicon-starship-hud-quadrant-box rubicon-starship-hud-quadrant-ac-box">
+										<div class="rubicon-hud-layer rubicon-hud-background-layer">
+										</div>
+										<div class="rubicon-hud-layer rubicon-hud-content-layer">
+										<span class="rubicon-starship-hud-quadrant-heading">AC</span>
+											<span class="rubicon-starship-hud-quadrant-value" id="rubicon-starship-hud-forward-ac-value">0</span>
+										</div>
+									</div>
+									<div class="rubicon-hud-column rubicon-starship-hud-quadrant-box rubicon-starship-hud-quadrant-tl-box">
+										<div class="rubicon-hud-layer rubicon-hud-background-layer">
+										</div>
+										<div class="rubicon-hud-layer rubicon-hud-content-layer">
+										<span class="rubicon-starship-hud-quadrant-heading">TL</span>
+											<span class="rubicon-starship-hud-quadrant-value" id="rubicon-starship-hud-forward-tl-value">1</span>
+										</div>
+									</div>
+									<div class="rubicon-hud-column rubicon-starship-hud-quadrant-box rubicon-starship-hud-quadrant-pd-box">
+										<div class="rubicon-hud-layer rubicon-hud-background-layer">
+										</div>
+										<div class="rubicon-hud-layer rubicon-hud-content-layer">
+										<span class="rubicon-starship-hud-quadrant-heading">PD</span>
+											<span class="rubicon-starship-hud-quadrant-value" id="rubicon-starship-hud-forward-pd-value">-</span>
+										</div>
+									</div>
+									<div class="rubicon-hud-column rubicon-starship-hud-quadrant-box rubicon-starship-hud-quadrant-shields-box">
+										<div class="rubicon-hud-layer rubicon-hud-background-layer">
+										</div>
+										<div class="rubicon-hud-layer rubicon-hud-content-layer">
+										<span class="rubicon-starship-hud-quadrant-heading">SH</span>
+											<span class="rubicon-starship-hud-quadrant-value" id="rubicon-starship-hud-forward-shields-value">test</span>
+										</div>
+									</div>
+									<div class="rubicon-hud-column rubicon-starship-hud-quadrant-box rubicon-starship-hud-quadrant-ablative-box">
+										<div class="rubicon-hud-layer rubicon-hud-background-layer">
+										</div>
+										<div class="rubicon-hud-layer rubicon-hud-content-layer">
+										<span class="rubicon-starship-hud-quadrant-heading">AB</span>
+											<span class="rubicon-starship-hud-quadrant-value" id="rubicon-starship-hud-forward-ablative-value">test</span>
+										</div>
+									</div>
+								</div>
+								<div class="rubicon-hud-row" id="rubicon-starship-hud-portrait">
+									<img src="stuff/aliens/treant-sapling/actor.png" />
+								</div>
+								<div class="rubicon-hud-row rubicon-starship-hud-quadrant-section">
+									<div class="rubicon-hud-column rubicon-starship-hud-quadrant-box rubicon-starship-hud-quadrant-ac-box">
+										<div class="rubicon-hud-layer rubicon-hud-background-layer">
+										</div>
+										<div class="rubicon-hud-layer rubicon-hud-content-layer">
+											<span class="rubicon-starship-hud-quadrant-heading">AC</span>
+											<span class="rubicon-starship-hud-quadrant-value" id="rubicon-starship-hud-aft-ac-value">0</span>
+										</div>
+									</div>
+									<div class="rubicon-hud-column rubicon-starship-hud-quadrant-box rubicon-starship-hud-quadrant-tl-box">
+										<div class="rubicon-hud-layer rubicon-hud-background-layer">
+										</div>
+										<div class="rubicon-hud-layer rubicon-hud-content-layer">
+											<span class="rubicon-starship-hud-quadrant-heading">TL</span>
+											<span class="rubicon-starship-hud-quadrant-value" id="rubicon-starship-hud-aft-tl-value">1</span>
+										</div>
+									</div>
+									<div class="rubicon-hud-column rubicon-starship-hud-quadrant-box rubicon-starship-hud-quadrant-pd-box">
+										<div class="rubicon-hud-layer rubicon-hud-background-layer">
+										</div>
+										<div class="rubicon-hud-layer rubicon-hud-content-layer">
+											<span class="rubicon-starship-hud-quadrant-heading">PD</span>
+											<span class="rubicon-starship-hud-quadrant-value" id="rubicon-starship-hud-aft-pd-value">-</span>
+										</div>
+									</div>
+									<div class="rubicon-hud-column rubicon-starship-hud-quadrant-box rubicon-starship-hud-quadrant-shields-box">
+										<div class="rubicon-hud-layer rubicon-hud-background-layer">
+										</div>
+										<div class="rubicon-hud-layer rubicon-hud-content-layer">
+											<span class="rubicon-starship-hud-quadrant-heading">SH</span>
+											<span class="rubicon-starship-hud-quadrant-value" id="rubicon-starship-hud-aft-shields-value">test</span>
+										</div>
+									</div>
+									<div class="rubicon-hud-column rubicon-starship-hud-quadrant-box rubicon-starship-hud-quadrant-ablative-box">
+										<div class="rubicon-hud-layer rubicon-hud-background-layer">
+										</div>
+										<div class="rubicon-hud-layer rubicon-hud-content-layer">
+										<span class="rubicon-starship-hud-quadrant-heading">AB</span>
+											<span class="rubicon-starship-hud-quadrant-value" id="rubicon-starship-hud-aft-ablative-value">test</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="rubicon-hud-column rubicon-starship-hud-quadrant-section">
+								<div class="rubicon-hud-row rubicon-starship-hud-quadrant-box rubicon-starship-hud-quadrant-ac-box">
+									<div class="rubicon-hud-layer rubicon-hud-background-layer">
+									</div>
+									<div class="rubicon-hud-layer rubicon-hud-content-layer">
+										<span class="rubicon-starship-hud-quadrant-heading">AC</span>
+										<span class="rubicon-starship-hud-quadrant-value" id="rubicon-starship-hud-starboard-ac-value">0</span>
+									</div>
+								</div>
+								<div class="rubicon-hud-row rubicon-starship-hud-quadrant-box rubicon-starship-hud-quadrant-tl-box">
+									<div class="rubicon-hud-layer rubicon-hud-background-layer">
+									</div>
+									<div class="rubicon-hud-layer rubicon-hud-content-layer">
+										<span class="rubicon-starship-hud-quadrant-heading">TL</span>
+										<span class="rubicon-starship-hud-quadrant-value" id="rubicon-starship-hud-starboard-tl-value">1</span>
+									</div>
+								</div>
+								<div class="rubicon-hud-row rubicon-starship-hud-quadrant-box rubicon-starship-hud-quadrant-pd-box">
+									<div class="rubicon-hud-layer rubicon-hud-background-layer">
+									</div>
+									<div class="rubicon-hud-layer rubicon-hud-content-layer">
+										<span class="rubicon-starship-hud-quadrant-heading">PD</span>
+										<span class="rubicon-starship-hud-quadrant-value" id="rubicon-starship-hud-starboard-pd-value">-</span>
+									</div>
+								</div>
+								<div class="rubicon-hud-row rubicon-starship-hud-quadrant-box rubicon-starship-hud-quadrant-shields-box">
+									<div class="rubicon-hud-layer rubicon-hud-background-layer">
+									</div>
+									<div class="rubicon-hud-layer rubicon-hud-content-layer">
+										<span class="rubicon-starship-hud-quadrant-heading">SH</span>
+										<span class="rubicon-starship-hud-quadrant-value" id="rubicon-starship-hud-starboard-shields-value">test</span>
+									</div>
+								</div>
+								<div class="rubicon-hud-row rubicon-starship-hud-quadrant-box rubicon-starship-hud-quadrant-ablative-box">
+									<div class="rubicon-hud-layer rubicon-hud-background-layer">
+									</div>
+									<div class="rubicon-hud-layer rubicon-hud-content-layer">
+										<span class="rubicon-starship-hud-quadrant-heading">AB</span>
+										<span class="rubicon-starship-hud-quadrant-value" id="rubicon-starship-hud-starboard-ablative-value">test</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="rubicon-hud-column rubicon-hud-left-column-padding-column">
+						<!-- padding column -->
+						<div class="rubicon-hud-row rubicon-hud-left-column-padding-column-top-row">
+						</div>
+						<div class="rubicon-hud-row rubicon-hud-left-column-padding-column-bottom-row">
+						</div>
+					</div>
+				</div>
+			</div>
 			<div class="rubicon-hud-column">
-				<div class="rubicon-hud-row">
-					<div class="rubicon-hud-column rubicon-starship-hud-quadrant-section">
-						<div class="rubicon-hud-row rubicon-starship-hud-quadrant-box rubicon-starship-hud-quadrant-ac-box">
-							<div class="rubicon-hud-layer rubicon-hud-background-layer">
+				<div class="rubicon-hud-row rubicon-hud-information-row rubicon-starship-hud-information-row">
+					<div class="rubicon-hud-column" id="rubicon-starship-hud-bars">
+						<div class="rubicon-starship-hud-bar" id="rubicon-starship-hud-bar-health">
+							<div class="rubicon-hud-layer rubicon-hud-background-layer" id="rubicon-starship-hud-health-background">
 							</div>
 							<div class="rubicon-hud-layer rubicon-hud-content-layer">
-								<span class="rubicon-starship-hud-quadrant-heading">AC</span>
-								<span class="rubicon-starship-hud-quadrant-value" id="rubicon-starship-hud-port-ac-value">0</span>
+								<span class="rubicon-hud-heading">HP</span>
+								<span class="rubicon-hud-value" id="rubicon-starship-hud-health-value">1234 / 1234</span>
 							</div>
 						</div>
-						<div class="rubicon-hud-row rubicon-starship-hud-quadrant-box rubicon-starship-hud-quadrant-tl-box">
-							<div class="rubicon-hud-layer rubicon-hud-background-layer">
+						<div class="rubicon-starship-hud-bar" id="rubicon-starship-hud-bar-shields">
+							<div class="rubicon-hud-layer rubicon-hud-background-layer" id="rubicon-starship-hud-shields-background">
 							</div>
 							<div class="rubicon-hud-layer rubicon-hud-content-layer">
-								<span class="rubicon-starship-hud-quadrant-heading">TL</span>
-								<span class="rubicon-starship-hud-quadrant-value" id="rubicon-starship-hud-port-tl-value">1</span>
+								<span class="rubicon-hud-heading">SH</span>
+								<span class="rubicon-hud-value" id="rubicon-starship-hud-shields-value">567 / 567</span>
 							</div>
 						</div>
-						<div class="rubicon-hud-row rubicon-starship-hud-quadrant-box rubicon-starship-hud-quadrant-pd-box">
-							<div class="rubicon-hud-layer rubicon-hud-background-layer">
+						<div class="rubicon-starship-hud-bar" id="rubicon-starship-hud-bar-icm">
+							<div class="rubicon-hud-layer rubicon-hud-background-layer" id="rubicon-starship-hud-icm-background">
 							</div>
 							<div class="rubicon-hud-layer rubicon-hud-content-layer">
-								<span class="rubicon-starship-hud-quadrant-heading">PD</span>
-								<span class="rubicon-starship-hud-quadrant-value" id="rubicon-starship-hud-port-pd-value">-</span>
-							</div>
-						</div>
-						<div class="rubicon-hud-row rubicon-starship-hud-quadrant-box rubicon-starship-hud-quadrant-shields-box">
-							<div class="rubicon-hud-layer rubicon-hud-background-layer">
-							</div>
-							<div class="rubicon-hud-layer rubicon-hud-content-layer">
-								<span class="rubicon-starship-hud-quadrant-heading">SH</span>
-								<span class="rubicon-starship-hud-quadrant-value" id="rubicon-starship-hud-port-shields-value">test</span>
-							</div>
-						</div>
-						<div class="rubicon-hud-row rubicon-starship-hud-quadrant-box rubicon-starship-hud-quadrant-ablative-box">
-							<div class="rubicon-hud-layer rubicon-hud-background-layer">
-							</div>
-							<div class="rubicon-hud-layer rubicon-hud-content-layer">
-								<span class="rubicon-starship-hud-quadrant-heading">AB</span>
-								<span class="rubicon-starship-hud-quadrant-value" id="rubicon-starship-hud-port-ablative-value">test</span>
+								<span class="rubicon-hud-heading">ICM</span>
+								<span class="rubicon-hud-value" id="rubicon-starship-hud-icm-value">99 / 99</span>
 							</div>
 						</div>
 					</div>
 					<div class="rubicon-hud-column">
-						<div class="rubicon-hud-row rubicon-starship-hud-quadrant-section">
-							<div class="rubicon-hud-column rubicon-starship-hud-quadrant-box rubicon-starship-hud-quadrant-ac-box">
+						<div class="rubicon-hud-ac rubicon-hud-row">
+							<div class="rubicon-hud-column rubicon-hud-threshold-box" id="rubicon-starship-hud-dt">
 								<div class="rubicon-hud-layer rubicon-hud-background-layer">
 								</div>
 								<div class="rubicon-hud-layer rubicon-hud-content-layer">
-								<span class="rubicon-starship-hud-quadrant-heading">AC</span>
-									<span class="rubicon-starship-hud-quadrant-value" id="rubicon-starship-hud-forward-ac-value">0</span>
+									<span class="rubicon-hud-ac-heading">DT</span>
+									<span class="rubicon-hud-ac-value" id="rubicon-starship-hud-dt-value">100</span>
 								</div>
 							</div>
-							<div class="rubicon-hud-column rubicon-starship-hud-quadrant-box rubicon-starship-hud-quadrant-tl-box">
+							<div class="rubicon-hud-column rubicon-hud-threshold-box" id="rubicon-starship-hud-ct">
 								<div class="rubicon-hud-layer rubicon-hud-background-layer">
 								</div>
 								<div class="rubicon-hud-layer rubicon-hud-content-layer">
-								<span class="rubicon-starship-hud-quadrant-heading">TL</span>
-									<span class="rubicon-starship-hud-quadrant-value" id="rubicon-starship-hud-forward-tl-value">1</span>
+									<span class="rubicon-hud-ac-heading">CT</span>
+									<span class="rubicon-hud-ac-value" id="rubicon-starship-hud-ct-value">100</span>
 								</div>
 							</div>
-							<div class="rubicon-hud-column rubicon-starship-hud-quadrant-box rubicon-starship-hud-quadrant-pd-box">
+							<div class="rubicon-hud-column rubicon-hud-threshold-box" id="rubicon-starship-hud-movement">
 								<div class="rubicon-hud-layer rubicon-hud-background-layer">
 								</div>
 								<div class="rubicon-hud-layer rubicon-hud-content-layer">
-								<span class="rubicon-starship-hud-quadrant-heading">PD</span>
-									<span class="rubicon-starship-hud-quadrant-value" id="rubicon-starship-hud-forward-pd-value">-</span>
+									<span class="rubicon-hud-ac-heading">Move</span>
+									<span class="rubicon-hud-ac-value" id="rubicon-starship-hud-movement-value">100</span>
 								</div>
 							</div>
-							<div class="rubicon-hud-column rubicon-starship-hud-quadrant-box rubicon-starship-hud-quadrant-shields-box">
+							<div class="rubicon-hud-column rubicon-hud-threshold-box" id="rubicon-starship-hud-turn">
 								<div class="rubicon-hud-layer rubicon-hud-background-layer">
 								</div>
 								<div class="rubicon-hud-layer rubicon-hud-content-layer">
-								<span class="rubicon-starship-hud-quadrant-heading">SH</span>
-									<span class="rubicon-starship-hud-quadrant-value" id="rubicon-starship-hud-forward-shields-value">test</span>
+									<span class="rubicon-hud-ac-heading">Turn</span>
+									<span class="rubicon-hud-ac-value" id="rubicon-starship-hud-turn-value">100</span>
 								</div>
 							</div>
-							<div class="rubicon-hud-column rubicon-starship-hud-quadrant-box rubicon-starship-hud-quadrant-ablative-box">
+							<div class="rubicon-hud-column rubicon-hud-threshold-box" id="rubicon-starship-hud-sensor">
 								<div class="rubicon-hud-layer rubicon-hud-background-layer">
 								</div>
 								<div class="rubicon-hud-layer rubicon-hud-content-layer">
-								<span class="rubicon-starship-hud-quadrant-heading">AB</span>
-									<span class="rubicon-starship-hud-quadrant-value" id="rubicon-starship-hud-forward-ablative-value">test</span>
+									<span class="rubicon-hud-ac-heading">SR</span>
+									<span class="rubicon-hud-ac-value" id="rubicon-starship-hud-sensor-value">100</span>
+								</div>
+							</div>
+							<div class="rubicon-hud-column rubicon-hud-threshold-box" id="rubicon-starship-hud-scandc">
+								<div class="rubicon-hud-layer rubicon-hud-background-layer">
+								</div>
+								<div class="rubicon-hud-layer rubicon-hud-content-layer">
+									<span class="rubicon-hud-ac-heading">SDC</span>
+									<span class="rubicon-hud-ac-value" id="rubicon-starship-hud-scandc-value">---</span>
+								</div>
+							</div>
+							<div class="rubicon-hud-column rubicon-hud-threshold-box" id="rubicon-starship-hud-actiondc">
+								<div class="rubicon-hud-layer rubicon-hud-background-layer">
+								</div>
+								<div class="rubicon-hud-layer rubicon-hud-content-layer">
+									<span class="rubicon-hud-ac-heading">ADC</span>
+									<span class="rubicon-hud-ac-value" id="rubicon-starship-hud-actiondc-value">---</span>
+								</div>
+							</div>
+							<div class="rubicon-hud-column rubicon-hud-threshold-box" id="rubicon-starship-hud-dipdc">
+								<div class="rubicon-hud-layer rubicon-hud-background-layer">
+								</div>
+								<div class="rubicon-hud-layer rubicon-hud-content-layer">
+									<span class="rubicon-hud-ac-heading">DDC</span>
+									<span class="rubicon-hud-ac-value" id="rubicon-starship-hud-dipdc-value">---</span>
 								</div>
 							</div>
 						</div>
-						<div class="rubicon-hud-row" id="rubicon-starship-hud-portrait">
-							<img src="stuff/aliens/treant-sapling/actor.png" />
-						</div>
-						<div class="rubicon-hud-row rubicon-starship-hud-quadrant-section">
-							<div class="rubicon-hud-column rubicon-starship-hud-quadrant-box rubicon-starship-hud-quadrant-ac-box">
-								<div class="rubicon-hud-layer rubicon-hud-background-layer">
+						<div class="rubicon-hud-row">
+							<div class="rubicon-hud-column">
+								<div class="rubicon-hud-row rubicon-starship-hud-systemstatus-row" id="rubicon-starship-hud-lifeSupport-row">
+									<span class="rubicon-hud-heading">Life Support</span>
+									<span class="rubicon-hud-value" id="rubicon-starship-hud-lifeSupport-value">0</span>
 								</div>
-								<div class="rubicon-hud-layer rubicon-hud-content-layer">
-									<span class="rubicon-starship-hud-quadrant-heading">AC</span>
-									<span class="rubicon-starship-hud-quadrant-value" id="rubicon-starship-hud-aft-ac-value">0</span>
+								<div class="rubicon-hud-row rubicon-starship-hud-systemstatus-row" id="rubicon-starship-hud-sensors-row">
+									<span class="rubicon-hud-heading">Sensors</span>
+									<span class="rubicon-hud-value" id="rubicon-starship-hud-sensors-value">1</span>
 								</div>
-							</div>
-							<div class="rubicon-hud-column rubicon-starship-hud-quadrant-box rubicon-starship-hud-quadrant-tl-box">
-								<div class="rubicon-hud-layer rubicon-hud-background-layer">
+								<div class="rubicon-hud-row rubicon-starship-hud-systemstatus-row" id="rubicon-starship-hud-engines-row">
+									<span class="rubicon-hud-heading">Engines</span>
+									<span class="rubicon-hud-value" id="rubicon-starship-hud-engines-value">2</span>
 								</div>
-								<div class="rubicon-hud-layer rubicon-hud-content-layer">
-									<span class="rubicon-starship-hud-quadrant-heading">TL</span>
-									<span class="rubicon-starship-hud-quadrant-value" id="rubicon-starship-hud-aft-tl-value">1</span>
-								</div>
-							</div>
-							<div class="rubicon-hud-column rubicon-starship-hud-quadrant-box rubicon-starship-hud-quadrant-pd-box">
-								<div class="rubicon-hud-layer rubicon-hud-background-layer">
-								</div>
-								<div class="rubicon-hud-layer rubicon-hud-content-layer">
-									<span class="rubicon-starship-hud-quadrant-heading">PD</span>
-									<span class="rubicon-starship-hud-quadrant-value" id="rubicon-starship-hud-aft-pd-value">-</span>
+								<div class="rubicon-hud-row rubicon-starship-hud-systemstatus-row" id="rubicon-starship-hud-powerCore-row">
+									<span class="rubicon-hud-heading">Power Core</span>
+									<span class="rubicon-hud-value" id="rubicon-starship-hud-powerCore-value">3</span>
 								</div>
 							</div>
-							<div class="rubicon-hud-column rubicon-starship-hud-quadrant-box rubicon-starship-hud-quadrant-shields-box">
-								<div class="rubicon-hud-layer rubicon-hud-background-layer">
+							<div class="rubicon-hud-column">
+								<div class="rubicon-hud-row rubicon-starship-hud-systemstatus-row" id="rubicon-starship-hud-weaponsArrayForward-row">
+									<span class="rubicon-hud-heading">W-Forward</span>
+									<span class="rubicon-hud-value" id="rubicon-starship-hud-weaponsArrayForward-value">4</span>
 								</div>
-								<div class="rubicon-hud-layer rubicon-hud-content-layer">
-									<span class="rubicon-starship-hud-quadrant-heading">SH</span>
-									<span class="rubicon-starship-hud-quadrant-value" id="rubicon-starship-hud-aft-shields-value">test</span>
+								<div class="rubicon-hud-row rubicon-starship-hud-systemstatus-row" id="rubicon-starship-hud-weaponsArrayPort-row">
+									<span class="rubicon-hud-heading">W-Port</span>
+									<span class="rubicon-hud-value" id="rubicon-starship-hud-weaponsArrayPort-value">5</span>
 								</div>
-							</div>
-							<div class="rubicon-hud-column rubicon-starship-hud-quadrant-box rubicon-starship-hud-quadrant-ablative-box">
-								<div class="rubicon-hud-layer rubicon-hud-background-layer">
+								<div class="rubicon-hud-row rubicon-starship-hud-systemstatus-row" id="rubicon-starship-hud-weaponsArrayStarboard-row">
+									<span class="rubicon-hud-heading">W-Starboard</span>
+									<span class="rubicon-hud-value" id="rubicon-starship-hud-weaponsArrayStarboard-value">6</span>
 								</div>
-								<div class="rubicon-hud-layer rubicon-hud-content-layer">
-								<span class="rubicon-starship-hud-quadrant-heading">AB</span>
-									<span class="rubicon-starship-hud-quadrant-value" id="rubicon-starship-hud-aft-ablative-value">test</span>
+								<div class="rubicon-hud-row rubicon-starship-hud-systemstatus-row" id="rubicon-starship-hud-weaponsArrayAft-row">
+									<span class="rubicon-hud-heading">W-Aft</span>
+									<span class="rubicon-hud-value" id="rubicon-starship-hud-weaponsArrayAft-value">7</span>
 								</div>
-							</div>
-						</div>
-					</div>
-					<div class="rubicon-hud-column rubicon-starship-hud-quadrant-section">
-						<div class="rubicon-hud-row rubicon-starship-hud-quadrant-box rubicon-starship-hud-quadrant-ac-box">
-							<div class="rubicon-hud-layer rubicon-hud-background-layer">
-							</div>
-							<div class="rubicon-hud-layer rubicon-hud-content-layer">
-								<span class="rubicon-starship-hud-quadrant-heading">AC</span>
-								<span class="rubicon-starship-hud-quadrant-value" id="rubicon-starship-hud-starboard-ac-value">0</span>
-							</div>
-						</div>
-						<div class="rubicon-hud-row rubicon-starship-hud-quadrant-box rubicon-starship-hud-quadrant-tl-box">
-							<div class="rubicon-hud-layer rubicon-hud-background-layer">
-							</div>
-							<div class="rubicon-hud-layer rubicon-hud-content-layer">
-								<span class="rubicon-starship-hud-quadrant-heading">TL</span>
-								<span class="rubicon-starship-hud-quadrant-value" id="rubicon-starship-hud-starboard-tl-value">1</span>
-							</div>
-						</div>
-						<div class="rubicon-hud-row rubicon-starship-hud-quadrant-box rubicon-starship-hud-quadrant-pd-box">
-							<div class="rubicon-hud-layer rubicon-hud-background-layer">
-							</div>
-							<div class="rubicon-hud-layer rubicon-hud-content-layer">
-								<span class="rubicon-starship-hud-quadrant-heading">PD</span>
-								<span class="rubicon-starship-hud-quadrant-value" id="rubicon-starship-hud-starboard-pd-value">-</span>
-							</div>
-						</div>
-						<div class="rubicon-hud-row rubicon-starship-hud-quadrant-box rubicon-starship-hud-quadrant-shields-box">
-							<div class="rubicon-hud-layer rubicon-hud-background-layer">
-							</div>
-							<div class="rubicon-hud-layer rubicon-hud-content-layer">
-								<span class="rubicon-starship-hud-quadrant-heading">SH</span>
-								<span class="rubicon-starship-hud-quadrant-value" id="rubicon-starship-hud-starboard-shields-value">test</span>
-							</div>
-						</div>
-						<div class="rubicon-hud-row rubicon-starship-hud-quadrant-box rubicon-starship-hud-quadrant-ablative-box">
-							<div class="rubicon-hud-layer rubicon-hud-background-layer">
-							</div>
-							<div class="rubicon-hud-layer rubicon-hud-content-layer">
-								<span class="rubicon-starship-hud-quadrant-heading">AB</span>
-								<span class="rubicon-starship-hud-quadrant-value" id="rubicon-starship-hud-starboard-ablative-value">test</span>
 							</div>
 						</div>
 					</div>
+				</div>
+				<div class="rubicon-hud-action-bar rubicon-hud-row">
+					<div class="rubicon-hud-action-button" data-action="myStarshipActions">
+						<span class="macro-key">S1</span>
+						<img src="icons/magic/movement/trail-streak-pink.webp"/><span class="rubicon-hud-action-label">My Ship<br/>Actions</span>
+					</div>
+					<div class="rubicon-hud-action-button" data-action="allStarshipActions">
+						<span class="macro-key">S2</span>
+						<img src="icons/magic/movement/trail-streak-zigzag-yellow.webp"/><span class="rubicon-hud-action-label">All Ship<br/>Actions</span>
+					</div>
+					<div class="rubicon-hud-action-button" data-action="starshipControlPlayer">
+						<span class="macro-key">S3</span>
+						<img src="icons/magic/movement/trail-streak-zigzag-teal.webp"/><span class="rubicon-hud-action-label">My Crew<br/>Actions</span>
+					</div>
+					<div class="rubicon-hud-action-button" data-action="rollableTable">
+						<span class="macro-key">S4</span>
+						<img src="systems/sfrpg/icons/spells/share_language.webp"/><span class="rubicon-hud-action-label">Roll<br/>Table</span>
+					</div>
+					<div class="rubicon-hud-action-button" style="width: 236px; pointer-events: none;">
+						<span class="rubicon-hud-action-label" style="width: 100%; height: 100%; line-height: 28px;">More Buttons Coming Soon</span>
+					</div>
+				</div>
+				<div class="rubicon-hud-row rubicon-hud-dummy-action-bar-row">
 				</div>
 			</div>
-			<div class="rubicon-hud-column">
-				<div class="rubicon-hud-separator"></div>
-			</div>
-			<div class="rubicon-hud-column" id="rubicon-hud-bars">
-				<div class="rubicon-hud-ac rubicon-hud-row">
-					<div class="rubicon-hud-column rubicon-hud-threshold-box" id="rubicon-starship-hud-dt">
-						<div class="rubicon-hud-layer rubicon-hud-background-layer">
-						</div>
-						<div class="rubicon-hud-layer rubicon-hud-content-layer">
-							<span class="rubicon-hud-ac-heading">DT</span>
-							<span class="rubicon-hud-ac-value" id="rubicon-starship-hud-dt-value">100</span>
-						</div>
-					</div>
-					<div class="rubicon-hud-column rubicon-hud-threshold-box" id="rubicon-starship-hud-ct">
-						<div class="rubicon-hud-layer rubicon-hud-background-layer">
-						</div>
-						<div class="rubicon-hud-layer rubicon-hud-content-layer">
-							<span class="rubicon-hud-ac-heading">CT</span>
-							<span class="rubicon-hud-ac-value" id="rubicon-starship-hud-ct-value">100</span>
-						</div>
-					</div>
-					<div class="rubicon-hud-column rubicon-hud-ac-box" id="rubicon-starship-hud-scandc">
-						<div class="rubicon-hud-layer rubicon-hud-background-layer">
-						</div>
-						<div class="rubicon-hud-layer rubicon-hud-content-layer">
-							<span class="rubicon-hud-ac-heading">SDC</span>
-							<span class="rubicon-hud-ac-value" id="rubicon-starship-hud-scandc-value">---</span>
-						</div>
-					</div>
-					<div class="rubicon-hud-column rubicon-hud-ac-box" id="rubicon-starship-hud-actiondc">
-						<div class="rubicon-hud-layer rubicon-hud-background-layer">
-						</div>
-						<div class="rubicon-hud-layer rubicon-hud-content-layer">
-							<span class="rubicon-hud-ac-heading">ADC</span>
-							<span class="rubicon-hud-ac-value" id="rubicon-starship-hud-actiondc-value">---</span>
-						</div>
-					</div>
-					<div class="rubicon-hud-column rubicon-hud-ac-box" id="rubicon-starship-hud-dipdc">
-						<div class="rubicon-hud-layer rubicon-hud-background-layer">
-						</div>
-						<div class="rubicon-hud-layer rubicon-hud-content-layer">
-							<span class="rubicon-hud-ac-heading">DDC</span>
-							<span class="rubicon-hud-ac-value" id="rubicon-starship-hud-dipdc-value">---</span>
-						</div>
-					</div>
-					<div class="rubicon-hud-column rubicon-hud-threshold-box" id="rubicon-starship-hud-movement">
-						<div class="rubicon-hud-layer rubicon-hud-background-layer">
-						</div>
-						<div class="rubicon-hud-layer rubicon-hud-content-layer">
-							<span class="rubicon-hud-ac-heading">Mv</span>
-							<span class="rubicon-hud-ac-value" id="rubicon-starship-hud-movement-value">100</span>
-						</div>
-					</div>
-					<div class="rubicon-hud-column rubicon-hud-threshold-box" id="rubicon-starship-hud-turn">
-						<div class="rubicon-hud-layer rubicon-hud-background-layer">
-						</div>
-						<div class="rubicon-hud-layer rubicon-hud-content-layer">
-							<span class="rubicon-hud-ac-heading">Tn</span>
-							<span class="rubicon-hud-ac-value" id="rubicon-starship-hud-turn-value">100</span>
-						</div>
-					</div>
-					<div class="rubicon-hud-column rubicon-hud-threshold-box" id="rubicon-starship-hud-sensor">
-						<div class="rubicon-hud-layer rubicon-hud-background-layer">
-						</div>
-						<div class="rubicon-hud-layer rubicon-hud-content-layer">
-							<span class="rubicon-hud-ac-heading">SR</span>
-							<span class="rubicon-hud-ac-value" id="rubicon-starship-hud-sensor-value">100</span>
-						</div>
-					</div>
-				</div>
-				<div class="rubicon-hud-row">
-					<div class="rubicon-starship-hud-bar" id="rubicon-starship-hud-bar-health">
-						<div class="rubicon-hud-layer rubicon-hud-background-layer" id="rubicon-starship-hud-health-background">
-						</div>
-						<div class="rubicon-hud-layer rubicon-hud-content-layer">
-							<span class="rubicon-hud-heading">HP</span>
-							<span class="rubicon-hud-value" id="rubicon-starship-hud-health-value">1234 / 1234</span>
-						</div>
-					</div>
-					<div class="rubicon-starship-hud-bar" id="rubicon-starship-hud-bar-shields">
-						<div class="rubicon-hud-layer rubicon-hud-background-layer" id="rubicon-starship-hud-shields-background">
-						</div>
-						<div class="rubicon-hud-layer rubicon-hud-content-layer">
-							<span class="rubicon-hud-heading">SH</span>
-							<span class="rubicon-hud-value" id="rubicon-starship-hud-shields-value">567 / 567</span>
-						</div>
-					</div>
-					<div class="rubicon-starship-hud-bar" id="rubicon-starship-hud-bar-icm">
-						<div class="rubicon-hud-layer rubicon-hud-background-layer" id="rubicon-starship-hud-icm-background">
-						</div>
-						<div class="rubicon-hud-layer rubicon-hud-content-layer">
-							<span class="rubicon-hud-heading">ICM</span>
-							<span class="rubicon-hud-value" id="rubicon-starship-hud-icm-value">99 / 99</span>
-						</div>
-					</div>
-				</div>
-				<div class="rubicon-hud-row">
-					<div class="rubicon-hud-column">
-						<div class="rubicon-hud-row rubicon-starship-hud-systemstatus-row" id="rubicon-starship-hud-lifeSupport-row">
-							<span class="rubicon-hud-heading">Life Support</span>
-							<span class="rubicon-hud-value" id="rubicon-starship-hud-lifeSupport-value">0</span>
-						</div>
-						<div class="rubicon-hud-row rubicon-starship-hud-systemstatus-row" id="rubicon-starship-hud-sensors-row">
-							<span class="rubicon-hud-heading">Sensors</span>
-							<span class="rubicon-hud-value" id="rubicon-starship-hud-sensors-value">1</span>
-						</div>
-						<div class="rubicon-hud-row rubicon-starship-hud-systemstatus-row" id="rubicon-starship-hud-engines-row">
-							<span class="rubicon-hud-heading">Engines</span>
-							<span class="rubicon-hud-value" id="rubicon-starship-hud-engines-value">2</span>
-						</div>
-						<div class="rubicon-hud-row rubicon-starship-hud-systemstatus-row" id="rubicon-starship-hud-powerCore-row">
-							<span class="rubicon-hud-heading">Power Core</span>
-							<span class="rubicon-hud-value" id="rubicon-starship-hud-powerCore-value">3</span>
-						</div>
-						<div class="rubicon-hud-row rubicon-starship-hud-systemstatus-row" id="rubicon-starship-hud-weaponsArrayForward-row">
-							<span class="rubicon-hud-heading">W-Forward</span>
-							<span class="rubicon-hud-value" id="rubicon-starship-hud-weaponsArrayForward-value">4</span>
-						</div>
-						<div class="rubicon-hud-row rubicon-starship-hud-systemstatus-row" id="rubicon-starship-hud-weaponsArrayPort-row">
-							<span class="rubicon-hud-heading">W-Port</span>
-							<span class="rubicon-hud-value" id="rubicon-starship-hud-weaponsArrayPort-value">5</span>
-						</div>
-						<div class="rubicon-hud-row rubicon-starship-hud-systemstatus-row" id="rubicon-starship-hud-weaponsArrayStarboard-row">
-							<span class="rubicon-hud-heading">W-Starboard</span>
-							<span class="rubicon-hud-value" id="rubicon-starship-hud-weaponsArrayStarboard-value">6</span>
-						</div>
-						<div class="rubicon-hud-row rubicon-starship-hud-systemstatus-row" id="rubicon-starship-hud-weaponsArrayAft-row">
-							<span class="rubicon-hud-heading">W-Aft</span>
-							<span class="rubicon-hud-value" id="rubicon-starship-hud-weaponsArrayAft-value">7</span>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="rubicon-hud-action-bar rubicon-hud-row">
-		<div class="rubicon-hud-action-button" data-action="myStarshipActions">
-			<span class="macro-key">S1</span>
-			<img src="icons/magic/movement/trail-streak-pink.webp"/><span class="rubicon-hud-action-label">My Ship<br/>Actions</span>
-		</div>
-		<div class="rubicon-hud-action-button" data-action="allStarshipActions">
-			<span class="macro-key">S1</span>
-			<img src="icons/magic/movement/trail-streak-zigzag-yellow.webp"/><span class="rubicon-hud-action-label">All Ship<br/>Actions</span>
-		</div>
-		<div class="rubicon-hud-action-button" data-action="starshipControlPlayer">
-			<span class="macro-key">S2</span>
-			<img src="icons/magic/movement/trail-streak-zigzag-teal.webp"/><span class="rubicon-hud-action-label">Crew<br/>Actions</span>
-		</div>
-		<div class="rubicon-hud-action-button" data-action="rollableTable">
-			<span class="macro-key">S3</span>
-			<img src="systems/sfrpg/icons/spells/share_language.webp"/><span class="rubicon-hud-action-label">Roll<br/>Table</span>
 		</div>
 	</div>
 </div>

@@ -6,185 +6,212 @@
 		</div>
 	</div>
 	<div class="rubicon-spell-hud rubicon-hud-column">
-		<div class="rubicon-spell-hud-row rubicon-spell-hud-title">
-			<span class="rubicon-hud-heading"><b>Spells</b></span>
+		<div class="rubicon-hud-row">
+			<div class="rubicon-hud-column rubicon-spell-hud-inner">
+				<div class="rubicon-spell-hud-row rubicon-spell-hud-title">
+					<span class="rubicon-hud-heading">Spells</span>
+				</div>
+				<div class="rubicon-spell-hud-row">
+					<span class="rubicon-hud-heading">Lv 1</span>
+					<span class="rubicon-hud-value" id="rubicon-hud-spell1-value">99</span>
+				</div>
+				<div class="rubicon-spell-hud-row">
+					<span class="rubicon-hud-heading">Lv 2</span>
+					<span class="rubicon-hud-value" id="rubicon-hud-spell2-value">V</span>
+				</div>
+				<div class="rubicon-spell-hud-row">
+					<span class="rubicon-hud-heading">Lv 3</span>
+					<span class="rubicon-hud-value" id="rubicon-hud-spell3-value">V</span>
+				</div>
+				<div class="rubicon-spell-hud-row">
+					<span class="rubicon-hud-heading">Lv 4</span>
+					<span class="rubicon-hud-value" id="rubicon-hud-spell4-value">V</span>
+				</div>
+				<div class="rubicon-spell-hud-row">
+					<span class="rubicon-hud-heading">Lv 5</span>
+					<span class="rubicon-hud-value" id="rubicon-hud-spell5-value">V</span>
+				</div>
+				<div class="rubicon-spell-hud-row">
+					<span class="rubicon-hud-heading">Lv 6</span>
+					<span class="rubicon-hud-value" id="rubicon-hud-spell6-value">V</span>
+				</div>
+			</div>
 		</div>
-		<div class="rubicon-spell-hud-row">
-			<span class="rubicon-hud-heading">Lv 1</span>
-			<span class="rubicon-hud-value" id="rubicon-hud-spell1-value">99</span>
-		</div>
-		<div class="rubicon-spell-hud-row">
-			<span class="rubicon-hud-heading">Lv 2</span>
-			<span class="rubicon-hud-value" id="rubicon-hud-spell2-value">V</span>
-		</div>
-		<div class="rubicon-spell-hud-row">
-			<span class="rubicon-hud-heading">Lv 3</span>
-			<span class="rubicon-hud-value" id="rubicon-hud-spell3-value">V</span>
-		</div>
-		<div class="rubicon-spell-hud-row">
-			<span class="rubicon-hud-heading">Lv 4</span>
-			<span class="rubicon-hud-value" id="rubicon-hud-spell4-value">V</span>
-		</div>
-		<div class="rubicon-spell-hud-row">
-			<span class="rubicon-hud-heading">Lv 5</span>
-			<span class="rubicon-hud-value" id="rubicon-hud-spell5-value">V</span>
-		</div>
-		<div class="rubicon-spell-hud-row">
-			<span class="rubicon-hud-heading">Lv 6</span>
-			<span class="rubicon-hud-value" id="rubicon-hud-spell6-value">V</span>
+		<div class="rubicon-hud-row">
+			<div id="rubicon-hud-action-spell-cast-button" class="rubicon-hud-action-button" data-action="cast">
+				<span class="macro-key">S8</span>
+				<img src="icons/magic/symbols/runes-star-pentagon-orange-purple.webp"/><span class="rubicon-hud-action-label">Cast<br/>Spell</span>
+			</div>
 		</div>
 	</div>
-	<div class="rubicon-hud rubicon-hud-column">
+	<div class="rubicon-hud-column">
 		<div class="rubicon-hud-title">
 			<span class="rubicon-hud-heading" id="rubicon-hud-character-name">Young Treant</span>
 			<span class="rubicon-hud-value" id="rubicon-hud-character-level">CR 1/3</span>
 		</div>
 		<div class="rubicon-hud-row">
-			<div class="rubicon-hud-column" id="rubicon-hud-portrait">
-				<img src="stuff/aliens/treant-sapling/actor.png" />
-			</div>
-			<div class="rubicon-hud-column" id="rubicon-hud-bars">
-				<div class="rubicon-hud-ac rubicon-hud-row">
-					<div class="rubicon-hud-column rubicon-hud-ac-box" id="rubicon-hud-ac-eac">
-						<div class="rubicon-hud-layer rubicon-hud-background-layer">
-						</div>
-						<div class="rubicon-hud-layer rubicon-hud-content-layer">
-							<span class="rubicon-hud-ac-heading">EAC</span>
-							<span class="rubicon-hud-ac-value" id="rubicon-hud-eac-value">100</span>
+			<div class="rubicon-hud-column rubicon-hud-left-column">
+				<div class="rubicon-hud-row rubicon-hud-left-column-main-row">
+					<div class="rubicon-hud-column rubicon-hud-left-column-main-column">
+						<div class="rubicon-hud-row">
+							<div class="rubicon-hud-column" id="rubicon-hud-portrait">
+								<img src="stuff/aliens/treant-sapling/actor.png" />
+							</div>
 						</div>
 					</div>
-					<div class="rubicon-hud-column rubicon-hud-ac-box" id="rubicon-hud-ac-kac">
-						<div class="rubicon-hud-layer rubicon-hud-background-layer">
+					<div class="rubicon-hud-column rubicon-hud-left-column-padding-column">
+						<!-- padding column -->
+						<div class="rubicon-hud-row rubicon-hud-left-column-padding-column-top-row">
 						</div>
-						<div class="rubicon-hud-layer rubicon-hud-content-layer">
-							<span class="rubicon-hud-ac-heading">KAC</span>
-							<span class="rubicon-hud-ac-value" id="rubicon-hud-kac-value">100</span>
+						<div class="rubicon-hud-row rubicon-hud-left-column-padding-column-bottom-row">
 						</div>
-					</div>
-					<div class="rubicon-hud-column rubicon-hud-speed-box" id="rubicon-hud-speed">
-						<div class="rubicon-hud-layer rubicon-hud-background-layer">
-						</div>
-						<div class="rubicon-hud-layer rubicon-hud-content-layer">
-							<span class="rubicon-hud-ac-heading" id="rubicon-hud-speed-heading">Move</span>
-							<span class="rubicon-hud-ac-value" id="rubicon-hud-speed-value">80 ft</span>
-						</div>
-					</div>
-				</div>
-				<div class="rubicon-hud-bar" id="rubicon-hud-bar-health">
-					<div class="rubicon-hud-layer rubicon-hud-background-layer" id="rubicon-hud-health-background">
-					</div>
-					<div class="rubicon-hud-layer rubicon-hud-content-layer">
-						<span class="rubicon-hud-heading">HP</span>
-						<span class="rubicon-hud-value" id="rubicon-hud-health-value">1234 / 1234</span>
-					</div>
-				</div>
-				<div class="rubicon-hud-bar" id="rubicon-hud-bar-stamina">
-					<div class="rubicon-hud-layer rubicon-hud-background-layer" id="rubicon-hud-stamina-background">
-					</div>
-					<div class="rubicon-hud-layer rubicon-hud-content-layer">
-						<span class="rubicon-hud-heading">SP</span>
-						<span class="rubicon-hud-value" id="rubicon-hud-stamina-value">567 / 567</span>
-					</div>
-				</div>
-				<div class="rubicon-hud-bar" id="rubicon-hud-bar-resolve">
-					<div class="rubicon-hud-layer rubicon-hud-background-layer" id="rubicon-hud-resolve-background">
-					</div>
-					<div class="rubicon-hud-layer rubicon-hud-content-layer">
-						<span class="rubicon-hud-heading">RP</span>
-						<span class="rubicon-hud-value" id="rubicon-hud-resolve-value">89 / 89</span>
 					</div>
 				</div>
 			</div>
-			<div class="rubicon-hud-column" id="rubicon-hud-right-column">
-				<div class="rubicon-hud-column" id="rubicon-hud-equipment-section">
-					<div class="rubicon-hud-row rubicon-hud-equipment" id="rubicon-hud-equipment-0">
-						<div class="rubicon-hud-equipment-icon"><img src="systems/sfrpg/icons/equipment/weapons/semi-auto-pistol-tactical.webp"/></div>
-						<div class="rubicon-hud-equipment-name">Blaster of Extreme Blasting</div>
-						<div class="rubicon-hud-equipment-charges">4 / 4</div>
+			<div class="rubicon-hud-column">
+				<div class="rubicon-hud-row rubicon-hud-information-row">
+					<div class="rubicon-hud-column" id="rubicon-hud-bars">
+						<div class="rubicon-hud-ac rubicon-hud-row">
+							<div class="rubicon-hud-column rubicon-hud-ac-box" id="rubicon-hud-ac-eac">
+								<div class="rubicon-hud-layer rubicon-hud-background-layer">
+								</div>
+								<div class="rubicon-hud-layer rubicon-hud-content-layer">
+									<span class="rubicon-hud-ac-heading">EAC</span>
+									<span class="rubicon-hud-ac-value" id="rubicon-hud-eac-value">100</span>
+								</div>
+							</div>
+							<div class="rubicon-hud-column rubicon-hud-ac-box" id="rubicon-hud-ac-kac">
+								<div class="rubicon-hud-layer rubicon-hud-background-layer">
+								</div>
+								<div class="rubicon-hud-layer rubicon-hud-content-layer">
+									<span class="rubicon-hud-ac-heading">KAC</span>
+									<span class="rubicon-hud-ac-value" id="rubicon-hud-kac-value">100</span>
+								</div>
+							</div>
+							<div class="rubicon-hud-column rubicon-hud-speed-box" id="rubicon-hud-speed">
+								<div class="rubicon-hud-layer rubicon-hud-background-layer">
+								</div>
+								<div class="rubicon-hud-layer rubicon-hud-content-layer">
+									<span class="rubicon-hud-ac-heading" id="rubicon-hud-speed-heading">Move</span>
+									<span class="rubicon-hud-ac-value" id="rubicon-hud-speed-value">80 ft</span>
+								</div>
+							</div>
+						</div>
+						<div class="rubicon-hud-bar" id="rubicon-hud-bar-health">
+							<div class="rubicon-hud-layer rubicon-hud-background-layer" id="rubicon-hud-health-background">
+							</div>
+							<div class="rubicon-hud-layer rubicon-hud-content-layer">
+								<span class="rubicon-hud-heading">HP</span>
+								<span class="rubicon-hud-value" id="rubicon-hud-health-value">1234 / 1234</span>
+							</div>
+						</div>
+						<div class="rubicon-hud-bar" id="rubicon-hud-bar-stamina">
+							<div class="rubicon-hud-layer rubicon-hud-background-layer" id="rubicon-hud-stamina-background">
+							</div>
+							<div class="rubicon-hud-layer rubicon-hud-content-layer">
+								<span class="rubicon-hud-heading">SP</span>
+								<span class="rubicon-hud-value" id="rubicon-hud-stamina-value">567 / 567</span>
+							</div>
+						</div>
+						<div class="rubicon-hud-bar" id="rubicon-hud-bar-resolve">
+							<div class="rubicon-hud-layer rubicon-hud-background-layer" id="rubicon-hud-resolve-background">
+							</div>
+							<div class="rubicon-hud-layer rubicon-hud-content-layer">
+								<span class="rubicon-hud-heading">RP</span>
+								<span class="rubicon-hud-value" id="rubicon-hud-resolve-value">89 / 89</span>
+							</div>
+						</div>
 					</div>
-					<div class="rubicon-hud-row rubicon-hud-equipment" id="rubicon-hud-equipment-1">
-						<div class="rubicon-hud-equipment-icon"><img src="icons/svg/mystery-man.svg"/></div>
-						<div class="rubicon-hud-equipment-name">Deluxe Acid Pistol</div>
-						<div class="rubicon-hud-equipment-charges">20 / 20</div>
-					</div>
-					<div class="rubicon-hud-row rubicon-hud-equipment" id="rubicon-hud-equipment-2">
-						<div class="rubicon-hud-equipment-icon"><img src="icons/magic/nature/tree-animated-strike.webp"/></div>
-						<div class="rubicon-hud-equipment-name">Swipe</div>
-						<div class="rubicon-hud-equipment-charges"></div>
-					</div>
-					<div class="rubicon-hud-row rubicon-hud-equipment" id="rubicon-hud-equipment-3">
-						<div class="rubicon-hud-equipment-icon"><img src="icons/magic/nature/tree-animated-smile.webp"/></div>
-						<div class="rubicon-hud-equipment-name">Hurl Debris</div>
-						<div class="rubicon-hud-equipment-charges"></div>
+					<div class="rubicon-hud-column" id="rubicon-hud-right-column">
+						<div class="rubicon-hud-column" id="rubicon-hud-equipment-section">
+							<div class="rubicon-hud-row rubicon-hud-equipment" id="rubicon-hud-equipment-0">
+								<div class="rubicon-hud-equipment-icon"><img src="systems/sfrpg/icons/equipment/weapons/semi-auto-pistol-tactical.webp"/></div>
+								<div class="rubicon-hud-equipment-name">Blaster of Extreme Blasting</div>
+								<div class="rubicon-hud-equipment-charges">4 / 4</div>
+							</div>
+							<div class="rubicon-hud-row rubicon-hud-equipment" id="rubicon-hud-equipment-1">
+								<div class="rubicon-hud-equipment-icon"><img src="icons/svg/mystery-man.svg"/></div>
+								<div class="rubicon-hud-equipment-name">Deluxe Acid Pistol</div>
+								<div class="rubicon-hud-equipment-charges">20 / 20</div>
+							</div>
+							<div class="rubicon-hud-row rubicon-hud-equipment" id="rubicon-hud-equipment-2">
+								<div class="rubicon-hud-equipment-icon"><img src="icons/magic/nature/tree-animated-strike.webp"/></div>
+								<div class="rubicon-hud-equipment-name">Swipe</div>
+								<div class="rubicon-hud-equipment-charges"></div>
+							</div>
+							<div class="rubicon-hud-row rubicon-hud-equipment" id="rubicon-hud-equipment-3">
+								<div class="rubicon-hud-equipment-icon"><img src="icons/magic/nature/tree-animated-smile.webp"/></div>
+								<div class="rubicon-hud-equipment-name">Hurl Debris</div>
+								<div class="rubicon-hud-equipment-charges"></div>
+							</div>
+						</div>
+						<!--
+						<div class="rubicon-hud-row" id="rubicon-hud-consumables-section">
+							<div class="rubicon-hud-row rubicon-hud-consumable" id="rubicon-hud-consumable-0">
+								<div class="rubicon-hud-consumable-icon"><img src="systems/sfrpg/icons/equipment/weapons/semi-auto-pistol-tactical.webp"/></div>
+								<div class="rubicon-hud-consumable-amount">99</div>
+							</div>
+							<div class="rubicon-hud-row rubicon-hud-consumable" id="rubicon-hud-consumable-1">
+								<div class="rubicon-hud-consumable-icon"><img src="systems/sfrpg/icons/equipment/weapons/semi-auto-pistol-tactical.webp"/></div>
+								<div class="rubicon-hud-consumable-amount">4</div>
+							</div>
+							<div class="rubicon-hud-row rubicon-hud-consumable" id="rubicon-hud-consumable-2">
+								<div class="rubicon-hud-consumable-icon"><img src="systems/sfrpg/icons/equipment/weapons/semi-auto-pistol-tactical.webp"/></div>
+								<div class="rubicon-hud-consumable-amount">3</div>
+							</div>
+							<div class="rubicon-hud-row rubicon-hud-consumable" id="rubicon-hud-consumable-3">
+								<div class="rubicon-hud-consumable-icon"><img src="systems/sfrpg/icons/equipment/weapons/semi-auto-pistol-tactical.webp"/></div>
+								<div class="rubicon-hud-consumable-amount">2</div>
+							</div>
+							<div class="rubicon-hud-row rubicon-hud-consumable" id="rubicon-hud-consumable-4">
+								<div class="rubicon-hud-consumable-icon"><img src="systems/sfrpg/icons/equipment/weapons/semi-auto-pistol-tactical.webp"/></div>
+								<div class="rubicon-hud-consumable-amount">1</div>
+							</div>
+							<div class="rubicon-hud-row rubicon-hud-consumable" id="rubicon-hud-consumable-5">
+								<div class="rubicon-hud-consumable-icon"><img src="systems/sfrpg/icons/equipment/weapons/semi-auto-pistol-tactical.webp"/></div>
+								<div class="rubicon-hud-consumable-amount">0</div>
+							</div>
+							<div class="rubicon-hud-row rubicon-hud-consumable" id="rubicon-hud-consumable-6">
+								<div class="rubicon-hud-consumable-icon"><img src="systems/sfrpg/icons/equipment/weapons/semi-auto-pistol-tactical.webp"/></div>
+								<div class="rubicon-hud-consumable-amount">-</div>
+							</div>
+						</div>
+						-->
 					</div>
 				</div>
-				<!--
-				<div class="rubicon-hud-row" id="rubicon-hud-consumables-section">
-					<div class="rubicon-hud-row rubicon-hud-consumable" id="rubicon-hud-consumable-0">
-						<div class="rubicon-hud-consumable-icon"><img src="systems/sfrpg/icons/equipment/weapons/semi-auto-pistol-tactical.webp"/></div>
-						<div class="rubicon-hud-consumable-amount">99</div>
+				<div class="rubicon-hud-action-bar rubicon-hud-row">
+					<div class="rubicon-hud-action-button" data-action="attack">
+						<span class="macro-key">S1</span>
+						<img src="icons/skills/melee/hand-grip-sword-strike-orange.webp"/><span class="rubicon-hud-action-label">Basic<br/>Attack</span>
 					</div>
-					<div class="rubicon-hud-row rubicon-hud-consumable" id="rubicon-hud-consumable-1">
-						<div class="rubicon-hud-consumable-icon"><img src="systems/sfrpg/icons/equipment/weapons/semi-auto-pistol-tactical.webp"/></div>
-						<div class="rubicon-hud-consumable-amount">4</div>
+					<div class="rubicon-hud-action-button" data-action="altAttack">
+						<span class="macro-key">S2</span>
+						<img src="icons/skills/melee/maneuver-sword-katana-yellow.webp"/><span class="rubicon-hud-action-label">Special<br/>Attack</span>
 					</div>
-					<div class="rubicon-hud-row rubicon-hud-consumable" id="rubicon-hud-consumable-2">
-						<div class="rubicon-hud-consumable-icon"><img src="systems/sfrpg/icons/equipment/weapons/semi-auto-pistol-tactical.webp"/></div>
-						<div class="rubicon-hud-consumable-amount">3</div>
+					<div class="rubicon-hud-action-button" data-action="defend">
+						<span class="macro-key">S3</span>
+						<img src="icons/magic/defensive/shield-barrier-deflect-teal.webp"/><span class="rubicon-hud-action-label">Move/<br/>Defend</span>
 					</div>
-					<div class="rubicon-hud-row rubicon-hud-consumable" id="rubicon-hud-consumable-3">
-						<div class="rubicon-hud-consumable-icon"><img src="systems/sfrpg/icons/equipment/weapons/semi-auto-pistol-tactical.webp"/></div>
-						<div class="rubicon-hud-consumable-amount">2</div>
+					<div class="rubicon-hud-action-button" data-action="reload">
+						<span class="macro-key">S4</span>
+						<img src="modules/rubicon-sfrpg/icons/quick-menu/reload.jpg"/><span class="rubicon-hud-action-label">Equip/<br/>Reload</span>
 					</div>
-					<div class="rubicon-hud-row rubicon-hud-consumable" id="rubicon-hud-consumable-4">
-						<div class="rubicon-hud-consumable-icon"><img src="systems/sfrpg/icons/equipment/weapons/semi-auto-pistol-tactical.webp"/></div>
-						<div class="rubicon-hud-consumable-amount">1</div>
+					<div class="rubicon-hud-action-button" data-action="consumable">
+						<span class="macro-key">S5</span>
+						<img src="icons/consumables/potions/potion-vial-corked-purple.webp"/><span class="rubicon-hud-action-label">Use<br/>Item</span>
 					</div>
-					<div class="rubicon-hud-row rubicon-hud-consumable" id="rubicon-hud-consumable-5">
-						<div class="rubicon-hud-consumable-icon"><img src="systems/sfrpg/icons/equipment/weapons/semi-auto-pistol-tactical.webp"/></div>
-						<div class="rubicon-hud-consumable-amount">0</div>
+					<div class="rubicon-hud-action-button" data-action="skillAction">
+						<span class="macro-key">S6</span>
+						<img src="icons/magic/movement/chevrons-down-yellow.webp"/><span class="rubicon-hud-action-label">Skill<br/>Action</span>
 					</div>
-					<div class="rubicon-hud-row rubicon-hud-consumable" id="rubicon-hud-consumable-6">
-						<div class="rubicon-hud-consumable-icon"><img src="systems/sfrpg/icons/equipment/weapons/semi-auto-pistol-tactical.webp"/></div>
-						<div class="rubicon-hud-consumable-amount">-</div>
+					<div class="rubicon-hud-action-button" data-action="quickRoll">
+						<span class="macro-key">S7</span>
+						<img src="modules/rubicon-sfrpg/icons/quick-menu/set-of-six-ivory-dice.webp"/><span class="rubicon-hud-action-label">Quick<br/>Roll</span>
 					</div>
 				</div>
-				-->
+				<div class="rubicon-hud-row rubicon-hud-dummy-action-bar-row">
+				</div>
 			</div>
-		</div>
-	</div>
-	<div class="rubicon-hud-action-bar rubicon-hud-row">
-		<div class="rubicon-hud-action-button" data-action="attack">
-			<span class="macro-key">S1</span>
-			<img src="icons/skills/melee/hand-grip-sword-strike-orange.webp"/><span class="rubicon-hud-action-label">Basic<br/>Attack</span>
-		</div>
-		<div class="rubicon-hud-action-button" data-action="altAttack">
-			<span class="macro-key">S2</span>
-			<img src="icons/skills/melee/maneuver-sword-katana-yellow.webp"/><span class="rubicon-hud-action-label">Special<br/>Attack</span>
-		</div>
-		<div class="rubicon-hud-action-button" data-action="defend">
-			<span class="macro-key">S3</span>
-			<img src="icons/magic/defensive/shield-barrier-deflect-teal.webp"/><span class="rubicon-hud-action-label">Move/<br/>Defend</span>
-		</div>
-		<div class="rubicon-hud-action-button" data-action="reload">
-			<span class="macro-key">S4</span>
-			<img src="modules/rubicon-sfrpg/icons/quick-menu/reload.jpg"/><span class="rubicon-hud-action-label">Equip/<br/>Reload</span>
-		</div>
-		<div class="rubicon-hud-action-button" data-action="consumable">
-			<span class="macro-key">S5</span>
-			<img src="icons/consumables/potions/potion-vial-corked-purple.webp"/><span class="rubicon-hud-action-label">Use<br/>Item</span>
-		</div>
-		<div class="rubicon-hud-action-button" data-action="skillAction">
-			<span class="macro-key">S6</span>
-			<img src="icons/magic/movement/chevrons-down-yellow.webp"/><span class="rubicon-hud-action-label">Skill<br/>Action</span>
-		</div>
-		<div class="rubicon-hud-action-button" data-action="quickRoll">
-			<span class="macro-key">S7</span>
-			<img src="modules/rubicon-sfrpg/icons/quick-menu/set-of-six-ivory-dice.webp"/><span class="rubicon-hud-action-label">Quick<br/>Roll</span>
-		</div>
-		<div id="rubicon-hud-action-spell-cast-button" class="rubicon-hud-action-button" data-action="cast">
-			<span class="macro-key">S8</span>
-			<img src="icons/magic/symbols/runes-star-pentagon-orange-purple.webp"/><span class="rubicon-hud-action-label">Cast<br/>Spell</span>
 		</div>
 	</div>
 </div>

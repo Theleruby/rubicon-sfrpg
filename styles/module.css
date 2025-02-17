@@ -1,4 +1,3 @@
-
 /*===================================*/
 /* hacks */
 /*===================================*/
@@ -10,7 +9,7 @@
 /* fix player box not being wide enough to fit player names */
 #players {
 	width: 273px !important;
-	margin-left: 8px;
+    margin-left: 8px;
 }
 #players ol {
 	width: 276px !important;
@@ -38,6 +37,19 @@ li.scene-control[data-control="measure"] > i::before {
     line-height: 20px;
     vertical-align: middle;
     margin: auto;
+}
+/* move the hotbar right 265px because we need to put the rubicon HUD around it */
+footer#ui-bottom {
+    position: relative;
+    top: 56px;
+}
+footer#ui-bottom > div:last-of-type {
+    top: -53px;
+    position: relative;
+}
+footer#ui-bottom > div > #hotbar {
+    position: relative;
+    left: 265px;
 }
 /*===================================*/
 
@@ -89,7 +101,7 @@ table.rubicon-bonuses-table td:first-child {
 }
 
 .rubicon-hud-outer-container {
-    width: 610px;
+    width: 875px;
 	flex-direction: column;
 }
 
@@ -133,9 +145,21 @@ table.rubicon-bonuses-table td:first-child {
     top: -1px;
 }
 
-.rubicon-hud, .rubicon-spell-hud {
+.rubicon-spell-hud-inner {
 	margin-left: 2px;
-	height: 173px;
+	margin-right: 2px;
+	margin-bottom: 4px;
+	width: 100%;
+	height: 177px;
+    background: url(/ui/denim075.png) repeat;
+    padding: 6px;
+	border: 1px solid black;
+	border-radius: 3px;
+}
+
+.rubicon-starship-crew-hud {
+	margin-left: 2px;
+	height: 318px;
     margin-bottom: 2px;
     background: url(/ui/denim075.png) repeat;
     padding: 6px;
@@ -143,26 +167,16 @@ table.rubicon-bonuses-table td:first-child {
 	border-radius: 3px;
 }
 
-.rubicon-starship-hud, .rubicon-starship-crew-hud {
-	margin-left: 2px;
-	height: 312px;
-	margin-bottom: 2px;
-	background: url(/ui/denim075.png) repeat;
-	padding: 6px;
-	border: 1px solid black;
-	border-radius: 3px;
-}
-
 .rubicon-spell-hud {
-	width: 79px;
+	width: 82px;
 	position: absolute;
-	left: 610px;
+	left: 875px;
 }
 
 .rubicon-starship-crew-hud {
 	width: 251px;
 	position: absolute;
-	left: 610px;
+	left: 875px;
 }
 
 .rubicon-starship-crew-hud-row {
@@ -206,17 +220,33 @@ table.rubicon-bonuses-table td:first-child {
 }
 
 .rubicon-hud-title {
-    margin-bottom: 4px;
-	border-bottom: 1px solid white;
-	width: 100%;
+    width: 100%;
+    background: url(/ui/denim075.png) repeat;
+    padding-top: 5px;
+	padding-left: 6px;
+	padding-right: 6px;
+	padding-bottom: 2px;
+    border-top: 1px solid black;
+    border-left: 1px solid black;
+    border-right: 1px solid black;
+    border-bottom: 1px solid white;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
+.rubicon-hud-dummy-action-bar-row {
+	height: 55px;
 }
 
 #rubicon-hud-portrait {
-	width: 132px;
-	height: 132px;
+	width: 253px;
+	height: 239px;
 	border: 1px solid black;
 	border-radius: 3px;
 	background: rgba(0, 0, 0, 0.5);
+	margin: 4px;
 }
 
 #rubicon-hud-portrait > img {
@@ -224,15 +254,16 @@ table.rubicon-bonuses-table td:first-child {
 	height: 100%;
 	border: none;
 	object-position: center center;
-	object-fit: contain;
+	object-fit: cover;
 }
 
 #rubicon-starship-hud-portrait {
-	width: 196px;
+	width: 183px;
 	height: 196px;
 	border: 1px solid black;
 	border-radius: 3px;
 	background: rgba(0, 0, 0, 0.5);
+	margin: 2px;
 }
 
 #rubicon-starship-hud-portrait > img {
@@ -259,7 +290,7 @@ table.rubicon-bonuses-table td:first-child {
 	border: 1px solid black;
 	border-radius: 3px;
 	background: rgba(0, 0, 0, 0.5);
-	position: relative;
+    position: relative;
 }
 
 .rubicon-starship-crew-hud-hp, .rubicon-starship-crew-hud-rp {
@@ -268,7 +299,7 @@ table.rubicon-bonuses-table td:first-child {
 	border: 1px solid black;
 	border-radius: 3px;
 	background: rgba(0, 0, 0, 0.5);
-	position: relative;
+    position: relative;
 }
 
 .rubicon-starship-crew-hud-hp {
@@ -284,24 +315,24 @@ table.rubicon-bonuses-table td:first-child {
 }
 
 .rubicon-hud-bar {
-	width: 140px;
+	width: 170px;
     height: 28px;
     font-size: 1.3em;
 }
 
 .rubicon-starship-hud-bar {
-	width: 107px;
-	height: 28px;
-	font-size: 1.3em;
+	width: 180px;
+    height: 28px;
+    font-size: 1.3em;
 }
 
 .rubicon-hud-ac-box {
-	width: 42px;
+	width: 52px;
 	height: 43px;
 }
 
 .rubicon-hud-threshold-box {
-	width: 37px;
+	width: 51px;
 	height: 43px;
 }
 
@@ -311,7 +342,7 @@ table.rubicon-bonuses-table td:first-child {
 }
 
 .rubicon-hud-speed-box {
-	width: 52px;
+	width: 62px;
 	height: 43px;
 }
 
@@ -676,11 +707,25 @@ span.rubicon-item-capacity-box {
     font-weight: normal;
 }
 
+div.rubicon-hud-information-row {
+    padding: 4px 4px 4px 0px;
+    background: url(/ui/denim075.png) repeat;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+    border-bottom-right-radius: 3px;
+	margin-right: 2px;
+}
+
+div.rubicon-hud-left-column {
+	width: 263px;
+}
+
 div.rubicon-hud-action-bar {
 	height: 45px;
-	width: 701px;
+	width: 612px;
 	/*margin-bottom: 2px;*/
 	margin-left: 2px;
+	margin-top: 4px;
 }
 
 div.rubicon-hud-action-button {
@@ -689,7 +734,7 @@ div.rubicon-hud-action-button {
     background: url(/ui/denim075.png) repeat;
     box-shadow: 0 0 5px var(--color-shadow-dark) inset;
     cursor: pointer;
-    margin-right: 2px;
+    margin-left: 2px;
     height: 43px;
     width: fit-content;
     display: inline-block;
@@ -895,7 +940,7 @@ span.rubicon-weapon-damage-box {
 .rubicon-starship-hud-systemstatus-row {
 	margin-left: 2px;
     margin-bottom: 1px;
-    padding: 2px 5px;
+    padding: 6px 5px;
     border: 1px solid #000000;
     border-radius: 3px;
     /*background: rgba(90, 90, 90, 0.9);*/
@@ -918,7 +963,7 @@ span.rubicon-weapon-damage-box {
 }
 
 .rubicon-starship-hud-systemstatus-row > .rubicon-hud-heading {
-	width: 90px;
+	width: 84px;
 }
 
 .rubicon-starship-hud-systemstatus-row > .rubicon-hud-value {
@@ -972,4 +1017,52 @@ span.rubicon-weapon-damage-box {
     cursor: not-allowed;
     pointer-events: none;
     opacity: 0.5;
+}
+
+
+.rubicon-hud-left-column-padding-column {
+    width: 3px;
+}
+
+.rubicon-hud-left-column-main-row {
+    height: 100%;
+}
+
+.rubicon-hud-left-column-padding-column-bottom-row {
+    height: 105px;
+    background: url(/ui/denim075.png) repeat;
+    border-bottom: 1px solid black;
+    border-right: 1px solid black;
+    border-bottom-right-radius: 3px;
+}
+
+.rubicon-hud-left-column-main-column {
+    flex-grow: 1;
+    background: url(/ui/denim075.png) repeat;
+    border-left: 1px solid black;
+    border-bottom: 1px solid black;
+    border-bottom-left-radius: 3px;
+}
+
+.rubicon-hud-left-column-padding-column-top-row {
+    flex-grow: 1;
+	background: url(/ui/denim075.png) repeat;
+}
+
+div#rubicon-hud-bars {
+    margin-left: -3px;
+}
+
+div#rubicon-starship-hud-bars {
+    padding-right: 1px;
+}
+
+.rubicon-starship-hud-portrait-row {
+	position: relative;
+    top: 5px;
+    left: 1px;
+}
+
+.rubicon-starship-hud-information-row {
+	height: 182px;
 }
