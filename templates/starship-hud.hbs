@@ -253,6 +253,28 @@
 								<span class="rubicon-hud-value" id="rubicon-starship-hud-icm-value">99 / 99</span>
 							</div>
 						</div>
+						<div class="rubicon-hud-row rubicon-starship-weapon-section">
+							<div class="rubicon-hud-column rubicon-starship-weapon-box" id="rubicon-starship-weapon-box-0">
+								<div class="rubicon-hud-row rubicon-starship-weapon-a" id="rubicon-starship-weapon-box-0-a">a</div>
+								<div class="rubicon-hud-row rubicon-starship-weapon-b" id="rubicon-starship-weapon-box-0-b"><img src="" /></div>
+								<div class="rubicon-hud-row rubicon-starship-weapon-c" id="rubicon-starship-weapon-box-0-c">c</div>
+							</div>
+							<div class="rubicon-hud-column rubicon-starship-weapon-box" id="rubicon-starship-weapon-box-1">
+								<div class="rubicon-hud-row rubicon-starship-weapon-a" id="rubicon-starship-weapon-box-1-a">1</div>
+								<div class="rubicon-hud-row rubicon-starship-weapon-b" id="rubicon-starship-weapon-box-1-b"><img src="" /></div>
+								<div class="rubicon-hud-row rubicon-starship-weapon-c" id="rubicon-starship-weapon-box-1-c">3</div>
+							</div>
+							<div class="rubicon-hud-column rubicon-starship-weapon-box" id="rubicon-starship-weapon-box-2">
+								<div class="rubicon-hud-row rubicon-starship-weapon-a" id="rubicon-starship-weapon-box-2-a">4</div>
+								<div class="rubicon-hud-row rubicon-starship-weapon-b" id="rubicon-starship-weapon-box-2-b"><img src="" /></div>
+								<div class="rubicon-hud-row rubicon-starship-weapon-c" id="rubicon-starship-weapon-box-2-c">6</div>
+							</div>
+							<div class="rubicon-hud-column rubicon-starship-weapon-box" id="rubicon-starship-weapon-box-3">
+								<div class="rubicon-hud-row rubicon-starship-weapon-a" id="rubicon-starship-weapon-box-3-a">7</div>
+								<div class="rubicon-hud-row rubicon-starship-weapon-b" id="rubicon-starship-weapon-box-3-b"><img src="" /></div>
+								<div class="rubicon-hud-row rubicon-starship-weapon-c" id="rubicon-starship-weapon-box-3-c">9</div>
+							</div>
+						</div>
 					</div>
 					<div class="rubicon-hud-column">
 						<div class="rubicon-hud-ac rubicon-hud-row">
@@ -272,22 +294,6 @@
 									<span class="rubicon-hud-ac-value" id="rubicon-starship-hud-ct-value">100</span>
 								</div>
 							</div>
-							<div class="rubicon-hud-column rubicon-hud-threshold-box" id="rubicon-starship-hud-movement">
-								<div class="rubicon-hud-layer rubicon-hud-background-layer">
-								</div>
-								<div class="rubicon-hud-layer rubicon-hud-content-layer">
-									<span class="rubicon-hud-ac-heading">Move</span>
-									<span class="rubicon-hud-ac-value" id="rubicon-starship-hud-movement-value">100</span>
-								</div>
-							</div>
-							<div class="rubicon-hud-column rubicon-hud-threshold-box" id="rubicon-starship-hud-turn">
-								<div class="rubicon-hud-layer rubicon-hud-background-layer">
-								</div>
-								<div class="rubicon-hud-layer rubicon-hud-content-layer">
-									<span class="rubicon-hud-ac-heading">Turn</span>
-									<span class="rubicon-hud-ac-value" id="rubicon-starship-hud-turn-value">100</span>
-								</div>
-							</div>
 							<div class="rubicon-hud-column rubicon-hud-threshold-box" id="rubicon-starship-hud-sensor">
 								<div class="rubicon-hud-layer rubicon-hud-background-layer">
 								</div>
@@ -296,28 +302,61 @@
 									<span class="rubicon-hud-ac-value" id="rubicon-starship-hud-sensor-value">100</span>
 								</div>
 							</div>
-							<div class="rubicon-hud-column rubicon-hud-threshold-box" id="rubicon-starship-hud-scandc">
+							<div class="rubicon-hud-column rubicon-hud-turn-box" id="rubicon-starship-hud-movement">
 								<div class="rubicon-hud-layer rubicon-hud-background-layer">
 								</div>
 								<div class="rubicon-hud-layer rubicon-hud-content-layer">
-									<span class="rubicon-hud-ac-heading">SDC</span>
-									<span class="rubicon-hud-ac-value" id="rubicon-starship-hud-scandc-value">---</span>
+									<span class="rubicon-hud-ac-heading">Mv</span>
+									<span class="rubicon-hud-ac-value" id="rubicon-starship-hud-movement-value">100</span>
 								</div>
 							</div>
-							<div class="rubicon-hud-column rubicon-hud-threshold-box" id="rubicon-starship-hud-actiondc">
+							<div class="rubicon-hud-column rubicon-hud-turn-box" id="rubicon-starship-hud-turn">
 								<div class="rubicon-hud-layer rubicon-hud-background-layer">
 								</div>
 								<div class="rubicon-hud-layer rubicon-hud-content-layer">
-									<span class="rubicon-hud-ac-heading">ADC</span>
-									<span class="rubicon-hud-ac-value" id="rubicon-starship-hud-actiondc-value">---</span>
+									<span class="rubicon-hud-ac-heading">Tn</span>
+									<span class="rubicon-hud-ac-value" id="rubicon-starship-hud-turn-value">100</span>
 								</div>
 							</div>
-							<div class="rubicon-hud-column rubicon-hud-threshold-box" id="rubicon-starship-hud-dipdc">
-								<div class="rubicon-hud-layer rubicon-hud-background-layer">
+							<div class="rubicon-hud-column">
+								<!--
+								<div class="rubicon-hud-row">
+									<div class="rubicon-difficulty-check-title">Difficulty Checks</div>
 								</div>
-								<div class="rubicon-hud-layer rubicon-hud-content-layer">
-									<span class="rubicon-hud-ac-heading">DDC</span>
-									<span class="rubicon-hud-ac-value" id="rubicon-starship-hud-dipdc-value">---</span>
+								-->
+								<div class="rubicon-hud-row">
+									<div class="rubicon-hud-column rubicon-hud-dc-box" id="rubicon-starship-hud-dc-sensor">
+										<div class="rubicon-hud-layer rubicon-hud-background-layer">
+										</div>
+										<div class="rubicon-hud-layer rubicon-hud-content-layer">
+											<span class="rubicon-hud-ac-heading">SDC</span>
+											<span class="rubicon-hud-ac-value" id="rubicon-starship-hud-dc-sensor-value">---</span>
+										</div>
+									</div>
+									<div class="rubicon-hud-column rubicon-hud-dc-box" id="rubicon-starship-hud-dc-easy">
+										<div class="rubicon-hud-layer rubicon-hud-background-layer">
+										</div>
+										<div class="rubicon-hud-layer rubicon-hud-content-layer">
+											<span class="rubicon-hud-ac-heading">EDC</span>
+											<span class="rubicon-hud-ac-value" id="rubicon-starship-hud-dc-easy-value">---</span>
+										</div>
+									</div>
+									<div class="rubicon-hud-column rubicon-hud-dc-box" id="rubicon-starship-hud-dc-average">
+										<div class="rubicon-hud-layer rubicon-hud-background-layer">
+										</div>
+										<div class="rubicon-hud-layer rubicon-hud-content-layer">
+											<span class="rubicon-hud-ac-heading">ADC</span>
+											<span class="rubicon-hud-ac-value" id="rubicon-starship-hud-dc-average-value">---</span>
+										</div>
+									</div>
+									<div class="rubicon-hud-column rubicon-hud-dc-box" id="rubicon-starship-hud-dc-hard">
+										<div class="rubicon-hud-layer rubicon-hud-background-layer">
+										</div>
+										<div class="rubicon-hud-layer rubicon-hud-content-layer">
+											<span class="rubicon-hud-ac-heading">HDC</span>
+											<span class="rubicon-hud-ac-value" id="rubicon-starship-hud-dc-hard-value">---</span>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>

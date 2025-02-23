@@ -38,15 +38,6 @@ li.scene-control[data-control="measure"] > i::before {
 	vertical-align: middle;
 	margin: auto;
 }
-/* move the hotbar right 265px because we need to put the rubicon HUD around it */
-footer#ui-bottom {
-	position: relative;
-	top: 56px;
-}
-footer#ui-bottom > div:last-of-type {
-	top: -53px;
-	position: relative;
-}
 footer#ui-bottom > div > #hotbar {
 	position: relative;
 	left: 265px;
@@ -289,7 +280,7 @@ table.rubicon-bonuses-table td:first-child {
 	object-fit: contain;
 }
 
-.rubicon-hud-bar, .rubicon-hud-ac-box, .rubicon-hud-threshold-box, .rubicon-hud-speed-box, .rubicon-starship-hud-bar {
+.rubicon-hud-bar, .rubicon-hud-ac-box, .rubicon-hud-threshold-box, .rubicon-hud-turn-box, .rubicon-hud-dc-box, .rubicon-hud-speed-box, .rubicon-starship-hud-bar {
 	margin-left: 2px;
 	margin-bottom: 2px;
 	border: 1px solid black;
@@ -347,6 +338,16 @@ table.rubicon-bonuses-table td:first-child {
 }
 
 .rubicon-hud-threshold-box {
+	width: 40px;
+	height: 43px;
+}
+
+.rubicon-hud-turn-box {
+	width: 41px;
+	height: 43px;
+}
+
+.rubicon-hud-dc-box {
 	width: 51px;
 	height: 43px;
 }
@@ -459,7 +460,7 @@ span.rubicon-hud-value {
 }
 
 #rubicon-starship-hud-turn > .rubicon-hud-background-layer {
-	background: #396839;
+	background: #396849;
 }
 
 .rubicon-starship-hud-quadrant-ac-box > .rubicon-hud-background-layer {
@@ -1080,4 +1081,83 @@ div#rubicon-starship-hud-bars {
 
 .rubicon-starship-hud-information-row {
 	height: 182px;
+}
+
+.rubicon-difficulty-check-title {
+	color: white;
+	padding: 1px 2px 3px 1px;
+	width: 158px;
+	display: inline-block;
+	text-align: center;
+	font-size: 1.15em;
+}
+
+div#rubicon-starship-hud-dc-sensor {
+	background-color: #188fbdc7;
+}
+
+div#rubicon-starship-hud-dc-easy {
+	background-color: #349f4ac7;
+}
+
+div#rubicon-starship-hud-dc-average {
+	background-color: #a96d0fc7;
+}
+
+div#rubicon-starship-hud-dc-hard {
+	background-color: #b32a2ac7;
+}
+
+.rubicon-starship-weapon-section {
+	height: 82px;
+}
+
+.rubicon-starship-weapon-box {
+	border: 1px solid black;
+	border-radius: 3px;
+	flex-grow: 1;
+	flex-basis: 0;
+	text-transform: uppercase;
+}
+
+.rubicon-starship-weapon-box > .rubicon-hud-row {
+	text-align: center;
+	margin: auto;
+}
+
+.rubicon-starship-weapon-box-active {
+	background: #cccccc47;
+	color: white;
+}
+
+.rubicon-starship-weapon-box-inactive {
+	/*
+	display: none;
+	*/
+	/*
+	background: none;
+	border: none;
+	color: transparent;
+	*/
+	background: #66666647;
+	color: #4b4848;
+}
+
+.rubicon-starship-weapon-a {
+	display: none; /* for now */
+}
+
+.rubicon-starship-weapon-b {
+	height: 24px;
+}
+
+.rubicon-starship-weapon-b > img {
+	height: 32px;
+	width: 32px;
+	border: none;
+}
+
+.rubicon-hud-outer-container {
+	position: relative;
+	top: 52px;
 }

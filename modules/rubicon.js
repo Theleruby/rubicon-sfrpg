@@ -1375,13 +1375,19 @@ export class Rubicon extends Application {
   
   _show() {
     // this makes the HUD container show in 1ms time, which avoids a bug where the content sort-of procedurally updates.
+    let actorType = this._actor.type;
     if (this._actor.type === "starship") {
       setTimeout(function(){
         document.getElementById("rubicon-starship-hud-container").style.display = "block";
       },1);
     } else {
       setTimeout(function(){
-        document.getElementById("rubicon-character-hud-container").style.display = "block";
+        let container = document.getElementById("rubicon-character-hud-container");
+        for (const charType of ['character', 'drone', 'hazard', 'npc', 'npc2', 'starship', 'vehicle']) {
+          container.classList.remove(`rubicon-actor-hud-${charType}`);
+        }
+        container.classList.add(`rubicon-actor-hud-${actorType}`)
+        container.style.display = "block";
       },1);
     }
   }
@@ -1396,6 +1402,7 @@ export class Rubicon extends Application {
     let crew = this._actor.system.crew;
     let quadrants = this._actor.system.quadrants;
     let details = this._actor.system.details;
+    let weaponsWithCapacity = [];
     
     //======================================
     // title
@@ -1435,19 +1442,30 @@ export class Rubicon extends Application {
         }
         sensorRange = sensorRange + item.system.modifier;
       }
+      if (item.type === "starshipWeapon") {
+        if (item.system.mount?.mounted) {
+          let maxCapacity = item.system.capacity?.max;
+          if (maxCapacity !== null && maxCapacity !== undefined && maxCapacity > 0) {
+            weaponsWithCapacity.push(item);
+          }
+        }
+      }
     }
     
     //======================================
-    // scan / action / diplomatic DC
+    // various difficulties we have to compare against
     //======================================
-    let scanDC = 5 + Math.floor(details.tier * 1.5) + defensiveCountermeasureBonus;
-    document.getElementById("rubicon-starship-hud-scandc-value").textContent = scanDC;
+    let sensorDC = 5 + Math.floor(details.tier * 1.5) + defensiveCountermeasureBonus;
+    document.getElementById("rubicon-starship-hud-dc-sensor-value").textContent = sensorDC;
     
-    let actionDC = 10 + Math.floor(details.tier * 1.5);
-    document.getElementById("rubicon-starship-hud-actiondc-value").textContent = actionDC;
+    let easyDC = 10 + Math.floor(details.tier * 1.5);
+    document.getElementById("rubicon-starship-hud-dc-easy-value").textContent = easyDC;
     
-    let dipDC = 15 + Math.floor(details.tier * 1.5);
-    document.getElementById("rubicon-starship-hud-dipdc-value").textContent = dipDC;
+    let averageDC = 15 + Math.floor(details.tier * 1.5);
+    document.getElementById("rubicon-starship-hud-dc-average-value").textContent = averageDC;
+    
+    let hardDC = 20 + Math.floor(details.tier * 1.5);
+    document.getElementById("rubicon-starship-hud-dc-hard-value").textContent = hardDC;
     
     //======================================
     // sensor range
@@ -1532,6 +1550,38 @@ export class Rubicon extends Application {
         }
       }
       document.getElementById(`rubicon-starship-hud-${systemId}-value`).textContent = attributes.systems[systemId].value;
+    }
+    
+    let arcTexts = {
+      'aft': "AFT",
+      'forward': "FWD",
+      'port': "PORT",
+      'starboard': "STAR",
+      'turret': "TURR",
+    }
+    
+    //======================================
+    // weapons with capacity
+    //======================================
+    for (let i = 0; i < 4; i++) {
+      if (weaponsWithCapacity.length > i) {
+        let weaponitem = weaponsWithCapacity[i];
+        document.getElementById(`rubicon-starship-weapon-box-${i}`).classList.remove("rubicon-starship-weapon-box-inactive");
+        document.getElementById(`rubicon-starship-weapon-box-${i}`).classList.add("rubicon-starship-weapon-box-active");
+        document.getElementById(`rubicon-starship-weapon-box-${i}-a`).textContent = arcTexts[weaponitem?.system?.mount?.arc] ?? "<?>";
+        let imgElement = document.getElementById(`rubicon-starship-weapon-box-${i}-b`).getElementsByTagName('img')[0];
+        imgElement.style.display = "block";
+        imgElement.src = weaponitem.img;
+        document.getElementById(`rubicon-starship-weapon-box-${i}-c`).textContent = `${weaponitem.system.capacity.value} / ${weaponitem.system.capacity.max}`;
+      } else {
+        document.getElementById(`rubicon-starship-weapon-box-${i}`).classList.remove("rubicon-starship-weapon-box-active");
+        document.getElementById(`rubicon-starship-weapon-box-${i}`).classList.add("rubicon-starship-weapon-box-inactive");
+        document.getElementById(`rubicon-starship-weapon-box-${i}-a`).textContent = "";
+        let imgElement = document.getElementById(`rubicon-starship-weapon-box-${i}-b`).getElementsByTagName('img')[0];
+        imgElement.style.display = "none";
+        //imgElement.src = this._actor.img;
+        document.getElementById(`rubicon-starship-weapon-box-${i}-c`).textContent = "";
+      }
     }
     
     //======================================
