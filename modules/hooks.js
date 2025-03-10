@@ -8,11 +8,36 @@ import { Rubicon } from "./rubicon.js";
 
 // Load the HUD and construct the app object
 Hooks.once('ready', async function() {
+	console.log("Rubicon Hooks | Loading HUD elements")
 	let rubiconCharacterHudHtml = await renderTemplate("modules/rubicon-sfrpg/templates/character-hud.hbs", {});
 	document.getElementById("ui-bottom").insertAdjacentHTML("afterbegin", rubiconCharacterHudHtml);
 	let rubiconStarshipHudHtml = await renderTemplate("modules/rubicon-sfrpg/templates/starship-hud.hbs", {"crewArray": ["crew0", "crew1", "crew2", "crew3", "crew4", "crew5", "crew6", "crew7", "crew8"]});
 	document.getElementById("ui-bottom").insertAdjacentHTML("afterbegin", rubiconStarshipHudHtml);
 	game.rubicon = new Rubicon();
+	console.log("Rubicon Hooks | Preloading actor images")
+	// Preload the images
+	var cache = document.createElement("CACHE");
+	cache.style = "position:absolute;z-index:-1000;opacity:0;";
+	document.body.appendChild(cache);
+	game.actors.forEach((actor) => {
+		// 1
+		var target = actor.img;
+		if (target) {
+			console.log(`Rubicon Hooks | Preloading ${actor.name} root image: ${target}`);
+			var img = new Image();
+			img.src = target;
+			img.style = "position:absolute";
+			cache.appendChild(img);
+		}
+		target = actor?.system?.details?.biography?.fullBodyImage;
+		if (target) {
+			console.log(`Rubicon Hooks | Preloading ${actor.name} full body image: ${target}`);
+			var img = new Image();
+			img.src = target;
+			img.style = "position:absolute";
+			cache.appendChild(img);
+		};
+	});
 	console.log("Rubicon Hooks | Initialized successfully")
 });
 
