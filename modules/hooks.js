@@ -247,3 +247,18 @@ Hooks.on("onBeforeRoll", function(rollData) {
   console.log(rollData);
 });
 */
+
+Hooks.on("calculateSaveDC", function(data) {
+  if (["character", "drone"].includes(data.actor?.type)) {
+    if (data.item?.type === "weapon" && data.item?.system?.weaponType === "grenade") {
+      if (data.actor?.items?.getName("Grenade Mastery (Combat)")) {
+        // GRENADE MASTERY
+        let baseAttackBonus = data.actor.system.attributes.baseAttackBonus.value;
+        let grenadeItemLevel = data.item.system.level;
+        let grenadeSaveBonus = ((grenadeItemLevel + 5) <= baseAttackBonus) ? 2 : 1;
+        console.log(`Rubicon Hooks | Grenade Mastery: Amending reflex save of ${data.item.name} owned by ${data.actor.name} (bonus: +${grenadeSaveBonus})`);
+        data.formula.dcFormula = `${data.formula.dcFormula} + ${grenadeSaveBonus}`;
+      }
+    }
+  }
+});
