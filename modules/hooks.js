@@ -131,6 +131,16 @@ Hooks.on('preCreateChatMessage', async function(doc, _data, _options) {
 // Disable all timed effects directly linked to feats that are still active when combat ends
 Hooks.on("deleteCombat", function(combat) {
     console.log("Rubicon Hooks | Cleaning up a combat session")
+    if (game.user?.isGM) {
+      combat.combatants.forEach((combatant) => {
+        combatant.actor.items.forEach((item) => {
+          if (item?.type === "weapon" && item?.system?.weaponType === "grenade" && item?.system?.capacity?.value === 0) {
+            console.log(`Rubicon Hooks | Deleting used ${item.name} from ${combatant.actor.name}`);
+            item.delete();
+          }
+        });
+      });
+    };
     game.sfrpg.timedEffects.forEach((effect) => {
       if (effect.originItem) {
         console.log(`Rubicon Hooks | Forcing effect ${effect.name} to be reset`)
