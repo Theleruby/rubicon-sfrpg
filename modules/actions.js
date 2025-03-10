@@ -64,19 +64,19 @@ RubiconActions.combatManeuvers = {
   "grapple": {
     "img": "icons/skills/melee/unarmed-punch-fist-yellow-red.webp",
     "name": "Grapple",
-    "allowItem": 0, // no.  need to check the grapple items
+    "allowItem": 10, // unarmed strike or grapple weapons only
     "actionType": "Standard",
     "shortDescription": "Hold a target in place",
-    "buttonComment": "Requires a free hand",
-    "itemActionTypes": [],
+    "buttonComment": "Requires a free hand or grapple weapon",
+    "itemActionTypes": ["mwak"],
     "itemSpecialTarget": "kac8",
     "requireTraining": false,
-    "description": "<p>As a standard action, you can attempt to hold a target in place. You must have at least one hand free to perform a grapple combat maneuver.</p><p>Choose an opponent within your reach and then make a melee attack roll against KAC + 4. If successful, your target gains the grappled condition, meaning she can't move from her current space and takes further penalties until she either uses a standard action to attempt a grapple combat maneuver to grapple you (giving you the grappled condition) or uses the escape task of the Acrobatics skill to break free.</p><p>If the result of your attack roll equals or exceeds the target's KAC + 13, the target is instead pinned for the same duration, and she can't take any actions that involve moving her limbs other than to attempt to escape.</p><p>The grappled or pinned condition lasts until the end of your next turn, unless you renew it on your next turn with another grapple combat maneuver. The condition ends immediately if you move away.</p><p>As long as you have one target grappled or pinned, you cannot attempt to grapple another.</p><p>When you renew a grapple, you can remove one item from the target's body that can be easily accessed, including most weapons and equipment (but not worn armor). Doing so immediately ends the grapple.</p>",
+    "description": "<p>As a standard action, you can attempt to hold a target in place. To perform a grapple combat maneuver, you must have at least one hand free, or have a weapon with the Grapple property equipped.</p><p>Choose an opponent within your reach and then make a melee attack roll against KAC + 4. If successful, your target gains the grappled condition, meaning she can't move from her current space and takes further penalties until she either uses a standard action to attempt a grapple combat maneuver to grapple you (giving you the grappled condition) or uses the escape task of the Acrobatics skill to break free.</p><p>If the result of your attack roll equals or exceeds the target's KAC + 13, the target is instead pinned for the same duration, and she can't take any actions that involve moving her limbs other than to attempt to escape.</p><p>The grappled or pinned condition lasts until the end of your next turn, unless you renew it on your next turn with another grapple combat maneuver. The condition ends immediately if you move away.</p><p>As long as you have one target grappled or pinned, you cannot attempt to grapple another.</p><p>When you renew a grapple, you can remove one item from the target's body that can be easily accessed, including most weapons and equipment (but not worn armor). Doing so immediately ends the grapple.</p>",
     "properties": ["Standard action", "Combat maneuver", "Melee"],
     "hasItemButtons": [
+      { name: "Grapple", action: "rollAttack", value: "", target: "kac8", content: "Attack", special: "" },
     ],
     "hasNoItemButtons": [
-      { name: "Grapple", action: "rollAttack", value: "mwak", target: "kac8", content: "Attack", special: "" },
     ]
   },
   "reposition": {

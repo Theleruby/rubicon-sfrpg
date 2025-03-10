@@ -739,7 +739,7 @@ export class Rubicon extends Application {
     let dialogName = entry.replace(" ", "_");
     // determine what we're doing
     let dialogString = `an item to perform ${action.name} with`;
-    if (action.allowItem === 1 || action.allowItem === 3) {
+    if (action.allowItem === 1 || action.allowItem === 3 || action.allowItem === 10) {
       dialogString = `a weapon to perform ${action.name} with`;
     } else if (action.allowItem === 4) {
       dialogString = "a spell to cast";
@@ -760,7 +760,12 @@ export class Rubicon extends Application {
     //console.log(actorItems);
     actorItems.forEach( (item) => {
       // does the entry allow the item?
-      if (action.allowItem === 4 || action.allowItem === 9) {
+      if (action.allowItem === 10) {
+        if (item?.type === "weapon" && (item?.name === "Unarmed strike" || item?.system.properties.grapple === true)) {
+          items.push(item);
+        }
+      }
+      else if (action.allowItem === 4 || action.allowItem === 9) {
         if (item?.type === "spell") {
           items.push(item);
         }
