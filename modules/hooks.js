@@ -79,10 +79,11 @@ Hooks.on('preCreateChatMessage', async function(doc, _data, _options) {
   if (whisper && whisper.length > 0) {
     return;
   }
+  //console.log(doc);
   if (doc.flags?.sfrpg?.item) {
     // get the item and find out if it's a spell being cast by an NPC.
     let item = await fromUuid(doc.flags.sfrpg.item);
-    console.log(item);
+    //console.log(item);
     if (item.type == "spell" && item.actor.type == "npc2") {
       // TODO find out if we've identified this spell yet
       let identified = false;
