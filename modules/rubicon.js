@@ -1666,9 +1666,13 @@ export class Rubicon extends Application {
       portraitElement.classList.add("rubicon-hud-contain-portrait")
     }
     let attributes = this._actor.system.attributes;
-    document.getElementById("rubicon-hud-eac-value").textContent = attributes.eac?.value;
-    document.getElementById("rubicon-hud-kac-value").textContent = attributes.kac?.value;
-    if (attributes.speed) {
+    document.getElementById("rubicon-hud-eac-value").textContent = attributes.eac?.value ?? "-";
+    document.getElementById("rubicon-hud-kac-value").textContent = attributes.kac?.value ?? "-";
+    if (this._actor.type == "vehicle") {
+      // prevents a crash when selecting a vehicle
+      document.getElementById("rubicon-hud-speed-heading").textContent = "Drive";
+      document.getElementById("rubicon-hud-speed-value").textContent = attributes.speed.drive;
+    } else if (attributes.speed) {
       let movementType = attributes.speed.movementType;
       if (!movementType) {
         movementType = attributes.speed.mainMovement;
@@ -1693,7 +1697,7 @@ export class Rubicon extends Application {
         movementStr = "Spec";
       }
       document.getElementById("rubicon-hud-speed-heading").textContent = movementStr;
-      document.getElementById("rubicon-hud-speed-value").textContent = `${attributes.speed[movementType].value} ft`;
+      document.getElementById("rubicon-hud-speed-value").textContent = `${attributes.speed[movementType]?.value ?? 0} ft`;
     } else {
       document.getElementById("rubicon-hud-speed-heading").textContent = "Move";
       document.getElementById("rubicon-hud-speed-value").textContent = "0 ft";
