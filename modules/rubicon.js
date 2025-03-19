@@ -1,9 +1,10 @@
 /*  
  *  Rubicon for Starfinder (sfrpg)
- *    Mostly compatible with Starfinder version 0.26.1
+ *    Mostly compatible with Starfinder version 0.27.1 (ish)
  *    Patches from theleruby/foundryvtt-sfrpg are required
  */
 
+/*
 import { getItemContainer } from "/systems/sfrpg/module/actor/actor-inventory-utils.js";
 import { SFRPG } from "/systems/sfrpg/module/config.js";
 import { DiceSFRPG } from "/systems/sfrpg/module/dice.js";
@@ -17,6 +18,20 @@ import {
     SFRPGModifierType,
     SFRPGModifierTypes
 } from "/systems/sfrpg/module/modifiers/types.js";
+*/
+
+let getItemContainer = null;//game.sfrpg.getItemContainer;
+let SFRPG = null;//game.sfrpg.config;
+let DiceSFRPG = null;//game.sfrpg.dice;
+let ActorSheetSFRPG = null;//game.sfrpg.applications.ActorSheetSFRPG;
+let ActorSheetSFRPGStarship = null;//game.sfrpg.applications.ActorSheetSFRPGStarship;
+let RollContext = null;//game.sfrpg.rolls.RollContext;
+let SFRPGModifier = null;//game.sfrpg.SFRPGModifier;
+let StackModifiers = null;//game.sfrpg.StackModifiers;
+let SFRPGEffectType = null;//game.sfrpg.SFRPGEffectType;
+let SFRPGModifierType = null;//game.sfrpg.SFRPGModifierType;
+let SFRPGModifierTypes = null;//game.sfrpg.SFRPGModifierTypes;
+
 import RubiconActions from "./actions.js";
 import SpellDescriptions from "./spells.js";
 import ShipActionDescriptions from "./shipactions.js";
@@ -60,6 +75,17 @@ RubiconConstants.defaultConsumables = [
 export class Rubicon extends Application {
   constructor () {
     super();
+    getItemContainer = game.sfrpg.getItemContainer;
+    SFRPG = game.sfrpg.config;
+    DiceSFRPG = game.sfrpg.dice;
+    ActorSheetSFRPG = game.sfrpg.applications.ActorSheetSFRPG;
+    ActorSheetSFRPGStarship = game.sfrpg.applications.ActorSheetSFRPGStarship;
+    RollContext = game.sfrpg.rolls.RollContext;
+    SFRPGModifier = game.sfrpg.SFRPGModifier;
+    StackModifiers = game.sfrpg.StackModifiers;
+    SFRPGEffectType = game.sfrpg.SFRPGEffectType;
+    SFRPGModifierType = game.sfrpg.SFRPGModifierType;
+    SFRPGModifierTypes = game.sfrpg.SFRPGModifierTypes;
     Hooks.on("createItem", this._onItemChange.bind(this));
     Hooks.on("updateItem", this._onItemChange.bind(this));
     Hooks.on("deleteItem", this._onItemChange.bind(this));
