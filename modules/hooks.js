@@ -41,6 +41,7 @@ Hooks.once('ready', async function() {
 	console.log("Rubicon Hooks | Initialized successfully")
 });
 
+/* No longer required.
 // Fixes the bug where the chat card ends up with the wrong information printed on the first turn
 Hooks.on("combatStart", function() {
   console.log("Rubicon Hooks | Combat round and turn corrected");
@@ -48,6 +49,7 @@ Hooks.on("combatStart", function() {
   game.combat.turn = 0;
   game.combat.current.turn = 0;
 });
+*/
 
 // Forces grenade to be unequipped when you attack with it. You've thrown it, so, it's no longer in your hand any more. Yeah.
 Hooks.on("attackRolled", function(e) {
@@ -62,7 +64,7 @@ Hooks.on("attackRolled", function(e) {
 Hooks.on("updateCombat", function() {
   if (game.combat.round > 0) {
     console.log("Rubicon Hooks | Selecting matching token for turn");
-    if (game.combat.combatant.isOwner || game.combat.combatant.token.permission == 3) {
+    if (game.combat.combatant?.isOwner || game.combat.combatant?.token.permission === 3) {  // combatant might be null during starship combat if it's a shared turn
       game.combat.combatant.token._object.control()
     } else {
       canvas.tokens.releaseAll()
@@ -84,7 +86,7 @@ Hooks.on('preCreateChatMessage', async function(doc, _data, _options) {
     // get the item and find out if it's a spell being cast by an NPC.
     let item = await fromUuid(doc.flags.sfrpg.item);
     //console.log(item);
-    if (item.type == "spell" && item.actor.type == "npc2") {
+    if (item.type === "spell" && item.actor.type === "npc2") {
       // TODO find out if we've identified this spell yet
       let identified = false;
       if (item.system?.identified !== true) {
@@ -189,7 +191,7 @@ Hooks.on("itemActivationChanged", function(evt) {
       return;
     }
     // check to see if there's a matching linked effect. if there is, we enable it
-    let x = evt.actor.items.find((i)=>i.type=="effect" && i.originItem?.uuid == evt.item.uuid)
+    let x = evt.actor.items.find((i)=>i.type=="effect" && i.originItem?.uuid === evt.item.uuid)
     if (x) {
       let y = game.sfrpg.timedEffects.get(x.uuid)
       if (y) {
@@ -206,7 +208,7 @@ Hooks.on("preUpdateItem", function(item, changes, options, source) {
     //console.log(item.type);
     //console.log(changes?.system?.enabled);
     //console.log(item.originItem?.system?.isActive);
-    if (item.type == "effect" && changes?.system?.enabled !== undefined && changes?.system?.enabled !== null) {
+    if (item.type === "effect" && changes?.system?.enabled !== undefined && changes?.system?.enabled !== null) {
       //console.log("effect toggle")
       if (item.originItem?.system?.isActive !== undefined && item.originItem?.system?.isActive !== null) {
         //console.log("isActive is defined")
@@ -223,7 +225,7 @@ Hooks.on("consumeCapacityMinute", function(evt) {
     console.log("Rubicon Hooks | Trying to consume a per-minute capacity item")
     // we're trying to consume ammo for a "per minute" powered item
     // check to see if there's a matching linked effect
-    let x = evt.actor.items.find((i)=>i.type=="effect" && i.originItem?.uuid == evt.item.uuid)
+    let x = evt.actor.items.find((i)=>i.type=="effect" && i.originItem?.uuid === evt.item.uuid)
     if (x) {
       let y = game.sfrpg.timedEffects.get(x.uuid)
       if (y) {

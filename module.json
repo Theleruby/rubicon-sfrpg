@@ -2,13 +2,13 @@
   "id": "rubicon-sfrpg",
   "title": "Rubicon for Starfinder",
   "description": "Adds custom UI and macro elements to Starfinder.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "library": "false",
   "manifestPlusVersion": "1.2.0",
   "compatibility": {
-    "minimum": 12,
-    "verified": 12,
-    "maximum": 12
+    "minimum": 13,
+    "verified": 13,
+    "maximum": 13
   },
   "authors": [
     {

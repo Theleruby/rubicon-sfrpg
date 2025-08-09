@@ -1,36 +1,19 @@
 /*  
- *  Rubicon for Starfinder (sfrpg)
- *    Mostly compatible with Starfinder version 0.27.1 (ish)
- *    Patches from theleruby/foundryvtt-sfrpg are required
+ *  Rubicon for Starfinder (sfrpg) "The Liberation of Locus-1"
+ *    Compatible only with locus1 branch of theleruby/foundryvtt-sfrpg
  */
 
-/*
-import { getItemContainer } from "/systems/sfrpg/module/actor/actor-inventory-utils.js";
-import { SFRPG } from "/systems/sfrpg/module/config.js";
-import { DiceSFRPG } from "/systems/sfrpg/module/dice.js";
-import { ActorSheetSFRPG } from "/systems/sfrpg/module/actor/sheet/base.js";
-import { ActorSheetSFRPGStarship } from "/systems/sfrpg/module/actor/sheet/starship.js";
-import RollContext from "/systems/sfrpg/module/rolls/rollcontext.js";
-import SFRPGModifier from "/systems/sfrpg/module/modifiers/modifier.js";
-import StackModifiers from "/systems/sfrpg/module/rules/closures/stack-modifiers.js";
-import {
-    SFRPGEffectType,
-    SFRPGModifierType,
-    SFRPGModifierTypes
-} from "/systems/sfrpg/module/modifiers/types.js";
-*/
-
-let getItemContainer = null;//game.sfrpg.getItemContainer;
-let SFRPG = null;//game.sfrpg.config;
-let DiceSFRPG = null;//game.sfrpg.dice;
-let ActorSheetSFRPG = null;//game.sfrpg.applications.ActorSheetSFRPG;
-let ActorSheetSFRPGStarship = null;//game.sfrpg.applications.ActorSheetSFRPGStarship;
-let RollContext = null;//game.sfrpg.rolls.RollContext;
-let SFRPGModifier = null;//game.sfrpg.SFRPGModifier;
-let StackModifiers = null;//game.sfrpg.StackModifiers;
-let SFRPGEffectType = null;//game.sfrpg.SFRPGEffectType;
-let SFRPGModifierType = null;//game.sfrpg.SFRPGModifierType;
-let SFRPGModifierTypes = null;//game.sfrpg.SFRPGModifierTypes;
+let getItemContainer = null;         // game.sfrpg.getItemContainer;                       // import { getItemContainer } from "/systems/sfrpg/module/actor/actor-inventory-utils.js";
+let SFRPG = null;                    // game.sfrpg.config;                                 // import { SFRPG } from "/systems/sfrpg/module/config.js";
+let DiceSFRPG = null;                // game.sfrpg.dice;                                   // import { DiceSFRPG } from "/systems/sfrpg/module/dice.js";
+let ActorSheetSFRPG = null;          // game.sfrpg.applications.ActorSheetSFRPG;           // import { ActorSheetSFRPG } from "/systems/sfrpg/module/actor/sheet/base.js";
+let ActorSheetSFRPGStarship = null;  // game.sfrpg.applications.ActorSheetSFRPGStarship;   // import { ActorSheetSFRPGStarship } from "/systems/sfrpg/module/actor/sheet/starship.js";
+let RollContext = null;              // game.sfrpg.rolls.RollContext;                      // import RollContext from "/systems/sfrpg/module/rolls/rollcontext.js";
+let SFRPGModifier = null;            // game.sfrpg.SFRPGModifier;                          // import SFRPGModifier from "/systems/sfrpg/module/modifiers/modifier.js";
+let StackModifiers = null;           // game.sfrpg.StackModifiers;                         // import StackModifiers from "/systems/sfrpg/module/rules/closures/stack-modifiers.js";
+let SFRPGEffectType = null;          // game.sfrpg.SFRPGEffectType;                        // import { SFRPGEffectType,
+let SFRPGModifierType = null;        // game.sfrpg.SFRPGModifierType;                      //          SFRPGModifierType,
+let SFRPGModifierTypes = null;       // game.sfrpg.SFRPGModifierTypes;                     //          SFRPGModifierTypes } from "/systems/sfrpg/module/modifiers/types.js";
 
 import RubiconActions from "./actions.js";
 import SpellDescriptions from "./spells.js";
@@ -39,42 +22,14 @@ import ConsumableDescriptions from "./consumables.js";
 import QuickMenuOptions from "./menu.js";
 
 export const RubiconConstants = {};
-/*
-RubiconConstants.defaultConsumables = [
-  {
-    "name": "Dye grenade 1",
-    "icon": "icons/weapons/thrown/grenade-round.webp"
-  },
-  {
-    "name": "Frag grenade I",
-    "icon": "systems/sfrpg/icons/equipment/weapons/frag-grenade.webp"
-  },
-  {
-    "name": "Shock grenade I",
-    "icon": "systems/sfrpg/icons/equipment/weapons/shock-grenade.webp"
-  },
-  {
-    "name": "Smoke grenade I",
-    "icon": "systems/sfrpg/icons/equipment/weapons/smoke-grenade.webp"
-  },
-  {
-    "name": "Stickybomb grenade I",
-    "icon": "systems/sfrpg/icons/equipment/weapons/stickybomb-grenade.webp"
-  },
-  {
-    "name": "Thasphalt grenade I",
-    "icon": "systems/sfrpg/icons/equipment/weapons/incendiary-grenade.webp"
-  },
-  {
-    "name": "Serum of Healing, Mk 1",
-    "icon": "systems/sfrpg/icons/equipment/magic%20items/serum-of-healing.webp"
-  }
-]
-*/
 
 export class Rubicon extends Application {
   constructor () {
     super();
+    
+    //==================================================================
+    // Load variables the hard way rather than importing normally
+    //==================================================================
     getItemContainer = game.sfrpg.getItemContainer;
     SFRPG = game.sfrpg.config;
     DiceSFRPG = game.sfrpg.dice;
@@ -86,6 +41,10 @@ export class Rubicon extends Application {
     SFRPGEffectType = game.sfrpg.SFRPGEffectType;
     SFRPGModifierType = game.sfrpg.SFRPGModifierType;
     SFRPGModifierTypes = game.sfrpg.SFRPGModifierTypes;
+    
+    //==================================================================
+    // Hooks
+    //==================================================================
     Hooks.on("createItem", this._onItemChange.bind(this));
     Hooks.on("updateItem", this._onItemChange.bind(this));
     Hooks.on("deleteItem", this._onItemChange.bind(this));
@@ -93,12 +52,20 @@ export class Rubicon extends Application {
     Hooks.on("updateToken", this._onTokenChange.bind(this));
     //Hooks.on("onAfterUpdateCombat", this._onAfterUpdateCombat.bind(this));
     //Hooks.on("renderChatMessage", this._onRenderChatMessage.bind(this));
+    
+    //==================================================================
+    // Token handling
+    //==================================================================
     this._actor = null;
     this._selectControlledToken();
     // the hooks are unreliable, so we're forced to just reselect the controlled token repeatedly.
     window.setInterval(() => { this._selectControlledToken(); }, 30);
     $(document).on('click', '.rubicon-chat-card-button', this._onButtonClick.bind(this));
     $(document).on('click', '.rubicon-hud-action-button', this._onHudActionClick.bind(this));
+    
+    //==================================================================
+    // Actions
+    //==================================================================
     this._availableActions = Object.assign({},
       RubiconActions.combatManeuvers,
       RubiconActions.specialAttacks,
@@ -1521,8 +1488,8 @@ export class Rubicon extends Application {
     //======================================
     // shields
     //======================================
-    document.getElementById("rubicon-starship-hud-shields-value").textContent = `${attributes.shields.value} / ${attributes.shields.max}`
-    let widthPercentage = (attributes.shields.value * 100) / attributes.shields.max;
+    document.getElementById("rubicon-starship-hud-shields-value").textContent = attributes.shields ? `${attributes.shields?.value} / ${attributes.shields?.max}` : "?"
+    let widthPercentage = attributes.shields ? (attributes.shields.value * 100) / attributes.shields.max : 100;
     document.getElementById("rubicon-starship-hud-shields-background").style.width = `${widthPercentage}%`;
 
     //======================================

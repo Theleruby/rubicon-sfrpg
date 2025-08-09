@@ -7,7 +7,7 @@
 	scrollbar-color: #d8d8d0 #111;
 }
 /* fix player box not being wide enough to fit player names */
-#players {
+/*#players {
 	width: 273px !important;
 	margin-left: 8px;
 }
@@ -16,7 +16,7 @@
 }
 #ui-top.offset {
 	margin-left: -190px !important;
-}
+}*/
 /* fix chat card text not being selectable if there were bullet points or a table */
 .sfrpg.chat-card .card-content > * > *, .sfrpg.chat-card .card-content > * > * > *, .sfrpg.chat-card .card-content > * > * > * > * {
 	-webkit-user-select: text;
@@ -29,7 +29,7 @@
 	white-space: normal !important;
 }
 /* replace the movement control icon with a different one */
-li.scene-control[data-control="measure"] > i::before {
+button.control.ui-control.layer.icon.fa-solid.fa-ruler-combined::before {
 	content: "\e4b2" !important;
 }
 /* fix modifier cell heights */
@@ -38,9 +38,9 @@ li.scene-control[data-control="measure"] > i::before {
 	vertical-align: middle;
 	margin: auto;
 }
-footer#ui-bottom > div > #hotbar {
+footer#ui-bottom aside#hotbar {
 	position: relative;
-	left: 265px;
+	left: 266px;
 }
 /* move the game paused thing to the middle of the screen, as the HUD is now in the way of it */
 figure#pause {
@@ -68,6 +68,7 @@ table.rubicon-bonuses-table td:first-child {
 	flex-shrink: 0;
 	flex-basis: 220px;
 	margin-top: 10px;
+	flex-wrap: wrap;
 }
 
 #rubiconQuickSkillCheckDialog .dialog-button {
@@ -84,6 +85,7 @@ table.rubicon-bonuses-table td:first-child {
 
 #rubiconQuickAbilityCheckDialog .dialog-buttons {
 	margin-top: 10px;
+	flex-wrap: wrap;
 }
 
 #rubiconQuickAbilityCheckDialog .dialog-button {
@@ -99,8 +101,9 @@ table.rubicon-bonuses-table td:first-child {
 }
 
 .rubicon-hud-outer-container {
-	width: 875px;
+	width: 923px;
 	flex-direction: column;
+	overflow: visible;
 }
 
 .rubicon-hud-statuses {
@@ -145,10 +148,10 @@ table.rubicon-bonuses-table td:first-child {
 
 .rubicon-spell-hud-inner {
 	margin-left: 2px;
-	margin-right: 2px;
+	/*margin-right: 2px;*/
 	margin-bottom: 4px;
 	width: 100%;
-	height: 177px;
+	height: 179px;
 	background: url(/ui/denim075.png) repeat;
 	padding: 6px;
 	border: 1px solid black;
@@ -166,15 +169,15 @@ table.rubicon-bonuses-table td:first-child {
 }
 
 .rubicon-spell-hud {
-	width: 82px;
+	width: 88px;
 	position: absolute;
-	left: 875px;
+	left: 925px;
 }
 
 .rubicon-starship-crew-hud {
 	width: 251px;
 	position: absolute;
-	left: 875px;
+	left: 925px;
 }
 
 .rubicon-starship-crew-hud-row {
@@ -338,17 +341,17 @@ table.rubicon-bonuses-table td:first-child {
 }
 
 .rubicon-hud-threshold-box {
-	width: 40px;
+	width: 44px;
 	height: 43px;
 }
 
 .rubicon-hud-turn-box {
-	width: 41px;
+	width: 47px;
 	height: 43px;
 }
 
 .rubicon-hud-dc-box {
-	width: 51px;
+	width: 57px;
 	height: 43px;
 }
 
@@ -375,7 +378,7 @@ table.rubicon-bonuses-table td:first-child {
 }
 
 .rubicon-hud-bar > .rubicon-hud-content-layer > span.rubicon-hud-value, .rubicon-starship-hud-bar > .rubicon-hud-content-layer > span.rubicon-hud-value {
-	margin-top: 3px;
+	margin-top: 2px;
 	font-size: 0.8em;
 }
 
@@ -501,8 +504,10 @@ div#rubicon-hud-equipment-section {
 }
 
 .rubicon-hud-ac-heading {
-	font-size: 1.2em;
-	width: 100%;
+    font-size: 1.15em;
+    line-height: 1em;
+    padding-top: 2px;
+    width: 100%;
 }
 
 .rubicon-hud-ac-heading, .rubicon-hud-ac-value {
@@ -618,6 +623,7 @@ div[id^='rubiconQuickActionDialog_'] .dialog-buttons {
 	flex-grow: 0;
 	flex-shrink: 0;
 	margin-top: 10px;
+	flex-wrap: wrap;
 }
 
 div[id^='rubiconQuickActionDialog_'] .dialog-button {
@@ -676,6 +682,7 @@ div[id^='rubiconQuickActionDialog_TABBED_'] .content {
 
 div[id^='rubiconQuickActionDialog_TABBED_'] .dialog-buttons {
 	display: none;
+	flex-wrap: wrap;
 }
 
 div[id^='rubiconQuickActionDialog_TABBED__starshipActions_'] > .window-content {
@@ -684,6 +691,10 @@ div[id^='rubiconQuickActionDialog_TABBED__starshipActions_'] > .window-content {
 
 .rubicon-tabbed-dialog-header {
 	margin: 6px 6px 8px 6px;
+}
+
+.rubicon-tabbed-dialog-tabs > a {
+	color: white !important;
 }
 
 .rubicon-tabbed-dialog-tabs > .item {
@@ -738,28 +749,29 @@ div.rubicon-hud-left-column {
 
 div.rubicon-hud-action-bar {
 	height: 45px;
-	width: 612px;
+	width: 660px;
 	/*margin-bottom: 2px;*/
 	margin-left: 2px;
 	margin-top: 4px;
 }
 
 div.rubicon-hud-action-button {
-	border: 1px solid var(--color-border-dark);
-	border-radius: 2px;
+	border: 2px solid black;/*var(--color-border-dark);*/
+	border-radius: 6px;
 	background: url(/ui/denim075.png) repeat;
 	box-shadow: 0 0 5px var(--color-shadow-dark) inset;
 	cursor: pointer;
-	margin-left: 2px;
+	margin-left: 3px;
 	height: 43px;
 	width: fit-content;
 	display: inline-block;
 	pointer-events: all;
 	position: relative;
+	overflow: hidden;
 }
 
 div.rubicon-hud-action-button:hover {
-	border: 1px solid var(--color-border-highlight-alt);
+	border: 2px solid var(--color-warm-1);
 }
 
 .rubicon-hud-action-button > span.macro-key {
@@ -778,8 +790,8 @@ div.rubicon-hud-action-button:hover {
 }
 
 div.rubicon-hud-action-button > img {
-	height: 41px;
-	width: 35.8px;
+	height: 39px;
+	width: 36.9px;
 	margin-left: 0px;
 	margin-top: 0px;
 	float: left;
@@ -787,7 +799,7 @@ div.rubicon-hud-action-button > img {
 
 div.rubicon-hud-action-button > span.rubicon-hud-action-label {
 	color: white;
-	margin: 1px 4px;
+	margin: 0px 4px;
 	font-size: 0.85em;
 	float: right;
 	text-align: center;
@@ -960,6 +972,7 @@ span.rubicon-weapon-damage-box {
 	border: 1px solid #000000;
 	border-radius: 3px;
 	/*background: rgba(90, 90, 90, 0.9);*/
+	font-size: 0.88rem;
 }
 
 .rubicon-starship-hud-systemstatus-row-nominal {
@@ -983,7 +996,7 @@ span.rubicon-weapon-damage-box {
 }
 
 .rubicon-starship-hud-systemstatus-row > .rubicon-hud-value {
-	width: 114px;
+	width: 138px;
 	text-align: right;
 }
 
