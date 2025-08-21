@@ -131,6 +131,14 @@ Hooks.on('preCreateChatMessage', async function(doc, _data, _options) {
   }
 });
 
+Hooks.on("updateWorldTime", (worldTime, dt) => {
+  console.log(`Rubicon Hooks | Update world time ${worldTime} ${dt}`);
+});
+
+Hooks.on("combatStart", function() {
+  console.log("Rubicon Hooks | Starting a combat session")
+});
+
 // Disable all timed effects directly linked to feats that are still active when combat ends
 Hooks.on("deleteCombat", function(combat) {
     console.log("Rubicon Hooks | Cleaning up a combat session")
@@ -144,40 +152,6 @@ Hooks.on("deleteCombat", function(combat) {
         });
       });
     };
-    game.sfrpg.timedEffects.forEach((effect) => {
-      if (effect.originItem) {
-        console.log(`Rubicon Hooks | Forcing effect ${effect.name} to be reset`)
-        // manually hack it disabled because fgs.
-        effect.enabled = false;
-        const e = effect.item, i = effect.actor;
-        if (!e)
-            return ui.notifications.error("Failed to toggle effect, item missing.");
-        if (!i)
-            return ui.notifications.error("Failed to toggle effect, actor missing.");
-        const n = {
-            _id: e._id,
-            system: {
-                enabled: false,
-                modifiers: e.system.modifiers.map((t=>t.toObject?.() ?? t)),
-                activeDuration: e.system.activeDuration
-            }
-        };
-        for (let t = 0; t < e.system.modifiers.length; t++)
-            n.system.modifiers[t].enabled = false,
-            this.modifiers[t].enabled = false;
-        effect.activeDuration.activationTime = -1
-        n.system.activeDuration.activationTime = -1
-        effect.activeDuration.expiryInit = -1
-        n.system.activeDuration.expiryInit = -1
-        effect.activeDuration.activationEnd = -1
-        n.system.activeDuration.activationEnd = -1
-        i.system.timedEffects.get(effect.uuid)?.update(this)
-        game.sfrpg.timedEffects.get(effect.uuid)?.update(this)
-        if (game.user?.isGM) {
-          i.updateEmbeddedDocuments("Item", [n])
-        }
-      }
-    });
 });
 
 Hooks.on("itemActivationChanged", function(evt) {
@@ -186,10 +160,12 @@ Hooks.on("itemActivationChanged", function(evt) {
     //console.log(evt.isActive)
     // is this explicitly forbidden from being activated? if so, ignore.
     // (requires sfrpg patch)
+    /*
     if (evt.isActive && !evt.item.shouldHaveActivationToggled()) { //!evt.item?.system?.activation?.condition === "ignore") {
       //evt.item.update({"system.isActive": false});
       return;
     }
+    */
     // check to see if there's a matching linked effect. if there is, we enable it
     let x = evt.actor.items.find((i)=>i.type=="effect" && i.originItem?.uuid === evt.item.uuid)
     if (x) {
@@ -265,3 +241,4 @@ Hooks.on("calculateSaveDC", function(data) {
     }
   }
 });
+

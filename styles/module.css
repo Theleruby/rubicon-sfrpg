@@ -40,14 +40,17 @@ button.control.ui-control.layer.icon.fa-solid.fa-ruler-combined::before {
 }
 footer#ui-bottom aside#hotbar {
 	position: relative;
-	left: 266px;
+	left: 267px;
 }
-/* move the game paused thing to the middle of the screen, as the HUD is now in the way of it */
+/* move the game paused thing into the top part of the screen so it's above the break time box */
 figure#pause {
 	bottom: auto;
-	top: 50%;
-	margin-top: -50px;
-	margin-left: -100px;
+	top: auto;
+	width: calc(100% - 150px);
+	margin: 0;
+	/*margin-top: -50px;*/
+	/*margin-left: -50px;*/
+	/*margin-right: 300px;*/
 }
 /*===================================*/
 
@@ -109,7 +112,7 @@ table.rubicon-bonuses-table td:first-child {
 .rubicon-hud-statuses {
 	display: flex;
 	flex-flow: wrap-reverse;
-	margin-left: 2px;
+	/*margin-left: 2px;*/
 }
 /*
 .rubicon-hud-statuses {
@@ -122,7 +125,7 @@ table.rubicon-bonuses-table td:first-child {
 */
 
 .rubicon-hud-status-box {
-	height: 24px;
+	height: 40px;
 	background: url(/ui/denim075.png) repeat;
 	border: 1px solid black;
 	border-radius: 3px;
@@ -134,7 +137,7 @@ table.rubicon-bonuses-table td:first-child {
 }
 
 .rubicon-hud-status-box > img {
-	width: 16px;
+	width: 32px;
 	border: none;
 	float: left;
 }
@@ -146,6 +149,15 @@ table.rubicon-bonuses-table td:first-child {
 	top: -1px;
 }
 
+.rubicon-hud-status-subbox {
+	color: white;
+	padding-left: 5px;
+	padding-right: 3px;
+	line-height: 16px;
+	position: relative;
+	top: -1px;
+}
+
 .rubicon-spell-hud-inner {
 	margin-left: 2px;
 	/*margin-right: 2px;*/
@@ -153,15 +165,15 @@ table.rubicon-bonuses-table td:first-child {
 	width: 100%;
 	height: 179px;
 	background: url(/ui/denim075.png) repeat;
-	padding: 6px;
+	/*padding: 6px;*/
 	border: 1px solid black;
 	border-radius: 3px;
 }
 
 .rubicon-starship-crew-hud {
 	margin-left: 2px;
-	height: 318px;
-	margin-bottom: 2px;
+	height: 325px;
+	/*margin-bottom: 2px;*/
 	background: url(/ui/denim075.png) repeat;
 	padding: 6px;
 	border: 1px solid black;
@@ -187,12 +199,13 @@ table.rubicon-bonuses-table td:first-child {
 }
 
 .rubicon-spell-hud-row {
-	padding: 2px 3px;
+	padding: 2px 8px;
 }
 
 .rubicon-spell-hud-title {
-	padding-bottom: 6px !important;
-	margin-bottom: 4px;
+	padding: 8px;
+	padding-bottom: 7px !important;
+	margin-bottom: 3px;
 	border-bottom: 1px solid white;
 	width: 100%;
 }
@@ -243,7 +256,7 @@ table.rubicon-bonuses-table td:first-child {
 
 #rubicon-hud-portrait {
 	width: 253px;
-	height: 239px;
+	height: 243px;
 	border: 1px solid black;
 	border-radius: 3px;
 	background: rgba(0, 0, 0, 0.5);
@@ -268,7 +281,7 @@ table.rubicon-bonuses-table td:first-child {
 
 #rubicon-starship-hud-portrait {
 	width: 183px;
-	height: 196px;
+	height: 200px;
 	border: 1px solid black;
 	border-radius: 3px;
 	background: rgba(0, 0, 0, 0.5);
@@ -504,10 +517,10 @@ div#rubicon-hud-equipment-section {
 }
 
 .rubicon-hud-ac-heading {
-    font-size: 1.15em;
-    line-height: 1em;
-    padding-top: 2px;
-    width: 100%;
+	font-size: 1.15em;
+	line-height: 1em;
+	padding-top: 2px;
+	width: 100%;
 }
 
 .rubicon-hud-ac-heading, .rubicon-hud-ac-value {
@@ -747,12 +760,16 @@ div.rubicon-hud-left-column {
 	width: 263px;
 }
 
+div#rubicon-starship-hud-container div.rubicon-hud-left-column {
+	min-height: 291px;
+}
+
 div.rubicon-hud-action-bar {
 	height: 45px;
 	width: 660px;
-	/*margin-bottom: 2px;*/
+	margin-bottom: 3px;
 	margin-left: 2px;
-	margin-top: 4px;
+	margin-top: 6px;
 }
 
 div.rubicon-hud-action-button {
@@ -813,6 +830,7 @@ div.rubicon-hud-action-button > span.rubicon-hud-action-label {
 	/*width: 90px;*/
 	margin-right: 0px;
 	padding-right: 1px;
+	margin-top: 2px;
 }
 
 .rubicon-hud-action-button[data-action=skillCheck] {
@@ -1172,5 +1190,13 @@ div#rubicon-starship-hud-dc-hard {
 
 .rubicon-hud-outer-container {
 	position: relative;
-	top: 52px;
+	top: 54px;
+}
+
+body.streaming-mode div.rubicon-hud-outer-container {
+	margin-bottom: 57px;
+}
+
+body.streaming-mode div.rubicon-hud-action-bar {
+	display: none;
 }

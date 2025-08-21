@@ -50,6 +50,7 @@ export class Rubicon extends Application {
     Hooks.on("deleteItem", this._onItemChange.bind(this));
     Hooks.on("updateActor", this._onActorChange.bind(this));
     Hooks.on("updateToken", this._onTokenChange.bind(this));
+    Hooks.on("refreshToken", this._onTokenChange.bind(this));
     //Hooks.on("onAfterUpdateCombat", this._onAfterUpdateCombat.bind(this));
     //Hooks.on("renderChatMessage", this._onRenderChatMessage.bind(this));
     
@@ -1796,51 +1797,58 @@ export class Rubicon extends Application {
     equipment.textContent = "";
     let items = this._sortItems(Array.from(this._actor.items));
     items.forEach((item) => {
-      if (item.type == "effect") {
-        if (item.system.showOnToken === true && item.system.enabled === true) {
+      if (item.timedEffect?.enabled) {
+        let rootItem = document.createElement('div');
+        rootItem.className = 'rubicon-hud-status-box';
+        let imageItem = document.createElement('img');
+        imageItem.src = item.img;
+        rootItem.appendChild(imageItem);
+        let divItem = document.createElement('div');
+        divItem.className = 'rubicon-hud-status-subbox';
+        let strongItem = document.createElement('strong');
+        strongItem.textContent = `${item.timedEffect.name}`
+        let brItem = document.createElement('br');
+        let spanItem = document.createElement('span');
+        spanItem.textContent = item.timedEffect.activeDuration.activationEnd === null ? "Activated" : `${item.timedEffect.activeDuration?.remaining?.string}`;
+        divItem.appendChild(strongItem);
+        divItem.appendChild(brItem);
+        divItem.appendChild(spanItem);
+        rootItem.appendChild(divItem);
+        statuses.appendChild(rootItem);
+      }
+      if (["weapon", "shield"].includes(item.type)) {
+        if (item.system.equipped) {
+          //console.log(item);
           let rootItem = document.createElement('div');
-          rootItem.className = 'rubicon-hud-status-box';
-          let imageItem = document.createElement('img');
-          imageItem.src = item.img;
-          rootItem.appendChild(imageItem);
-          let spanItem = document.createElement('span');
-          spanItem.textContent = item.name;
-          rootItem.appendChild(spanItem);
-          statuses.appendChild(rootItem);
-        }
-      } else if (["weapon", "shield"].includes(item.type)) {
-          if (item.system.equipped) {
-            //console.log(item);
-            let rootItem = document.createElement('div');
-            rootItem.className = 'rubicon-hud-row rubicon-hud-equipment';
-            let iconDiv = document.createElement('div');
-            iconDiv.className = "rubicon-hud-equipment-icon";
-            let icon = document.createElement('img');
-            icon.src = item.img;
-            iconDiv.appendChild(icon);
-            rootItem.appendChild(iconDiv);
-            let nameDiv = document.createElement('div')
-            nameDiv.className = 'rubicon-hud-equipment-name';
-            nameDiv.textContent = item.name;
-            rootItem.appendChild(nameDiv);
-            let ammoDiv = document.createElement('div')
-            ammoDiv.className = 'rubicon-hud-equipment-charges';
-            if (item.system.capacity && item.system.capacity.max > 0) {
-              let currentCapacity = item.getCurrentCapacity();
-              let maxCapacity = item.getMaxCapacity();
-              let extraCapacity = this._getItemRemainingAmmo(item);
-              let extraCapacityString = extraCapacity === undefined ? "" : ` \u00A0 (${extraCapacity})`;
-              if (item?.type === "weapon" && item?.system?.weaponType === "grenade") {
-                extraCapacityString = ""; // don't show capacity for grenades
-              }
-              ammoDiv.textContent = `${currentCapacity} / ${maxCapacity}${extraCapacityString}`;
-            } else {
-              ammoDiv.textContent = '';
+          rootItem.className = 'rubicon-hud-row rubicon-hud-equipment';
+          let iconDiv = document.createElement('div');
+          iconDiv.className = "rubicon-hud-equipment-icon";
+          let icon = document.createElement('img');
+          icon.src = item.img;
+          iconDiv.appendChild(icon);
+          rootItem.appendChild(iconDiv);
+          let nameDiv = document.createElement('div')
+          nameDiv.className = 'rubicon-hud-equipment-name';
+          nameDiv.textContent = item.name;
+          rootItem.appendChild(nameDiv);
+          let ammoDiv = document.createElement('div')
+          ammoDiv.className = 'rubicon-hud-equipment-charges';
+          if (item.system.capacity && item.system.capacity.max > 0) {
+            let currentCapacity = item.getCurrentCapacity();
+            let maxCapacity = item.getMaxCapacity();
+            let extraCapacity = this._getItemRemainingAmmo(item);
+            let extraCapacityString = extraCapacity === undefined ? "" : ` \u00A0 (${extraCapacity})`;
+            if (item?.type === "weapon" && item?.system?.weaponType === "grenade") {
+              extraCapacityString = ""; // don't show capacity for grenades
             }
-            rootItem.appendChild(ammoDiv);
-            equipment.appendChild(rootItem);
+            ammoDiv.textContent = `${currentCapacity} / ${maxCapacity}${extraCapacityString}`;
+          } else {
+            ammoDiv.textContent = '';
           }
+          rootItem.appendChild(ammoDiv);
+          equipment.appendChild(rootItem);
         }
+      }
     });
   /*
   // update the consumables
