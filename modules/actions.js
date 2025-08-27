@@ -763,6 +763,23 @@ RubiconActions.basic = {
     "hasNoItemButtons": [
     ]
   },
+  "_feature_": {
+    "img": "icons/magic/symbols/chevron-elipse-circle-blue.webp",
+    "name": "Use Special Class Feature",
+    "allowItem": 11, // required, use class ability
+    "actionType": "",
+    "shortDescription": "Use a special class feature",
+    "buttonComment": "",
+    "itemActionTypes": [],
+    "itemSpecialTarget": undefined,
+    "requireTraining": false,
+    "description": "<p>Use a special class feature.</p>",
+    "properties": ["_", "_"],
+    "hasItemButtons": [
+    ],
+    "hasNoItemButtons": [
+    ]
+  },
   "_basicSpell_": {
     "img": "icons/magic/symbols/runes-star-pentagon-orange-purple.webp",
     "name": "Cast Spell",

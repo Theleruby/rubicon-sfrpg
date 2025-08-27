@@ -120,6 +120,14 @@ QuickMenuOptions.full = {
     "requireTraining": false,
     "type": 6
   },
+  "_feature_": {
+    "name": "Use a special class feature",
+    "img": "icons/magic/symbols/chevron-elipse-circle-blue.webp",
+    "shortDescription": "Special class features are things like biohacks",
+    "properties": [],
+    "requireTraining": false,
+    "type": 1
+  },
   "_basicSpell_": {
     "name": "Cast a spell",
     "img": "icons/magic/symbols/runes-star-pentagon-orange-purple.webp",
@@ -173,6 +181,7 @@ QuickMenuOptions.moveDefend = {
     "type": 0
   }
 }
+QuickMenuOptions.altActions2 = Object.assign({}, QuickMenuOptions.altActions, QuickMenuOptions.moveDefend);
 QuickMenuOptions.equip = {
   "_equip_": {
     "name": "Equip",

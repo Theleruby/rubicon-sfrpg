@@ -16,8 +16,10 @@ let SFRPGModifierType = null;        // game.sfrpg.SFRPGModifierType;           
 let SFRPGModifierTypes = null;       // game.sfrpg.SFRPGModifierTypes;                     //          SFRPGModifierTypes } from "/systems/sfrpg/module/modifiers/types.js";
 
 import RubiconActions from "./actions.js";
+import FeatureDescriptions from "./features.js";
 import SpellDescriptions from "./spells.js";
 import ShipActionDescriptions from "./shipactions.js";
+import ShipActionDifficulties from "./shipdifficulties.js";
 import ConsumableDescriptions from "./consumables.js";
 import QuickMenuOptions from "./menu.js";
 
@@ -51,6 +53,7 @@ export class Rubicon extends Application {
     Hooks.on("updateActor", this._onActorChange.bind(this));
     Hooks.on("updateToken", this._onTokenChange.bind(this));
     Hooks.on("refreshToken", this._onTokenChange.bind(this));
+    Hooks.on("updateCombatant", this._onActorChange.bind(this));
     //Hooks.on("onAfterUpdateCombat", this._onAfterUpdateCombat.bind(this));
     //Hooks.on("renderChatMessage", this._onRenderChatMessage.bind(this));
     
@@ -257,8 +260,16 @@ export class Rubicon extends Application {
     this.showDialogQuick(token, QuickMenuOptions.moveDefend, "moveDefend");
   }
   
+  showDialogQuickAlt2(token) {
+    this.showDialogQuick(token, QuickMenuOptions.altActions2, "alt2");
+  }
+  
   showDialogQuickEquipReload(token) {
     this.showDialogQuick(token, QuickMenuOptions.equipReload, "equipReload");
+  }
+  
+  showDialogQuickFeature(token) {
+    this._showDialogQuickActionItem(token, "_feature_");
   }
   
   showDialogQuickSpell(token) {
@@ -584,6 +595,11 @@ export class Rubicon extends Application {
         if (newDesc) {
           description = `${description}<span class="rubicon-item-description">${newDesc}</span>`
         }
+        let diffDisc = ShipActionDifficulties[action.name.split("(")[0].trim()];
+        let sideString = "";
+        if (diffDisc) {
+          sideString = `<span class="rubicon-item-description-difficulty">${diffDisc}</span>`;
+        }
         let phaseName = action?.system?.phase?.name;
         if (phaseName != null && phaseToInt[phaseName] != null) {
           let phaseInts = phaseToInt[phaseName];
@@ -591,7 +607,7 @@ export class Rubicon extends Application {
             // we add this action to this phase
             buttons[`itemQuickActionButton_${action._id}_${phaseInt}`] = {
               label: `
-              <span>${roleString}: <span style='font-weight:normal'>${name}</span></span>
+              <span>${roleString}: <span style='font-weight:normal'>${name}</span>${sideString}</span>
               <span>${description}</span>
               `,
               callback: () => { actor.useStarshipAction(action._id) },
@@ -628,7 +644,7 @@ export class Rubicon extends Application {
   }
   
   _showDialogQuickActionEntry(token, actionGroup) {
-    if(!Object.keys(QuickMenuOptions.skills).includes(actionGroup) && !Object.keys(QuickMenuOptions.altActions).includes(actionGroup) && !Object.keys(QuickMenuOptions.moveDefend).includes(actionGroup)) {
+    if(!Object.keys(QuickMenuOptions.skills).includes(actionGroup) && !Object.keys(QuickMenuOptions.altActions).includes(actionGroup) && !Object.keys(QuickMenuOptions.moveDefend).includes(actionGroup) && !Object.keys(QuickMenuOptions.altActions2).includes(actionGroup)) {
         return this.showDialogError("Error", "That isn't a valid action group");
     }
     let dialogName = actionGroup.replace(" ", "_");
@@ -747,6 +763,8 @@ export class Rubicon extends Application {
       dialogString = "an item to use";
     } else if (action.allowItem === 9) {
       dialogString = "a spell to (un)identify";
+    } else if (action.allowItem === 11) {
+      dialogString = "a special class feature to use";
     }
     // find all the items that can be used, put them into an Array
     let items = [];
@@ -758,9 +776,12 @@ export class Rubicon extends Application {
         if (item?.type === "weapon" && (item?.name === "Unarmed strike" || item?.system.properties.grapple === true)) {
           items.push(item);
         }
-      }
-      else if (action.allowItem === 4 || action.allowItem === 9) {
+      } else if (action.allowItem === 4 || action.allowItem === 9) {
         if (item?.type === "spell") {
+          items.push(item);
+        }
+      } else if (action.allowItem === 11) {
+        if (item?.type === "feat" && item.system.details?.category === "biohack") { //(item.system.activation.type || ) {
           items.push(item);
         }
       } else if (action.allowItem === 8) {
@@ -810,14 +831,22 @@ export class Rubicon extends Application {
       return this.showDialogError("Error", "You don't have any items equipped you can perform this action with.");
     }
     let buttons = {};
-    let spellTotals = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    let tabTotals = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     for (const item of items) {
       //console.log(item);
       let name = item.name.split("(")[0].trim();
       let description = "";
       let propertyString = "";
       let comment = "";
-      if (item.type == "spell") {
+      if (item.type === "feat" && item.system.details?.category === "biohack") {
+        let tabNumber = 1; //item.system.details?.category === "biohack" ? 1 : 0;
+        tabTotals[tabNumber] = tabTotals[tabNumber] + 1;
+        let newDesc = FeatureDescriptions[item.name.split("(")[0].trim()];
+        if (newDesc) {
+          description = `${description}<span class="rubicon-item-description">${newDesc}</span>`
+        }
+      }
+      if (item.type === "spell") {
         // if this is unidentified add that to the name
         if (item.actor.type == "npc2" && item.system?.identified !== true) {
           name = `${name} <span style="color: red; font-weight: normal;">(unidentified)</span>`;
@@ -825,13 +854,13 @@ export class Rubicon extends Application {
         // get the spell school
         let schoolString = SFRPG.spellSchools[item.system.school] ? game.i18n.localize(SFRPG.spellSchools[item.system.school]) : "Unknown";
         name = `<span class="rubicon-spell-school-box">${schoolString}</span> <!--<span class="rubicon-spell-level-box">Lv ${item.system.level}</span>--> ${name}`
-        spellTotals[item.system.level] = spellTotals[item.system.level] + 1;
+        tabTotals[item.system.level] = tabTotals[item.system.level] + 1;
         let newDesc = SpellDescriptions[item.name.split("(")[0].trim()];
         if (newDesc) {
           description = `${description}<span class="rubicon-item-description">${newDesc}</span>`
         }
       }
-      if (item.type == "consumable") {
+      if (item.type === "consumable") {
         // get the consumable description
         let newDesc = ConsumableDescriptions[item.name.split("(")[0].trim()];
         if (newDesc) {
@@ -904,7 +933,7 @@ export class Rubicon extends Application {
         <span>${description}</span>
         <span class="rubicon-button-property-block">${propertyString} <span style="padding-left: 3px;">${comment}</span></span>`,
         callback: () => {
-          if (action.allowItem === 3 || action.allowItem === 8) {
+          if (action.allowItem === 3 || action.allowItem === 8 || action.allowItem === 11) {
             item.roll(); // just show the normal item roll card
           } else if (action.allowItem === 4) {
             token.actor.useSpell(item); // just show the normal spell usage dialog
@@ -925,21 +954,22 @@ export class Rubicon extends Application {
             this.showSpecificItemChatDialog(token, entry, item);
           }
         },
-        tab: `${item?.system?.level}`,
+        tab: action.allowItem === 11 ? "1" : `${item?.system?.level}`, // TODO fix the tab selection
         icon: `<img src="${item.img}" />`
       };
     };
-    if (action.allowItem === 4) {
+    const featMenuTitles = ["Active Features", "Biohacks", "2", "3", "4", "5", "6", "7", "8", "9"];
+    if (action.allowItem === 4 || action.allowItem === 11) {
       const tabs = [];
       for (const tabNumber of [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) {
-        if (spellTotals[tabNumber] > 0) {
+        if (tabTotals[tabNumber] > 0) {
           tabs.push({ label: `${tabNumber}`,
-                     title: `Lv ${tabNumber}`,
+                     title: action.allowItem === 11 ? featMenuTitles[tabNumber] : `Lv ${tabNumber}`,
                      content: ""});
         }
       }
       if (tabs.length < 1) {
-        return this.showDialogError("Error", "No spells available");
+        return this.showDialogError("Error", action.allowItem === 11 ? "No matching class features or abilities available" : "No spells available");
       }
       const rendered_html = await renderTemplate("modules/rubicon-sfrpg/templates/tabbed-dialog.hbs", {
         header: `<b>${token.actor.name}</b><br/>Select ${dialogString}.`,
@@ -1311,6 +1341,8 @@ export class Rubicon extends Application {
       this.showDialogQuickAltAttack(token);
     } else if (action == "defend") {
       this.showDialogQuickMoveDefend(token);
+    } else if (action == "alt2") {
+      this.showDialogQuickAlt2(token);
     } else if (action == "reload") {
       this.showDialogQuickEquipReload(token);
     } else if (action == "consumable") {
@@ -1319,6 +1351,8 @@ export class Rubicon extends Application {
       this.showDialogQuickAction(token);
     } else if (action == "quickRoll") {
       this.showDialogQuickRoll(token);
+    } else if (action == "features") {
+      this.showDialogQuickFeature(token);
     } else if (action == "cast") {
       this.showDialogQuickSpell(token);
     } else if (action == "rollableTable") {
@@ -1329,6 +1363,12 @@ export class Rubicon extends Application {
       this._showDialogQuickActionStarshipActions(token, false);
     } else if (action == "allStarshipActions") {
       this._showDialogQuickActionStarshipActions(token, true);
+    } else if (action == "displayQuadrants") {
+      const macro = game.macros.getName("STARSHIP Display Quadrants");
+      if (!macro) { ui.notifications.error("Can't find macro 'STARSHIP Display Quadrants'"); } else { macro.execute(); }
+    } else if (action == "displayStarshipRange") {
+      const macro = game.macros.getName("STARSHIP Display Weapon Range Hex Shape");
+      if (!macro) { ui.notifications.error("Can't find macro 'STARSHIP Display Weapon Range Hex Shape'"); } else { macro.execute(); }
     } else {
       ui.notifications.error("Invalid action"); return;
     }
@@ -1548,7 +1588,11 @@ export class Rubicon extends Application {
           document.getElementById(`rubicon-starship-hud-${systemId}-row`).classList.remove(targetClass)
         }
       }
-      document.getElementById(`rubicon-starship-hud-${systemId}-value`).textContent = attributes.systems[systemId].value;
+      if (attributes.systems[systemId].patch === 'unpatched') {
+          document.getElementById(`rubicon-starship-hud-${systemId}-value`).innerHTML = `${CONFIG.SFRPG.starshipSystemStatus[attributes.systems[systemId].value]}`;
+      } else {
+          document.getElementById(`rubicon-starship-hud-${systemId}-value`).innerHTML = `${CONFIG.SFRPG.starshipSystemStatus[attributes.systems[systemId].value]}<br/>(${CONFIG.SFRPG.starshipSystemPatch[attributes.systems[systemId].patch]})`;
+      }
     }
     
     let arcTexts = {
@@ -1595,34 +1639,51 @@ export class Rubicon extends Application {
       "pilot": "P",
       "scienceOfficer": "S",
     }
+    // hide all the crew rows
+    for (const crewMemberIndex of [0, 1, 2, 3, 4, 5, 6, 7, 8]) {
+      document.getElementById(`rubicon-starship-crew${crewMemberIndex}-row`).style.display = "none";
+    }
+    let crewMembers = [];
+    document.getElementById("rubicon-starship-crew-hud").style.display = "block";
     if (crew.useNPCCrew) {
-      // for now we don't show this for the NPC crew
-      document.getElementById("rubicon-starship-crew-hud").style.display = "none";
-    } else {
-      // hide all the crew rows
-      for (const crewMemberIndex of [0, 1, 2, 3, 4, 5, 6, 7, 8]) {
-        document.getElementById(`rubicon-starship-crew${crewMemberIndex}-row`).style.display = "none";
+      for(const crewRole of ["captain", "pilot", "gunner", "engineer", "scienceOfficer", "chiefMate", "magicOfficer"]) {
+        for (var crewi = 1; crewi <= crew.npcData[crewRole].numberOfUses; crewi++) {
+          let crewn = crew.npcData[crewRole].numberOfUses > 1 ? `${game.sfrpg.config.starshipRoles[crewRole]} ${crewi}` : `${game.sfrpg.config.starshipRoles[crewRole]}`;
+          crewMembers.push([crewRole, `${this._actor.uuid}.${crewRole}${crewi}`, this._actor.img, crewn, null]);
+        }
       }
+    } else {
       // get all the crew members that are actually being used
-      let crewMembers = [];
-      document.getElementById("rubicon-starship-crew-hud").style.display = "block";
       for(const crewRole of ["captain", "pilot", "gunner", "engineer", "scienceOfficer", "chiefMate", "magicOfficer"]) {
         for(const crewActorId of crew[crewRole].actorIds) {
           let crewActor = game.actors.get(crewActorId);
           if (crewActor) {
-            crewMembers.push([crewRole, crewActor]);
+            crewMembers.push([crewRole, crewActor.uuid, crewActor.img, crewActor.name, crewActor.system.attributes]);
           }
         }
       }
-      for (const [crewMemberIndex, crewData] of crewMembers.entries()) {
-        if (crewMemberIndex > 8) continue; // we only support showing 9 crew members currently
-        let crewRole = crewData[0];
-        let crewMember = crewData[1];
-        document.getElementById(`rubicon-starship-crew${crewMemberIndex}-row`).style.display = "flex";
-        document.getElementById(`rubicon-starship-crew${crewMemberIndex}-role`).textContent = crewRolesTable[crewRole];
-        document.getElementById(`rubicon-starship-crew${crewMemberIndex}-portrait`).getElementsByTagName('img')[0].src = crewMember.img;
-        document.getElementById(`rubicon-starship-crew${crewMemberIndex}-player`).textContent = crewMember.name.replace("-", " "); // hack
-        let crewAttributes = crewMember.system.attributes;
+    }
+
+    for (const [crewMemberIndex, crewData] of crewMembers.entries()) {
+      if (crewMemberIndex > 8) continue; // we only support showing 9 crew members currently
+      let crewRole = crewData[0];
+      let crewId = crewData[1];
+      let crewImage = crewData[2];
+      let crewName = crewData[3];
+      let crewAttributes = crewData[4];
+      document.getElementById(`rubicon-starship-crew${crewMemberIndex}-row`).style.display = "flex";
+      document.getElementById(`rubicon-starship-crew${crewMemberIndex}-role`).textContent = crewRolesTable[crewRole];
+      document.getElementById(`rubicon-starship-crew${crewMemberIndex}-portrait`).getElementsByTagName('img')[0].src = crewImage;
+      document.getElementById(`rubicon-starship-crew${crewMemberIndex}-player`).textContent = crewName.replace("-", " "); // hack
+      const combatant = game.combat?.getCombatantByActor(this._actor);
+      if ((combatant?.system?.acted || []).includes(crewId)) {
+        document.getElementById(`rubicon-starship-crew${crewMemberIndex}-row`).style["background-color"] = "darkred";
+      } else {
+        document.getElementById(`rubicon-starship-crew${crewMemberIndex}-row`).style["background-color"] = "transparent";
+      }
+      if (crewAttributes) {
+        document.getElementById(`rubicon-starship-crew${crewMemberIndex}-hp`).style.display = "flex";
+        document.getElementById(`rubicon-starship-crew${crewMemberIndex}-rp`).style.display = "flex";
         // health. everyone should have this.
         let tempHealthValue = "";
         if(crewAttributes.hp.temp !== undefined && crewAttributes.hp.temp !== null && crewAttributes.hp.temp > 0) {
@@ -1644,6 +1705,9 @@ export class Rubicon extends Application {
           document.getElementById(`rubicon-starship-crew-crew${crewMemberIndex}-resolve-value`).textContent = "-";
           document.getElementById(`rubicon-starship-crew-crew${crewMemberIndex}-resolve-background`).style.width = "0%";
         }
+      } else {
+        document.getElementById(`rubicon-starship-crew${crewMemberIndex}-hp`).style.display = "none";
+        document.getElementById(`rubicon-starship-crew${crewMemberIndex}-rp`).style.display = "none";
       }
     }
   }
@@ -1873,5 +1937,36 @@ export class Rubicon extends Application {
     } else {
       this._updateCharacter();
     }
+  }
+  
+  updateTimeControls() {
+    let calendar = game.time.calendar;
+    let components = game.time.components;
+
+    let dayOfWeek = calendar.days.values[components.dayOfWeek].name;
+    let day = components.dayOfMonth + 1;
+    let month = calendar.months.values[components.month].name;
+    let year = components.year;
+    let dateField = document.getElementById("rubicon-date-field");
+    dateField.textContent = `${dayOfWeek} ${day} ${month}, ${year} AG`;
+
+    let hours = ["12 AM", "1 AM", "2 AM", "3 AM", "4 AM", "5 AM", "6 AM", "7 AM", "8 AM", "9 AM", "10 AM", "11 AM", "12 PM", "1 PM", "2 PM", "3 PM", "4 PM", "5 PM", "6 PM", "7 PM", "8 PM", "9 PM", "10 PM", "11 PM"];
+    let hour = hours[components.hour];
+    /*
+    if (hour < 10) { hour = `0${hour}` };
+    let minutes = Math.floor(components.minute / 5) * 5;
+    if (minutes < 10) { minutes = `0${minutes}` };
+    */
+
+    let timeField = document.getElementById("rubicon-time-field");
+    timeField.innerHTML = `${hour}`;
+
+    if (game.user.isGM) {
+      let worldTimeField = document.getElementById("rubicon-world-time-field");
+      worldTimeField.innerHTML = `${game.time.worldTime}`;
+    }
+
+    let formattedTimestampField = document.getElementById("rubicon-formatted-timestamp-field");
+    formattedTimestampField.textContent = `${game.time.calendar.format(game.time.components)}`;
   }
 }

@@ -6,6 +6,58 @@ import { Rubicon } from "./rubicon.js";
   CONFIG.compatibility.mode = CONST.COMPATIBILITY_MODES.SILENT;
 })();
 
+Hooks.once("init", () => {
+  // Set up the calendar
+  const myCalendarConfig = {
+    name: "Pact Standard Time",
+    description: "Used in any place were the Pact Worlds hold sway",
+    years: {
+      yearZero: 0,
+      firstWeekday: 0,
+    },
+    months: {
+      values: [
+          {name: "Abadius", abbreviation: "Jab", ordinal: 1, days: 31},
+          {name: "Calistril", abbreviation: "Map", ordinal: 2, days: 28},
+          {name: "Pharast", abbreviation: "May", ordinal: 3, days: 31},
+          {name: "Gozran", abbreviation: "Jug", ordinal: 4, days: 30},
+          {name: "Desnus", abbreviation: "Sep", ordinal: 5, days: 31},
+          {name: "Sarenith", abbreviation: "Noc", ordinal: 6, days: 30},
+          {name: "Erastus", abbreviation: "Noc", ordinal: 7, days: 31},
+          {name: "Arodus", abbreviation: "Noc", ordinal: 8, days: 31},
+          {name: "Rova", abbreviation: "Noc", ordinal: 9, days: 30},
+          {name: "Lamashan", abbreviation: "Noc", ordinal: 10, days: 31},
+          {name: "Neth", abbreviation: "Noc", ordinal: 11, days: 30},
+          {name: "Kuthona", abbreviation: "Noc", ordinal: 12, days: 31}
+      ]
+    },
+    days: {
+      values: [
+        {name: "Firstday", abbreviation: "Fir", ordinal: 1},
+        {name: "Secondday", abbreviation: "Sec", ordinal: 2},
+        {name: "Thirdday", abbreviation: "Thi", ordinal: 3},
+        {name: "Fourthday", abbreviation: "Fou", ordinal: 4},
+        {name: "Fifthday", abbreviation: "Fif", ordinal: 5},
+        {name: "Sixthday", abbreviation: "Six", ordinal: 6, isRestDay: true},
+        {name: "Seventhday", abbreviation: "Sev", ordinal: 7, isRestDay: true}
+      ],
+      daysPerYear: 365,
+      hoursPerDay: 24,
+      minutesPerHour: 60,
+      secondsPerMinute: 60
+    },
+    seasons: {
+      values: [
+        {name: "Spring", monthStart: 3, monthEnd: 5},
+        {name: "Summer", monthStart: 6, monthEnd: 8},
+        {name: "Autumn", monthStart: 9, monthEnd: 11},
+        {name: "Winter", monthStart: 12, monthEnd: 2}
+      ]
+    }
+  };
+  CONFIG.time.worldCalendarConfig = myCalendarConfig;
+});
+
 // Load the HUD and construct the app object
 Hooks.once('ready', async function() {
 	console.log("Rubicon Hooks | Loading HUD elements")
@@ -13,6 +65,8 @@ Hooks.once('ready', async function() {
 	document.getElementById("ui-bottom").insertAdjacentHTML("afterbegin", rubiconCharacterHudHtml);
 	let rubiconStarshipHudHtml = await renderTemplate("modules/rubicon-sfrpg/templates/starship-hud.hbs", {"crewArray": ["crew0", "crew1", "crew2", "crew3", "crew4", "crew5", "crew6", "crew7", "crew8"]});
 	document.getElementById("ui-bottom").insertAdjacentHTML("afterbegin", rubiconStarshipHudHtml);
+	let rubiconTimeHtml = await renderTemplate("modules/rubicon-sfrpg/templates/time-control.hbs", {});
+	document.getElementById("ui-left-column-1").insertAdjacentHTML("beforeend", rubiconTimeHtml);
 	game.rubicon = new Rubicon();
 	console.log("Rubicon Hooks | Preloading actor images")
 	// Preload the images
@@ -38,6 +92,8 @@ Hooks.once('ready', async function() {
 			cache.appendChild(img);
 		};
 	});
+	// Update time
+	game.rubicon.updateTimeControls();
 	console.log("Rubicon Hooks | Initialized successfully")
 });
 
@@ -133,6 +189,7 @@ Hooks.on('preCreateChatMessage', async function(doc, _data, _options) {
 
 Hooks.on("updateWorldTime", (worldTime, dt) => {
   console.log(`Rubicon Hooks | Update world time ${worldTime} ${dt}`);
+  game.rubicon.updateTimeControls();
 });
 
 Hooks.on("combatStart", function() {
