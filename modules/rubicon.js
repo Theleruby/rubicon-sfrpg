@@ -1539,7 +1539,7 @@ export class Rubicon extends Application {
     // TODO
     let icmValue = 0;
     let icmMax = nodes;
-    document.getElementById("rubicon-starship-hud-icm-value").textContent = `- / ${icmMax}`
+    document.getElementById("rubicon-starship-hud-icm-value").textContent = `${icmMax}`
     widthPercentage = icmMax < 1 ? 0 : (icmValue * 100) / icmMax;
     document.getElementById("rubicon-starship-hud-icm-background").style.width = `${widthPercentage}%`;
     
